@@ -1,4 +1,4 @@
-# Install script for directory: /home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves
+# Install script for directory: /home/ryoh/COURS/knight-moves-and-safari-grooves
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ryoh/COURS/knight-moves-and-safari-grooves/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

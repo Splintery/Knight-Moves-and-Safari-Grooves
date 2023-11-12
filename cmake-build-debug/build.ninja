@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: knight_moves___safari_grooves
+# Project: knight_moves_and_safari_grooves
 # Configurations: Debug
 # =============================================================================
 
@@ -39,45 +39,45 @@ include CMakeFiles/rules.ninja
 #############################################
 # Logical path to working directory; prefix for absolute paths.
 
-cmake_ninja_workdir = /home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves/cmake-build-debug/
+cmake_ninja_workdir = /home/ryoh/COURS/knight-moves-and-safari-grooves/cmake-build-debug/
 # =============================================================================
-# Object build statements for EXECUTABLE target knight_moves___safari_grooves
+# Object build statements for EXECUTABLE target knight_moves_and_safari_grooves
 
 
 #############################################
-# Order-only phony target for knight_moves___safari_grooves
+# Order-only phony target for knight_moves_and_safari_grooves
 
-build cmake_object_order_depends_target_knight_moves___safari_grooves: phony || CMakeFiles/knight_moves___safari_grooves.dir
+build cmake_object_order_depends_target_knight_moves_and_safari_grooves: phony || CMakeFiles/knight_moves_and_safari_grooves.dir
 
-build CMakeFiles/knight_moves___safari_grooves.dir/src/main.cpp.o: CXX_COMPILER__knight_moves___safari_grooves_Debug /home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves/src/main.cpp || cmake_object_order_depends_target_knight_moves___safari_grooves
-  DEP_FILE = CMakeFiles/knight_moves___safari_grooves.dir/src/main.cpp.o.d
+build CMakeFiles/knight_moves_and_safari_grooves.dir/src/main.cpp.o: CXX_COMPILER__knight_moves_and_safari_grooves_Debug /home/ryoh/COURS/knight-moves-and-safari-grooves/src/main.cpp || cmake_object_order_depends_target_knight_moves_and_safari_grooves
+  DEP_FILE = CMakeFiles/knight_moves_and_safari_grooves.dir/src/main.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++11
-  OBJECT_DIR = CMakeFiles/knight_moves___safari_grooves.dir
-  OBJECT_FILE_DIR = CMakeFiles/knight_moves___safari_grooves.dir/src
+  OBJECT_DIR = CMakeFiles/knight_moves_and_safari_grooves.dir
+  OBJECT_FILE_DIR = CMakeFiles/knight_moves_and_safari_grooves.dir/src
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target knight_moves___safari_grooves
+# Link build statements for EXECUTABLE target knight_moves_and_safari_grooves
 
 
 #############################################
-# Link the executable knight_moves___safari_grooves
+# Link the executable knight_moves_and_safari_grooves
 
-build knight_moves___safari_grooves: CXX_EXECUTABLE_LINKER__knight_moves___safari_grooves_Debug CMakeFiles/knight_moves___safari_grooves.dir/src/main.cpp.o | /usr/lib/libsfml-graphics.so.2.6.0 /usr/lib/libsfml-window.so.2.6.0 /usr/lib/libsfml-system.so.2.6.0
+build knight_moves_and_safari_grooves: CXX_EXECUTABLE_LINKER__knight_moves_and_safari_grooves_Debug CMakeFiles/knight_moves_and_safari_grooves.dir/src/main.cpp.o | /usr/lib64/libsfml-graphics.so.2.5.1 /usr/lib64/libsfml-window.so.2.5.1 /usr/lib64/libsfml-system.so.2.5.1
   FLAGS = -g
-  LINK_LIBRARIES = /usr/lib/libsfml-graphics.so.2.6.0  /usr/lib/libsfml-window.so.2.6.0  /usr/lib/libsfml-system.so.2.6.0
-  OBJECT_DIR = CMakeFiles/knight_moves___safari_grooves.dir
+  LINK_LIBRARIES = /usr/lib64/libsfml-graphics.so.2.5.1  /usr/lib64/libsfml-window.so.2.5.1  /usr/lib64/libsfml-system.so.2.5.1
+  OBJECT_DIR = CMakeFiles/knight_moves_and_safari_grooves.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_FILE = knight_moves___safari_grooves
-  TARGET_PDB = knight_moves___safari_grooves.dbg
+  TARGET_FILE = knight_moves_and_safari_grooves
+  TARGET_PDB = knight_moves_and_safari_grooves.dbg
 
 
 #############################################
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd "/home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves/cmake-build-debug" && /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/ryoh/COURS/knight-moves-and-safari-grooves/cmake-build-debug && /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -88,7 +88,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd "/home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves/cmake-build-debug" && /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S"/home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves" -B"/home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves/cmake-build-debug"
+  COMMAND = cd /home/ryoh/COURS/knight-moves-and-safari-grooves/cmake-build-debug && /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/home/ryoh/COURS/knight-moves-and-safari-grooves -B/home/ryoh/COURS/knight-moves-and-safari-grooves/cmake-build-debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -104,9 +104,9 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 
 #############################################
-# Folder: /home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves/cmake-build-debug
+# Folder: /home/ryoh/COURS/knight-moves-and-safari-grooves/cmake-build-debug
 
-build all: phony knight_moves___safari_grooves
+build all: phony knight_moves_and_safari_grooves
 
 # =============================================================================
 # Built-in targets
@@ -115,14 +115,14 @@ build all: phony knight_moves___safari_grooves
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-C.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-CXX.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-C.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-CXX.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/UnixPaths.cmake /home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves/CMakeLists.txt /lib64/cmake/SFML/SFMLConfig.cmake /lib64/cmake/SFML/SFMLConfigDependencies.cmake /lib64/cmake/SFML/SFMLConfigVersion.cmake /lib64/cmake/SFML/SFMLSharedTargets-release.cmake /lib64/cmake/SFML/SFMLSharedTargets.cmake CMakeCache.txt CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeCXXCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-C.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-CXX.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-C.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-CXX.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/UnixPaths.cmake /home/ryoh/COURS/knight-moves-and-safari-grooves/CMakeLists.txt /usr/lib64/cmake/SFML/SFMLConfig.cmake /usr/lib64/cmake/SFML/SFMLConfigDependencies.cmake /usr/lib64/cmake/SFML/SFMLConfigVersion.cmake /usr/lib64/cmake/SFML/SFMLSharedTargets-release.cmake /usr/lib64/cmake/SFML/SFMLSharedTargets.cmake CMakeCache.txt CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeCXXCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-C.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-CXX.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-C.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-CXX.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/UnixPaths.cmake /home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves/CMakeLists.txt /lib64/cmake/SFML/SFMLConfig.cmake /lib64/cmake/SFML/SFMLConfigDependencies.cmake /lib64/cmake/SFML/SFMLConfigVersion.cmake /lib64/cmake/SFML/SFMLSharedTargets-release.cmake /lib64/cmake/SFML/SFMLSharedTargets.cmake CMakeCache.txt CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeCXXCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake: phony
+build /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-C.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-CXX.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-C.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-CXX.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux.cmake /home/ryoh/.local/share/JetBrains/Toolbox/apps/clion-2/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/UnixPaths.cmake /home/ryoh/COURS/knight-moves-and-safari-grooves/CMakeLists.txt /usr/lib64/cmake/SFML/SFMLConfig.cmake /usr/lib64/cmake/SFML/SFMLConfigDependencies.cmake /usr/lib64/cmake/SFML/SFMLConfigVersion.cmake /usr/lib64/cmake/SFML/SFMLSharedTargets-release.cmake /usr/lib64/cmake/SFML/SFMLSharedTargets.cmake CMakeCache.txt CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeCXXCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake: phony
 
 
 #############################################
