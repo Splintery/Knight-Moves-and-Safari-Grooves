@@ -1,3 +1,0 @@
-/home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves/cmake-build-debug/CMakeFiles/knight_moves___safari_grooves.dir
-/home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/ryoh/Cours/2023/LOA/knight-moves-&-safari-grooves/cmake-build-debug/CMakeFiles/rebuild_cache.dir
