@@ -1,0 +1,4 @@
+main.o: src/main.cpp src/controller/Controller.hpp \
+ src/controller/../view/StateMachine.hpp src/controller/../view/State.hpp \
+ src/controller/../view/InputManager.hpp \
+ src/controller/../settings/SETTINGS.hpp src/settings/SETTINGS.hpp

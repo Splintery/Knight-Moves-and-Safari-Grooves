@@ -18,7 +18,7 @@ Controller.o: src/controller/Controller.cpp src/controller/Controller.hpp src/vi
 Butin.o: src/model/Butin.cpp src/model/Butin.hpp src/model/Game.hpp
 	$(GCC) -c src/model/Butin.cpp
 
-ButinPiece.o: src/model/ButinBoard.cpp src/model/ButinBoard.hpp src/model/Board.hpp
+ButinBoard.o: src/model/ButinBoard.cpp src/model/ButinBoard.hpp src/model/Board.hpp
 	$(GCC) -c src/model/ButinBoard.cpp
 
 Tile.o: src/model/Tile.cpp src/model/Tile.hpp
@@ -30,7 +30,7 @@ ButinPiece.o: src/model/ButinPiece.cpp src/model/ButinPiece.hpp src/model/Piece.
 Player.o: src/model/Player.cpp src/model/Player.hpp
 	$(GCC) -c src/model/Player.cpp
 
-test: src/main.cpp Controller.o MenuState.o StateMachine.o InputManager.o Player.o Tile.o ButinPiece.o Butin.o src/settings/SETTINGS.hpp
+test: src/main.cpp Controller.o MenuState.o StateMachine.o InputManager.o Player.o ButinPiece.o Tile.o ButinBoard.o Butin.o src/settings/SETTINGS.hpp
 	$(GCC) src/main.cpp Controller.o MenuState.o StateMachine.o InputManager.o -o Tesssttt $(SFML_FLAGS)
 
 clean:
