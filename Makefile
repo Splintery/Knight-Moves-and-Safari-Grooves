@@ -1,4 +1,4 @@
-GCC=g++ -MM --std=c++11 -Wall
+GCC=g++ --std=c++11 -Wall
 SFML_FLAGS=-lsfml-graphics -lsfml-window -lsfml-system
 
 all: test clean
@@ -15,13 +15,13 @@ MenuState.o: src/view/MenuState.cpp src/view/MenuState.hpp src/controller/Contro
 Controller.o: src/controller/Controller.cpp src/controller/Controller.hpp src/view/StateMachine.hpp src/view/State.hpp src/view/InputManager.hpp src/view/MenuState.hpp src/settings/SETTINGS.hpp
 	$(GCC) -c src/controller/Controller.cpp
 
-Butin.o: src/model/Butin.cpp src/model/Butin.hpp src/model/Game.hpp
+Butin.o: src/model/Butin.cpp src/model/Butin.hpp src/model/Game.hpp src/model/Player.hpp src/model/Board.hpp src/model/Tile.hpp src/model/Piece.hpp src/model/ButinBoard.hpp
 	$(GCC) -c src/model/Butin.cpp
 
-ButinPiece.o: src/model/ButinBoard.cpp src/model/ButinBoard.hpp src/model/Board.hpp
+ButinBoard.o: src/model/ButinBoard.cpp src/model/ButinBoard.hpp src/model/Board.hpp src/model/Tile.hpp src/model/Piece.hpp
 	$(GCC) -c src/model/ButinBoard.cpp
 
-Tile.o: src/model/Tile.cpp src/model/Tile.hpp
+Tile.o: src/model/Tile.cpp src/model/Tile.hpp src/model/Piece.hpp
 	$(GCC) -c src/model/Tile.cpp
 
 ButinPiece.o: src/model/ButinPiece.cpp src/model/ButinPiece.hpp src/model/Piece.hpp
