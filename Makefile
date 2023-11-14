@@ -30,7 +30,7 @@ ButinPiece.o: src/model/ButinPiece.cpp src/model/ButinPiece.hpp src/model/Piece.
 Player.o: src/model/Player.cpp src/model/Player.hpp
 	$(GCC) -c src/model/Player.cpp
 
-test: src/main.cpp Controller.o MenuState.o StateMachine.o InputManager.o Player.o Tile.o ButinPiece.o Butin.o src/settings/SETTINGS.hpp
+test: src/main.cpp Controller.o MenuState.o StateMachine.o InputManager.o Player.o ButinPiece.o Tile.o ButinBoard.o Butin.o src/settings/SETTINGS.hpp
 	$(GCC) src/main.cpp Controller.o MenuState.o StateMachine.o InputManager.o -o Tesssttt $(SFML_FLAGS)
 
 clean:
