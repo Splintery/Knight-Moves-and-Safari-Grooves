@@ -5,7 +5,7 @@
 
 class Board {
 public:
-     
+    virtual bool initGame() = 0;
 };
 
 #endif

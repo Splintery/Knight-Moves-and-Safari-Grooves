@@ -1,8 +1,15 @@
 #ifndef PIECE_HPP
 #define PIECE_HPP
 
-class Piece {
+#include <utility>
+#include <iostream>
+using namespace std;
 
+class Piece {
+protected:
+    pair<int, int> _position;
+public:
+    virtual void movePiece(pair<int, int> position) = 0;
 };
 
 #endif
