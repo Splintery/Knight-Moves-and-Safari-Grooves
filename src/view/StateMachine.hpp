@@ -12,7 +12,7 @@ class StateMachine {
 	public:
 		StateMachine() {}
 		virtual ~StateMachine() {}
-		void addState( StateRef newState, bool isReplacing = true);
+		void addState(StateRef newState, bool isReplacing = true);
 		void removeState();
 		void processStateChanges();
 

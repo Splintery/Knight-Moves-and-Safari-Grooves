@@ -1,0 +1,3 @@
+#define FPS 144.0
+#define SCREEN_WIDTH 1980
+#define SCREEN_HEIGHT 1080
