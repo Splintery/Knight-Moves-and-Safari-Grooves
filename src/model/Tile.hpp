@@ -7,6 +7,7 @@
 using namespace std;
 
 #include "Piece.hpp"
+#include "../utilities/Utilities.hpp"
 
 class Tile {
 public:
@@ -15,6 +16,7 @@ public:
     Tile(const Tile &) = delete;
 
     void movePieces(pair<int, int> position);
+    void initGame();
 
     friend ostream &operator<<(ostream &, const Tile &);
 protected:

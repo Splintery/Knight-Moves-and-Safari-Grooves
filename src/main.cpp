@@ -1,5 +1,6 @@
 #include <iostream>
 #include "controller/Controller.hpp"
+#include "model/Butin.hpp"
 
 int main(void){
     // sf::RenderWindow window(sf::VideoMode(640, 480), "SFML Application");
