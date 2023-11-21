@@ -19,31 +19,30 @@ bool Butin::isGameDone() const{
     return false;
 }
 
-void Butin::initializeGame(GameConfig *g) {
-    ButinConfig *c = (ButinConfig *) g;
-    for (string s : g->names){
+void Butin::initializeGame(const ButinConfig &bc) {
+    for (string s : bc.names){
         player_list.push_back(new Player(s));
     }
 }
 
-vector<Vector2i> Butin::validMoves(Vector2i from) const {
+void Butin::makeMove(const Vector2i &from, const Vector2i &to) {
+
+}
+
+const vector<Vector2i> Butin::validMoves(const Vector2i &from) const {
     return vector<Vector2i>();
 }
 
-void Butin::makeMove(Vector2i from, Vector2i to) {
+void Butin::isValidMove(const Vector2i &from, const Vector2i &to) const {
 
 }
 
-vector<vector<string>> Butin::getBoardState() const {
-    return vector<vector<string>>();
-}
-
-void Butin::isValidMove(Vector2i from, Vector2i to) const {
-
-}
-
-string Butin::getCurrentPlayer() const {
+const string Butin::getCurrentPlayer() const {
     return currentPlayer->name;
+}
+
+const vector<vector<string>> Butin::getBoardState() const {
+    return vector<vector<string>>();
 }
 
 Butin::~Butin() {
@@ -54,3 +53,4 @@ ostream &operator<<(ostream &o, const Butin &b) {
     o << "Game: Butin" << endl;
     return o;
 }
+

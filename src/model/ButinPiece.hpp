@@ -7,7 +7,7 @@
 class ButinPiece : public Piece {
 public:
     ButinPiece();
-    ButinPiece(ButinPieceType color, pair<int, int> position);
+    ButinPiece(ButinPieceType color, Vector2i position);
     virtual ~ButinPiece();
     ButinPiece(const ButinPiece &) = delete;
 

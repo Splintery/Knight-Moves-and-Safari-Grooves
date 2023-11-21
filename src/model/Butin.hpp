@@ -5,10 +5,10 @@
 #include "ButinBoard.hpp"
 #include "ButinConfig.hpp"
 
-class Butin : public Game {
+class Butin : public Game<ButinBoard, ButinConfig> {
 private:
     virtual ~Butin();
-    virtual void isValidMove(Vector2i from, Vector2i to) const;
+    virtual void isValidMove(const Vector2i& from, const Vector2i& to) const;
 public:
     Butin();
     Butin(const Butin &) = delete;
@@ -16,11 +16,11 @@ public:
     virtual void start();
     virtual void end();
     virtual bool isGameDone() const;
-    virtual void initializeGame(GameConfig *);
-    virtual string getCurrentPlayer() const;
-    virtual void makeMove(Vector2i from, Vector2i to);
-    virtual vector<Vector2i> validMoves(Vector2i from) const;
-    virtual vector<vector<string>> getBoardState() const;
+    virtual void initializeGame(const ButinConfig &);
+    virtual void makeMove(const Vector2i& from, const Vector2i& to);
+    virtual const vector<Vector2i> validMoves(const Vector2i& from) const;
+    virtual const vector<vector<string>> getBoardState() const;
+    virtual const string getCurrentPlayer() const;
 
     friend ostream &operator<<(ostream &, const Butin &);
 };
