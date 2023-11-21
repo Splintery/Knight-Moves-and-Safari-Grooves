@@ -2,25 +2,21 @@
 #define BUTINPIECE_HPP
 
 #include "Piece.hpp"
-
-enum ButinPieceColor {
-    Red,
-    Yellow,
-    Black
-};
+#include "../utilities/Utilities.hpp"
 
 class ButinPiece : public Piece {
 public:
-    ButinPiece(ButinPieceColor color, pair<int, int> position);
+    ButinPiece(ButinPieceType color, pair<int, int> position);
     virtual ~ButinPiece();
     ButinPiece(const ButinPiece &) = delete;
 
-    const int value;
     virtual void movePiece(pair<int, int> position);
+    const int value;
+    const ButinPieceType color;
 
     friend ostream &operator<<(ostream &, const ButinPiece &);
 private:
-    int getValueFromColor(ButinPieceColor color) const;
+    int getValueFromColor(ButinPieceType color) const;
 };
 
 

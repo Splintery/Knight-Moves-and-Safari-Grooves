@@ -11,9 +11,10 @@ public:
     Player(const Player &) = delete;
     virtual ~Player();
 
+    const string name;
+
     friend ostream &operator<<(ostream &, const Player &);
 private:
-    const string _name;
     int score;
 };
 

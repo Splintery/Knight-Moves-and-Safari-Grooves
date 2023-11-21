@@ -7,7 +7,7 @@ using namespace std;
 
 class Piece {
 protected:
-    pair<int, int> _position;
+    pair<int, int> position;
 public:
     virtual void movePiece(pair<int, int> position) = 0;
 };

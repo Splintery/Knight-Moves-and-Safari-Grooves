@@ -16,6 +16,8 @@ public:
     ButinBoard(const ButinBoard &) = delete;
 
     virtual bool initGame();
+    virtual void isValidMove(pair<pair<int, int>, pair<int, int>> move);
+    array<array<vector<ButinPieceType>, BOARD_SIZE>, BOARD_SIZE> getBoardState();
 
     virtual ~ButinBoard();
     friend ostream &operator<<(ostream &, const ButinBoard &);
