@@ -26,22 +26,25 @@ void Butin::initializeGame(GameConfig *g) {
     }
 }
 
-void Butin::isValidMove(pair<pair<int, int>, pair<int, int>> move) {
+vector<Vector2i> Butin::validMoves(Vector2i from) const {
+    return vector<Vector2i>();
+}
+
+void Butin::makeMove(Vector2i from, Vector2i to) {
 
 }
 
-void Butin::makeMove(pair<pair<int, int>, pair<int, int>> move) {
+vector<vector<string>> Butin::getBoardState() const {
+    return vector<vector<string>>();
+}
+
+void Butin::isValidMove(Vector2i from, Vector2i to) const {
 
 }
 
 string Butin::getCurrentPlayer() const {
     return currentPlayer->name;
 }
-
-array<array<vector<ButinPieceType>, BOARD_SIZE>, BOARD_SIZE> Butin::getBoardState() {
-    return board->getBoardState();
-}
-
 
 Butin::~Butin() {
     cout << "Destruction of " << *this;

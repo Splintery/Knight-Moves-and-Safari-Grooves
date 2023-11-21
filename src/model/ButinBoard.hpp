@@ -4,9 +4,10 @@
 #include <vector>
 #include <array>
 #include <iostream>
-using namespace std;
 
+#include "ButinPiece.hpp"
 #include "Board.hpp"
+#include "../utilities/Utilities.hpp"
 
 #define BOARD_SIZE 8
 
@@ -15,14 +16,14 @@ public:
     ButinBoard();
     ButinBoard(const ButinBoard &) = delete;
 
-    virtual bool initGame();
-    virtual void isValidMove(pair<pair<int, int>, pair<int, int>> move);
-    array<array<vector<ButinPieceType>, BOARD_SIZE>, BOARD_SIZE> getBoardState();
+    virtual void initializeGame();
+    virtual void isValidMove(Vector2i from, Vector2i to) const;
+    virtual vector<vector<string>> getBoardState() const;
 
     virtual ~ButinBoard();
     friend ostream &operator<<(ostream &, const ButinBoard &);
-protected:
-    array<array<Tile, BOARD_SIZE>, BOARD_SIZE> board;
+private:
+    array<array<ButinPiece, BOARD_SIZE>, BOARD_SIZE> board;
 };
 
 #endif

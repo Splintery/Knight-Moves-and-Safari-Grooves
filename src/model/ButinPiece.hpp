@@ -6,11 +6,12 @@
 
 class ButinPiece : public Piece {
 public:
+    ButinPiece();
     ButinPiece(ButinPieceType color, pair<int, int> position);
     virtual ~ButinPiece();
     ButinPiece(const ButinPiece &) = delete;
 
-    virtual void movePiece(pair<int, int> position);
+    virtual void movePiece(Vector2i position);
     const int value;
     const ButinPieceType color;
 

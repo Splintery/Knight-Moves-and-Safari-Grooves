@@ -8,20 +8,19 @@
 class Butin : public Game {
 private:
     virtual ~Butin();
+    virtual void isValidMove(Vector2i from, Vector2i to) const;
 public:
     Butin();
     Butin(const Butin &) = delete;
-    // TODO JSP SI CEST CEST BIEN DE FAIRE CA OU S'IL VAUT MIEUX CAST DANS CHAQUE FONCTION
-    ButinBoard *board;
 
     virtual void start();
     virtual void end();
     virtual bool isGameDone() const;
     virtual void initializeGame(GameConfig *);
-    virtual void makeMove(pair<pair<int, int>, pair<int, int>> move);
-    virtual void isValidMove(pair<pair<int, int>, pair<int, int>> move);
     virtual string getCurrentPlayer() const;
-    array<array<vector<ButinPieceType>, BOARD_SIZE>, BOARD_SIZE> getBoardState();
+    virtual void makeMove(Vector2i from, Vector2i to);
+    virtual vector<Vector2i> validMoves(Vector2i from) const;
+    virtual vector<vector<string>> getBoardState() const;
 
     friend ostream &operator<<(ostream &, const Butin &);
 };

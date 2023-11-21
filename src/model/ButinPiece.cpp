@@ -28,6 +28,11 @@ ostream &operator<<(ostream &o, const ButinPiece &bp) {
     return o;
 }
 
-void ButinPiece::movePiece(pair<int, int> position) {
-    position = position;
+void ButinPiece::movePiece(Vector2i position) {
+
+}
+
+// TODO SUPPRIMER
+ButinPiece::ButinPiece(): color{Red}, value{1} {
+
 }
