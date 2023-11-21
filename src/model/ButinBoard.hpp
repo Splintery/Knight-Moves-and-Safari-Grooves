@@ -4,6 +4,8 @@
 #include <vector>
 #include <array>
 #include <iostream>
+#include <cmath>
+#include <algorithm>
 
 #include "ButinPiece.hpp"
 #include "Board.hpp"
@@ -13,6 +15,7 @@
 
 class ButinBoard : public Board<ButinPiece> {
 private:
+    void generateDefaultBoard();
 public:
     ButinBoard();
     ButinBoard(const ButinBoard &) = delete;

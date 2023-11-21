@@ -14,6 +14,4 @@ public:
     friend ostream &operator<<(ostream &, const ButinConfig &);
 };
 
-
-
 #endif

@@ -2,9 +2,8 @@
 
 Butin::Butin() {
     board = new ButinBoard();
-
-    cout << "Construction of " << *this;
     currentPlayer = *player_list.begin();
+    cout << "Construction of " << *this;
 }
 
 void Butin::start() {
@@ -23,6 +22,7 @@ void Butin::initializeGame(const ButinConfig &bc) {
     for (string s : bc.names){
         player_list.push_back(new Player(s));
     }
+    board->initializeGame(bc.deleted_pieces);
 }
 
 void Butin::makeMove(const Vector2i &from, const Vector2i &to) {
@@ -49,7 +49,7 @@ Butin::~Butin() {
     cout << "Destruction of " << *this;
 }
 
-ostream &operator<<(ostream &o, const Butin &b) {
+ostream &operator<<(ostream &o, const Butin &) {
     o << "Game: Butin" << endl;
     return o;
 }

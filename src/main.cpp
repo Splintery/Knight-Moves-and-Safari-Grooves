@@ -1,6 +1,10 @@
 #include <iostream>
 #include "controller/Controller.hpp"
 #include "settings/SETTINGS.hpp"
+#include "model/ButinBoard.hpp"
+#include "model/ButinConfig.hpp"
+#include "model/Game.hpp"
+#include "model/Butin.hpp"
 
 int main(void){
     // sf::RenderWindow window(sf::VideoMode(640, 480), "SFML Application");
@@ -24,6 +28,7 @@ int main(void){
     //     window.display();
     // }
     Controller(SCREEN_WIDTH, SCREEN_HEIGHT, "TESSSSSSSt");
+    Butin *butin = new Butin();
 
     return EXIT_SUCCESS;
 }
