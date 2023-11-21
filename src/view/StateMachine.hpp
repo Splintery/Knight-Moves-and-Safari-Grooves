@@ -3,8 +3,10 @@
 
 #include <memory>
 #include <stack>
+#include <SFML/Graphics.hpp>
 
 #include "State.hpp"
+
 
 typedef std::unique_ptr<State> StateRef;
 
@@ -15,6 +17,7 @@ class StateMachine {
 		void addState(StateRef newState, bool isReplacing = true);
 		void removeState();
 		void processStateChanges();
+		sf::Vector2f getCenter();
 
 		StateRef &getActiveState();
 	private:

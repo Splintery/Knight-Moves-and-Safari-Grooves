@@ -1,3 +1,6 @@
+#ifndef MENUSTATE_H
+#define MENUSTATE_H
+
 #include "../controller/Controller.hpp"
 
 using namespace sf;
@@ -12,5 +15,10 @@ class MenuState: public State {
 	private:
 		ControllerDataRef data;
 		Clock clock;
-		Sprite testButton;
+
+		Sprite butinButton;
+		Sprite gounkiButton;
+		Sprite safariButton;
 };
+
+#endif
