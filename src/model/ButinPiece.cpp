@@ -7,13 +7,13 @@ ButinPiece::ButinPiece(ButinPieceType color, Vector2i position):value {getValueF
 
 int ButinPiece::getValueFromColor(ButinPieceType type) const{
     switch (type) {
-        case Black:
+        case ButinPieceType::Black:
             return 3;
-        case Red:
+        case ButinPieceType::Red:
             return 2;
-        case Yellow:
+        case ButinPieceType::Yellow:
             return 1;
-        case EmptyButin:
+        case ButinPieceType::EmptyButin:
             return -1;
     }
     return 0;
@@ -24,7 +24,7 @@ void ButinPiece::movePiece(Vector2i position) {
 }
 
 // TODO SUPPRIMER
-ButinPiece::ButinPiece(): color{Red}, value{1} {
+ButinPiece::ButinPiece(): color{ButinPieceType::Red}, value{1} {
 
 }
 

@@ -2,16 +2,17 @@
 #define UTILITIES_HPP
 
 #include <unordered_map>
+#include <string>
 using namespace std;
 
-enum ButinPieceType {
+enum class ButinPieceType {
     Red,
     Yellow,
     Black,
     EmptyButin
 };
 
-enum SafariPieceType {
+enum class SafariPieceType {
     Elephant,
     Rhinoceros,
     Lion,
@@ -19,7 +20,7 @@ enum SafariPieceType {
     EmptySafari
 };
 
-enum GounkiPieceType {
+enum class GounkiPieceType {
     BlackSquare,
     BlackCircle,
     WhiteSquare,
@@ -27,27 +28,13 @@ enum GounkiPieceType {
     EmptyGounki
 };
 
-unordered_map<ButinPieceType, string> butinSpriteMap = {
-    {Red, ""},
-    {Yellow, ""},
-    {Black, ""},
-    {EmptyButin, ""}
-};
+namespace UtilityFunctions {
 
-unordered_map<SafariPieceType, string> safariSpriteMap = {
-    {Elephant, ""},
-    {Rhinoceros, ""},
-    {Lion, ""},
-    {Fence, ""},
-    {EmptySafari, ""}
-};
+    const string getButinPieceString(ButinPieceType type);
 
-unordered_map<GounkiPieceType, string> gounkiSpriteMap = {
-    {BlackSquare, ""},
-    {BlackCircle, ""},
-    {WhiteSquare, ""},
-    {WhiteCircle, ""},
-    {EmptyGounki, ""}
-};
+    const string getSafariPieceString(SafariPieceType type);
+
+    const string getGounkiPieceString(GounkiPieceType type);
+}
 
 #endif

@@ -17,17 +17,22 @@ void ButinBoard::generateDefaultBoard() {
     vector<int> pieces_ratio = calculatePieceDistribution();
     vector<ButinPieceType> all_pieces;
 
-    all_pieces.insert(all_pieces.end(), pieces_ratio[0], Yellow);
-    all_pieces.insert(all_pieces.end(), pieces_ratio[1], Red);
-    all_pieces.insert(all_pieces.end(), pieces_ratio[2], Black);
+    all_pieces.insert(all_pieces.end(), pieces_ratio[0], ButinPieceType::Yellow);
+    all_pieces.insert(all_pieces.end(), pieces_ratio[1], ButinPieceType::Red);
+    all_pieces.insert(all_pieces.end(), pieces_ratio[2], ButinPieceType::Black);
 
     srand(time(nullptr));
     random_shuffle(all_pieces.begin(), all_pieces.end());
 
+    board.resize(BOARD_SIZE);
+    for (auto &row : board) {
+        row.resize(BOARD_SIZE, nullptr);
+    }
+
     int count = 0;
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
-            board.at(i).at(j) = new ButinPiece(all_pieces[count++], Vector2i {i, j});
+            board.at(i).push_back(new ButinPiece(all_pieces[count++], Vector2i {i, j}));
         }
     }
 }
@@ -55,10 +60,11 @@ const vector<vector<string>> ButinBoard::getBoardState() const {
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
             if (board[i][j] == nullptr) {
-                boardState.at(i).push_back(butinSpriteMap.at(EmptyButin));
+                string s = UtilityFunctions::getButinPieceString(ButinPieceType::EmptyButin);
+                boardState.at(i).push_back(s);
             }
             else {
-                boardState.at(i).push_back(butinSpriteMap.at(board[i][j]->color));
+                string s = UtilityFunctions::getButinPieceString(board[i][j]->color);
             }
         }
     }
