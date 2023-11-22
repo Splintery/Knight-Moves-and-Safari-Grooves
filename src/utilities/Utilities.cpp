@@ -2,16 +2,15 @@
 
 const string UtilityFunctions::getButinPieceString(ButinPieceType type) {
     switch (type) {
-        case ButinPieceType::Red: return "";
-        case ButinPieceType::Yellow: return "";
-        case ButinPieceType::Black: return "";
-        case ButinPieceType::EmptyButin: return "";
+        case ButinPieceType::Red: return "../resources/RedButinSprite.png";
+        case ButinPieceType::Yellow: return "../resources/YellowButinSprite.png";
+        case ButinPieceType::Black: return "../resources/BlackButinSprite.png";
+        case ButinPieceType::EmptyButin: return "../resources/EmptyButinSprite.png";
         default: return "";
     }
 }
 
 const string UtilityFunctions::getSafariPieceString(SafariPieceType type) {
-
     switch (type) {
         case SafariPieceType::Elephant: return "";
         case SafariPieceType::Rhinoceros: return "";

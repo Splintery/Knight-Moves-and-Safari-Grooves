@@ -3,5 +3,5 @@
 
 int main(void){
     Butin *butin = new Butin();
-    butin->getBoardState();
+    vector<vector<string>> tmp = butin->getBoardState();
 }

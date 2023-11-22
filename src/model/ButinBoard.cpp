@@ -32,7 +32,7 @@ void ButinBoard::generateDefaultBoard() {
     int count = 0;
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
-            board.at(i).push_back(new ButinPiece(all_pieces[count++], Vector2i {i, j}));
+            board.at(i).at(j) = new ButinPiece(all_pieces[count++], Vector2i {i, j});
         }
     }
 }
@@ -57,15 +57,21 @@ void ButinBoard::isValidMove(const Vector2i &from, const Vector2i &to) const {
 
 const vector<vector<string>> ButinBoard::getBoardState() const {
     vector<vector<string>> boardState;
+    boardState.resize(BOARD_SIZE);
+    for (auto &row : boardState) {
+        row.resize(BOARD_SIZE, "");
+    }
+    string s;
+
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
             if (board[i][j] == nullptr) {
-                string s = UtilityFunctions::getButinPieceString(ButinPieceType::EmptyButin);
-                boardState.at(i).push_back(s);
+                s = UtilityFunctions::getButinPieceString(ButinPieceType::EmptyButin);
             }
             else {
-                string s = UtilityFunctions::getButinPieceString(board[i][j]->color);
+                s = UtilityFunctions::getButinPieceString(board[i][j]->color);
             }
+            boardState.at(i).at(j) = s;
         }
     }
     return boardState;

@@ -2,7 +2,6 @@
 
 Butin::Butin() {
     board = new ButinBoard();
-    currentPlayer = *player_list.begin();
     cout << "Construction of " << *this;
 }
 
@@ -22,6 +21,7 @@ void Butin::initializeGame(const ButinConfig &bc) {
     for (string s : bc.names){
         player_list.push_back(new Player(s));
     }
+    currentPlayer = *player_list.begin();
     board->initializeGame(bc.deleted_pieces);
 }
 
@@ -42,7 +42,7 @@ const string Butin::getCurrentPlayer() const {
 }
 
 const vector<vector<string>> Butin::getBoardState() const {
-    return vector<vector<string>>();
+    return board->getBoardState();
 }
 
 Butin::~Butin() {
