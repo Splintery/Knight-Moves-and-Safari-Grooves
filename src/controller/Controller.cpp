@@ -38,3 +38,10 @@ void Controller::run() {
 		this -> data -> machine.getActiveState() -> draw(interpolation);
 	}
 }
+void Controller::setNewGame(Game *newGame) {
+	if (data -> currentGame -> isDone()) {
+		data -> currentGame = newGame;
+	} else {
+		cout << "Game is not finished yet" << endl;
+	}
+}

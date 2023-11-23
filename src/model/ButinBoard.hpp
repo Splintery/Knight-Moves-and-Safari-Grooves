@@ -7,8 +7,7 @@
 using namespace std;
 
 #include "Board.hpp"
-
-#define BOARD_SIZE 8
+#include "../settings/SETTINGS.hpp"
 
 class ButinBoard : public Board {
 public:
