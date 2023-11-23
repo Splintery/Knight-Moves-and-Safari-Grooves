@@ -21,7 +21,7 @@ vector<Vector2i> ButinPiece::getMovementPatterns() const {
     return patterns;
 }
 
-int ButinPiece::getValueFromColor(ButinPieceType type) const{
+int ButinPiece::getValueFromColor(ButinPieceType type){
     switch (type) {
         case ButinPieceType::Black:
             return 3;
@@ -37,11 +37,6 @@ int ButinPiece::getValueFromColor(ButinPieceType type) const{
 
 void ButinPiece::movePiece(Vector2i position) {
     this->position = position;
-}
-
-// TODO SUPPRIMER
-ButinPiece::ButinPiece(): color{ButinPieceType::Red}, value{1} {
-
 }
 
 ButinPiece::~ButinPiece() {

@@ -18,6 +18,7 @@ void Butin::initializeGame(const ButinConfig &bc) {
 }
 
 void Butin::makeMove(const Vector2i &from, const Vector2i &to) {
+    currentPlayer->increaseScore(board->getJumpedPieceType(from, to));
     board->makeMove(from, to);
 }
 

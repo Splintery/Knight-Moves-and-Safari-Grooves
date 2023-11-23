@@ -81,10 +81,26 @@ const vector<vector<vector<string>>> ButinBoard::getBoardState() const {
     return boardState;
 }
 
+const Vector2i ButinBoard::calculateJumpedPos(const Vector2i &from, const Vector2i &to) const {
+    return Vector2i((from.x + to.x) / 2, (from.y + to.y) / 2);
+}
+
 void ButinBoard::makeMove(const Vector2i &from, const Vector2i &to) {
+    const Vector2i jumpedPos = calculateJumpedPos(from, to);
+    ButinPiece* jumpedPiece = board[jumpedPos.x][jumpedPos.y];
+    ButinPiece* toPiece = board[to.x][to.y];
+
     board[to.x][to.y] = board[from.x][from.y];
     board[from.x][from.y]->movePiece(to);
     board[from.x][from.y] = nullptr;
+    board[jumpedPos.x][jumpedPos.y] = nullptr;
+    delete jumpedPiece;
+    delete toPiece;
+}
+
+ButinPieceType ButinBoard::getJumpedPieceType(const Vector2i &from, const Vector2i &to) const{
+    const Vector2i jumpedPos = calculateJumpedPos(from, to);
+    return board[jumpedPos.x][jumpedPos.y]->color;
 }
 
 bool ButinBoard::isWithinBounds(Vector2i pos) const {
@@ -121,4 +137,6 @@ ostream &operator<<(ostream &o, const ButinBoard &) {
     o << "Board: Butin" << endl;
     return o;
 }
+
+
 

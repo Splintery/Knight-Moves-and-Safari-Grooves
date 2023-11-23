@@ -12,6 +12,7 @@ public:
     Butin();
     Butin(const Butin &) = delete;
 
+    // TODO END GAME AJOUTER LES POINTS RESTANTS DU PLATEAU
     virtual bool isGameDone() const;
     virtual void initializeGame(const ButinConfig &);
     virtual void makeMove(const Vector2i& from, const Vector2i& to);

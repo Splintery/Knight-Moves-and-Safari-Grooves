@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include "ButinPiece.hpp"
+#include "../utilities/Utilities.hpp"
 using namespace std;
 
 class Player {
@@ -12,6 +14,7 @@ public:
     virtual ~Player();
 
     const string name;
+    void increaseScore(ButinPieceType type);
 
     friend ostream &operator<<(ostream &, const Player &);
 private:
