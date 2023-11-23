@@ -2,9 +2,7 @@
 
 Butin::Butin() {
     board = new ButinBoard();
-
     cout << "Construction of " << *this;
-    currentPlayer = *player_list.begin();
 }
 
 void Butin::start() {
@@ -19,35 +17,40 @@ bool Butin::isGameDone() const{
     return false;
 }
 
-void Butin::initializeGame(GameConfig *g) {
-    ButinConfig *c = (ButinConfig *) g;
-    for (string s : g->names){
+void Butin::initializeGame(const ButinConfig &bc) {
+    for (string s : bc.names){
         player_list.push_back(new Player(s));
     }
+    currentPlayer = *player_list.begin();
+    board->initializeGame(bc.deleted_pieces);
 }
 
-void Butin::isValidMove(pair<pair<int, int>, pair<int, int>> move) {
+void Butin::makeMove(const Vector2i &from, const Vector2i &to) {
 
 }
 
-void Butin::makeMove(pair<pair<int, int>, pair<int, int>> move) {
+const vector<Vector2i> Butin::validMoves(const Vector2i &from) const {
+    return vector<Vector2i>();
+}
+
+void Butin::isValidMove(const Vector2i &from, const Vector2i &to) const {
 
 }
 
-string Butin::getCurrentPlayer() const {
+const string Butin::getCurrentPlayer() const {
     return currentPlayer->name;
 }
 
-array<array<vector<ButinPieceType>, BOARD_SIZE>, BOARD_SIZE> Butin::getBoardState() {
+const vector<vector<string>> Butin::getBoardState() const {
     return board->getBoardState();
 }
-
 
 Butin::~Butin() {
     cout << "Destruction of " << *this;
 }
 
-ostream &operator<<(ostream &o, const Butin &b) {
+ostream &operator<<(ostream &o, const Butin &) {
     o << "Game: Butin" << endl;
     return o;
 }
+

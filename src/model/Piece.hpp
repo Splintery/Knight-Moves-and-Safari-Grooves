@@ -4,12 +4,14 @@
 #include <utility>
 #include <iostream>
 using namespace std;
+#include <SFML/System/Vector2.hpp>
+using namespace sf;
 
 class Piece {
 protected:
-    pair<int, int> position;
+    Vector2i position;
 public:
-    virtual void movePiece(pair<int, int> position) = 0;
+    virtual void movePiece(Vector2i position) = 0;
 };
 
 #endif

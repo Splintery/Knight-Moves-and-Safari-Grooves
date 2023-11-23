@@ -11,7 +11,7 @@
 
 #include "../settings/SETTINGS.hpp"
 
-#include "../model/*.hpp"
+// #include "../model/*.hpp"
 
 using namespace std;
 
@@ -20,7 +20,7 @@ struct ControllerData {
 	RenderWindow window;
 	InputManager input;
 	ResourceManager resource;
-	Game *currentGame = nullptr;
+	// Game *currentGame = nullptr;
 };
 
 typedef shared_ptr<ControllerData> ControllerDataRef;
@@ -34,6 +34,6 @@ class Controller {
 
 		ControllerDataRef data = make_shared<ControllerData>();
 		void run();
-		void setNewGame(Game *newGame);
+		// void setNewGame(Game *newGame);
 };
 #endif

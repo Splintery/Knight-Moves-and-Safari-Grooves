@@ -1,22 +1,31 @@
 #include "ButinPiece.hpp"
 
-ButinPiece::ButinPiece(ButinPieceType color, pair<int, int> position):value { getValueFromColor(color) }, color {color} {
+ButinPiece::ButinPiece(ButinPieceType color, Vector2i position): color {color}, value {getValueFromColor(color)} {
     position = position;
     cout << "Construction of " << *this;
 }
 
 int ButinPiece::getValueFromColor(ButinPieceType type) const{
     switch (type) {
-        case Black:
+        case ButinPieceType::Black:
             return 3;
-        case Red:
+        case ButinPieceType::Red:
             return 2;
-        case Yellow:
+        case ButinPieceType::Yellow:
             return 1;
-        case EmptyButin:
+        case ButinPieceType::EmptyButin:
             return -1;
     }
     return 0;
+}
+
+void ButinPiece::movePiece(Vector2i position) {
+
+}
+
+// TODO SUPPRIMER
+ButinPiece::ButinPiece(): color{ButinPieceType::Red}, value{1} {
+
 }
 
 ButinPiece::~ButinPiece() {
@@ -26,8 +35,4 @@ ButinPiece::~ButinPiece() {
 ostream &operator<<(ostream &o, const ButinPiece &bp) {
     o << "Piece: Butin" << endl << "\t Value: " << bp.value << endl;
     return o;
-}
-
-void ButinPiece::movePiece(pair<int, int> position) {
-    position = position;
 }

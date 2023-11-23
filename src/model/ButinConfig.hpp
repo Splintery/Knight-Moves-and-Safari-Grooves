@@ -9,11 +9,9 @@ private:
 public:
     ButinConfig();
     ButinConfig(const ButinConfig&) = delete;
-    vector<pair<int, int>> deleted_pieces;
+    const vector<Vector2i> deleted_pieces;
 
     friend ostream &operator<<(ostream &, const ButinConfig &);
 };
-
-
 
 #endif
