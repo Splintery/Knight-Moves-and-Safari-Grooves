@@ -2,7 +2,8 @@
 #define UTILITIES_HPP
 
 #include <unordered_map>
-#include <string>
+#include <iostream>
+#include <vector>
 using namespace std;
 
 enum class ButinPieceType {
@@ -35,6 +36,8 @@ namespace UtilityFunctions {
     const string getSafariPieceString(SafariPieceType type);
 
     const string getGounkiPieceString(GounkiPieceType type);
+
+    void printBoard(const std::vector<std::vector<std::vector<std::string>>>& board);
 }
 
 #endif

@@ -1,8 +1,24 @@
 #include "ButinPiece.hpp"
 
 ButinPiece::ButinPiece(ButinPieceType color, Vector2i position):value {getValueFromColor(color)}, color {color} {
-    position = position;
+    this->position = position;
     cout << "Construction of " << *this;
+}
+
+vector<Vector2i> ButinPiece::getMovementPatterns() const {
+    vector<Vector2i> patterns;
+
+    // diagonal jumps
+    patterns.push_back(Vector2i(2, 2));
+    patterns.push_back(Vector2i(2, -2));
+    patterns.push_back(Vector2i(-2, 2));
+    patterns.push_back(Vector2i(-2, -2));
+    // straight jumps
+    patterns.push_back(Vector2i(0, 2));
+    patterns.push_back(Vector2i(0, -2));
+    patterns.push_back(Vector2i(2, 0));
+    patterns.push_back(Vector2i(-2, 0));
+    return patterns;
 }
 
 int ButinPiece::getValueFromColor(ButinPieceType type) const{
@@ -20,7 +36,7 @@ int ButinPiece::getValueFromColor(ButinPieceType type) const{
 }
 
 void ButinPiece::movePiece(Vector2i position) {
-
+    this->position = position;
 }
 
 // TODO SUPPRIMER
@@ -35,4 +51,8 @@ ButinPiece::~ButinPiece() {
 ostream &operator<<(ostream &o, const ButinPiece &bp) {
     o << "Piece: Butin" << endl << "\t Value: " << bp.value << endl;
     return o;
+}
+
+const Vector2i ButinPiece::getPosition() const {
+    return this->position;
 }

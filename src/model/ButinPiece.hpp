@@ -11,9 +11,12 @@ public:
     virtual ~ButinPiece();
     ButinPiece(const ButinPiece &) = delete;
 
-    virtual void movePiece(Vector2i position);
     const int value;
     const ButinPieceType color;
+
+    virtual vector<Vector2i> getMovementPatterns() const;
+    virtual void movePiece(Vector2i position);
+    virtual const Vector2i getPosition() const;
 
     friend ostream &operator<<(ostream &, const ButinPiece &);
 private:
