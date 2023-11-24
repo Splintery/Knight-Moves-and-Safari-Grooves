@@ -16,11 +16,11 @@ class ButinState: public State {
 	private:
 		ControllerDataRef data;
 
-		array<array<Sprite>> spriteBoard;
+		// array<array<Sprite>> spriteBoard;
 
 		Vector2i fromTile;
 		Vector2i toTile;
 		bool moveReady;
-}
+};
 
 #endif

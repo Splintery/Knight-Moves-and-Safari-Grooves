@@ -12,3 +12,7 @@ ostream &operator<<(ostream &o, const Player &p) {
     o << "Player: " << p.name << endl;
     return o;
 }
+
+void Player::increaseScore(ButinPieceType type) {
+    score += ButinPiece::getValueFromColor(type);
+}

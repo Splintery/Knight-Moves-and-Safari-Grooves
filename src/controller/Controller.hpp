@@ -10,17 +10,18 @@
 #include "../view/ResourceManager.hpp"
 
 #include "../settings/SETTINGS.hpp"
-
-// #include "../model/*.hpp"
+//#include "../model/Game.hpp"
+//#include "../model/Board.hpp"
+//#include "../model/GameConfig.hpp"
 
 using namespace std;
 
 struct ControllerData {
-	StateMachine machine;
+    StateMachine machine;
 	RenderWindow window;
 	InputManager input;
 	ResourceManager resource;
-	// Game *currentGame = nullptr;
+//    Game<Board, GameConfig> *currentGame = nullptr;
 };
 
 typedef shared_ptr<ControllerData> ControllerDataRef;

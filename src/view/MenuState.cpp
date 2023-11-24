@@ -1,4 +1,5 @@
 #include "MenuState.hpp"
+#include "PlayerState.hpp"
 #include <iostream>
 
 using namespace std;
@@ -49,7 +50,8 @@ void MenuState::handleInput() {
 		if (event.type == Event::Closed) {
 			data -> window.close();
 		} else if (data -> input.isSpriteClicked(butinButton, Mouse::Left, data -> window)) {
-			cout << "pressed buttin" << endl;
+            cout << "pressed buttin" << endl;
+            data -> machine.addState(StateRef(new PlayerState(data)), true);
 		} else if (data -> input.isSpriteClicked(gounkiButton, Mouse::Left, data -> window)) {
 			cout << "pressed gounki" << endl;
 		} else if (data -> input.isSpriteClicked(safariButton, Mouse::Left, data -> window)) {
@@ -65,17 +67,17 @@ void MenuState::draw(float dt) {
 	data -> window.draw(gounkiButton);
 	data -> window.draw(safariButton);
 
-	Vector2f center = data -> machine.getCenter();
+//	Vector2f center = data -> machine.getCenter();
 
-	RectangleShape line = RectangleShape(Vector2f(1080, 1));
-	line.setPosition(center);
-	data -> window.draw(line);
-	line.rotate(90);
-	data -> window.draw(line);
-	line.rotate(90);
-	data -> window.draw(line);
-	line.rotate(90);
-	data -> window.draw(line);
+//	RectangleShape line = RectangleShape(Vector2f(1080, 1));
+//	line.setPosition(center);
+//	data -> window.draw(line);
+//	line.rotate(90);
+//	data -> window.draw(line);
+//	line.rotate(90);
+//	data -> window.draw(line);
+//	line.rotate(90);
+//	data -> window.draw(line);
 
 	data -> window.display();
 }

@@ -5,16 +5,8 @@ Butin::Butin() {
     cout << "Construction of " << *this;
 }
 
-void Butin::start() {
-
-}
-
-void Butin::end() {
-
-}
-
 bool Butin::isGameDone() const{
-    return false;
+    return board->isGameDone();
 }
 
 void Butin::initializeGame(const ButinConfig &bc) {
@@ -26,22 +18,19 @@ void Butin::initializeGame(const ButinConfig &bc) {
 }
 
 void Butin::makeMove(const Vector2i &from, const Vector2i &to) {
-
+    currentPlayer->increaseScore(board->getJumpedPieceType(from, to));
+    board->makeMove(from, to);
 }
 
 const vector<Vector2i> Butin::validMoves(const Vector2i &from) const {
-    return vector<Vector2i>();
-}
-
-void Butin::isValidMove(const Vector2i &from, const Vector2i &to) const {
-
+    return board->validMoves(from);
 }
 
 const string Butin::getCurrentPlayer() const {
     return currentPlayer->name;
 }
 
-const vector<vector<string>> Butin::getBoardState() const {
+const vector<vector<vector<string>>> Butin::getBoardState() const {
     return board->getBoardState();
 }
 

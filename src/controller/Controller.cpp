@@ -1,5 +1,6 @@
 #include "Controller.hpp"
 #include "../view/MenuState.hpp"
+#include "../view/PlayerState.hpp"
 
 Controller::Controller(int width, int height, string title) {
 	data -> window.create(VideoMode(width, height), title);
@@ -38,10 +39,10 @@ void Controller::run() {
 		this -> data -> machine.getActiveState() -> draw(interpolation);
 	}
 }
-// void Controller::setNewGame(Game *newGame) {
-// 	if (data -> currentGame -> isDone()) {
+//void Controller::setNewGame(Game<Board, GameConfig> *newGame) {
+//    if (data -> currentGame -> isGameDone()) {
 // 		data -> currentGame = newGame;
 // 	} else {
 // 		cout << "Game is not finished yet" << endl;
-// 	}
-// }
+//    }
+//}
