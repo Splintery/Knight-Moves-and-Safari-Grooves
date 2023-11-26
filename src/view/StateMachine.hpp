@@ -12,8 +12,8 @@ typedef std::unique_ptr<State> StateRef;
 
 class StateMachine {
 	public:
-		StateMachine() {}
-		virtual ~StateMachine() {}
+		StateMachine() = default;
+		virtual ~StateMachine() = default;
 		void addState(StateRef newState, bool isReplacing = true);
 		void removeState();
 		void processStateChanges();
@@ -24,9 +24,9 @@ class StateMachine {
 		std::stack<StateRef> states;
 		StateRef newState;
 		
-		bool isRemoving;
-		bool isAdding;
-		bool isReplacing;
+		bool isRemoving = false;
+		bool isAdding = false;
+		bool isReplacing = false;
 };
 
 #endif

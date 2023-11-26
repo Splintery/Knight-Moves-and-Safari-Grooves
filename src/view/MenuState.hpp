@@ -7,13 +7,13 @@ using namespace sf;
 
 class MenuState: public State {
 	public:
-		MenuState(ControllerDataRef data);
+		MenuState(Controller *controller);
 		void init();
 		void handleInput();
 		void update(float dt);
 		void draw(float dt);
 	private:
-		ControllerDataRef data;
+		Controller *controller;
 		Clock clock;
 
 		Sprite butinButton;

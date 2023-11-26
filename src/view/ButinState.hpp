@@ -8,13 +8,13 @@ using namespace sf;
 
 class ButinState: public State {
 	public:
-		ButinState(ControllerDataRef data);
+		ButinState(Controller *controller);
 		void init();
 		void handleInput();
 		void update(float dt);
 		void draw(float dt);
 	private:
-		ControllerDataRef data;
+		Controller *controller;
 
 		// array<array<Sprite>> spriteBoard;
 

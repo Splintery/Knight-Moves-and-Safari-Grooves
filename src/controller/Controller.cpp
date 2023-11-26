@@ -1,10 +1,15 @@
+#include <iostream>
 #include "Controller.hpp"
 #include "../view/MenuState.hpp"
-#include "../view/PlayerState.hpp"
 
-Controller::Controller(int width, int height, string title) {
-	data -> window.create(VideoMode(width, height), title);
-	data -> machine.addState(StateRef(new MenuState(data)));
+
+Controller::Controller(int width, int height, const string& title) {
+    cout << "creating window" << endl;
+    machine = new StateMachine();
+    input = new InputManager();
+    resource = new ResourceManager();
+	window = new RenderWindow(VideoMode(width, height), title);
+	machine -> addState(StateRef(new MenuState(this)));
 
 	this -> run();
 }
@@ -16,8 +21,8 @@ void Controller::run() {
 
 	float accumulator = 0.0f;
 
-	while (data -> window.isOpen()) {
-		this -> data -> machine.processStateChanges();
+	while (window -> isOpen()) {
+		machine -> processStateChanges();
 
 		newTime = this -> clock.getElapsedTime().asSeconds();
 		frameTime = newTime - currentTime;
@@ -30,19 +35,19 @@ void Controller::run() {
 		accumulator += frameTime;
 
 		while (accumulator >= dt) {
-			this -> data -> machine.getActiveState() -> handleInput();
-			this -> data -> machine.getActiveState() -> update(dt);
+			machine -> getActiveState() -> handleInput();
+			machine -> getActiveState() -> update(dt);
 			accumulator -= dt;
 		}
 
 		interpolation = accumulator / dt;
-		this -> data -> machine.getActiveState() -> draw(interpolation);
+		machine -> getActiveState() -> draw(interpolation);
 	}
 }
-//void Controller::setNewGame(Game<Board, GameConfig> *newGame) {
-//    if (data -> currentGame -> isGameDone()) {
-// 		data -> currentGame = newGame;
-// 	} else {
-// 		cout << "Game is not finished yet" << endl;
-//    }
-//}
+void Controller::setNewGame(Game<Board, GameConfig> *newGame) {
+    if (currentGame -> isGameDone()) {
+ 		currentGame = newGame;
+ 	} else {
+ 		cout << "Game is not finished yet" << endl;
+    }
+}

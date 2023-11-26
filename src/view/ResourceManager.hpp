@@ -8,8 +8,8 @@ using namespace std;
 
 class ResourceManager {
 	public:
-		ResourceManager() {}
-		virtual ~ResourceManager() {}
+		ResourceManager() = default;
+		virtual ~ResourceManager() = default;
 
 		void loadTexture(string key, string filePath);
 		sf::Texture &getTexture(string key);

@@ -5,13 +5,13 @@
 
 class PlayerState: public State {
     public:
-        PlayerState(ControllerDataRef data);
+        PlayerState(Controller *controller);
 		void init();
 		void handleInput();
 		void update(float dt);
 		void draw(float dt);
     private:
-        ControllerDataRef data;
+        Controller *controller;
         const int nbPlayers;
         vector<string> playerNames;
         Sprite addPlayerName;

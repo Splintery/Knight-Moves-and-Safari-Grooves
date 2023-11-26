@@ -1,19 +1,18 @@
 #include "PlayerState.hpp"
-#include <iostream>
 
-PlayerState::PlayerState(ControllerDataRef data): data{data}, nbPlayers{2} {
+PlayerState::PlayerState(Controller *controller): controller{controller}, nbPlayers{2} {
 //    Do stuff in init
 }
 
 void PlayerState::init() {
-    addPlayerName.setTexture(data -> resource.getTexture("butinLaunch"));
-    Vector2f center = data -> machine.getCenter();
+    addPlayerName.setTexture(controller -> resource -> getTexture("butinLaunch"));
+    Vector2f center = controller -> machine -> getCenter();
 
     addPlayerName.setPosition(
         center.x - TILE_SIZE / 2, center.y + TILE_SIZE * 2
     );
-    data -> resource.loadFont("Courier", "./resources/courier_std_medium.ttf");
-    nameDisplay.setFont(data -> resource.getFont("Courier"));
+    controller -> resource -> loadFont("Courier", "./resources/courier_std_medium.ttf");
+    nameDisplay.setFont(controller -> resource -> getFont("Courier"));
     nameDisplay.setCharacterSize(TEXT_SIZE);
     nameDisplay.setPosition(
         center.x, center.y
@@ -21,12 +20,12 @@ void PlayerState::init() {
 }
 
 void PlayerState::handleInput() {
-    Event event;
+    Event event{};
 
-    while (data -> window.pollEvent(event)) {
+    while (controller -> window -> pollEvent(event)) {
         switch (event.type) {
             case sf::Event::Closed:
-                data -> window.close();
+                controller -> window -> close();
                 break;
             case sf::Event::TextEntered:
                 if (event.text.unicode < 128) {
@@ -40,7 +39,7 @@ void PlayerState::handleInput() {
         if (Keyboard::isKeyPressed(Keyboard::BackSpace)) {
             nameDisplay.setString(nameDisplay.getString().substring(0, nameDisplay.getString().getSize() - 1));
             replaceNameDisplay();
-        } else if (data -> input.isSpriteClicked(addPlayerName, Mouse::Left, data -> window)) {
+        } else if (controller -> input -> isSpriteClicked(addPlayerName, Mouse::Left, *controller -> window)) {
             if ((int) playerNames.size() < nbPlayers) {
                 playerNames.push_back(nameDisplay.getString());
                 nameDisplay.setString("");
@@ -50,7 +49,7 @@ void PlayerState::handleInput() {
     }
 }
 void PlayerState::replaceNameDisplay() {
-    Vector2f center = data -> machine.getCenter();
+    Vector2f center = controller -> machine -> getCenter();
 
     float offset = nameDisplay.getGlobalBounds().width;
 
@@ -65,20 +64,20 @@ void PlayerState::update(float dt) {
 }
 
 void PlayerState::draw(float dt) {
-    data -> window.clear();
-    data -> window.draw(addPlayerName);
-    data -> window.draw(nameDisplay);
-    Vector2f center = data -> machine.getCenter();
+    controller -> window -> clear();
+    controller -> window -> draw(addPlayerName);
+    controller -> window -> draw(nameDisplay);
+    Vector2f center = controller -> machine -> getCenter();
 
 	RectangleShape line = RectangleShape(Vector2f(1080, 1));
 	line.setPosition(center);
-	data -> window.draw(line);
+	controller -> window -> draw(line);
 	line.rotate(90);
-	data -> window.draw(line);
+	controller -> window -> draw(line);
 	line.rotate(90);
-	data -> window.draw(line);
+	controller -> window -> draw(line);
 	line.rotate(90);
-	data -> window.draw(line);
+	controller -> window -> draw(line);
 
-    data -> window.display();
+    controller -> window -> display();
 }

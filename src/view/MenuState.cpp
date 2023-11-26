@@ -4,22 +4,22 @@
 
 using namespace std;
 
-MenuState::MenuState(ControllerDataRef data): data{data} {
+MenuState::MenuState(Controller *controller): controller{controller} {
 	// do stuff in init rather then here
 }
 
 void MenuState::init() {
 	cout << "creating MenuState" << endl;
 
-	data -> resource.loadTexture("butinLaunch", "./resources/ButinLaunchButton.png");
-	data -> resource.loadTexture("gounkiLaunch", "./resources/GounkiLaunchButton.png");
-	data -> resource.loadTexture("safariLaunch", "./resources/SafariLaunchButton.png");
+	controller -> resource -> loadTexture("butinLaunch", "./resources/ButinLaunchButton.png");
+	controller -> resource -> loadTexture("gounkiLaunch", "./resources/GounkiLaunchButton.png");
+	controller -> resource -> loadTexture("safariLaunch", "./resources/SafariLaunchButton.png");
 
-	Vector2f center = data -> machine.getCenter();
+	Vector2f center = controller -> machine -> getCenter();
 
-	butinButton.setTexture(data -> resource.getTexture("butinLaunch"));
-	gounkiButton.setTexture(data -> resource.getTexture("gounkiLaunch"));
-	safariButton.setTexture(data -> resource.getTexture("safariLaunch"));
+	butinButton.setTexture(controller -> resource -> getTexture("butinLaunch"));
+	gounkiButton.setTexture(controller -> resource -> getTexture("gounkiLaunch"));
+	safariButton.setTexture(controller -> resource -> getTexture("safariLaunch"));
 
 	gounkiButton.setPosition(
 		center.x - TILE_SIZE, center.y - TILE_SIZE / 2
@@ -46,40 +46,40 @@ void MenuState::init() {
 void MenuState::handleInput() {
 	Event event;
 
-	while (data -> window.pollEvent(event)) {
+	while (controller -> window -> pollEvent(event)) {
 		if (event.type == Event::Closed) {
-			data -> window.close();
-		} else if (data -> input.isSpriteClicked(butinButton, Mouse::Left, data -> window)) {
+			controller -> window -> close();
+		} else if (controller -> input -> isSpriteClicked(butinButton, Mouse::Left, *controller -> window)) {
             cout << "pressed buttin" << endl;
-            data -> machine.addState(StateRef(new PlayerState(data)), true);
-		} else if (data -> input.isSpriteClicked(gounkiButton, Mouse::Left, data -> window)) {
+            controller -> machine -> addState(StateRef(new PlayerState(controller)), true);
+		} else if (controller -> input -> isSpriteClicked(gounkiButton, Mouse::Left, *controller -> window)) {
 			cout << "pressed gounki" << endl;
-		} else if (data -> input.isSpriteClicked(safariButton, Mouse::Left, data -> window)) {
+		} else if (controller -> input -> isSpriteClicked(safariButton, Mouse::Left, *controller -> window)) {
 			cout << "pressed safari" << endl;
 		}
 	}
 }
 
 void MenuState::draw(float dt) {
-	data -> window.clear();
+	controller -> window -> clear();
 
-	data -> window.draw(butinButton);
-	data -> window.draw(gounkiButton);
-	data -> window.draw(safariButton);
+	controller -> window -> draw(butinButton);
+	controller -> window -> draw(gounkiButton);
+	controller -> window -> draw(safariButton);
 
-//	Vector2f center = data -> machine.getCenter();
+//	Vector2f center = controller -> machine -> getCenter();
 
 //	RectangleShape line = RectangleShape(Vector2f(1080, 1));
 //	line.setPosition(center);
-//	data -> window.draw(line);
+//	controller -> window -> draw(line);
 //	line.rotate(90);
-//	data -> window.draw(line);
+//	controller -> window -> draw(line);
 //	line.rotate(90);
-//	data -> window.draw(line);
+//	controller -> window -> draw(line);
 //	line.rotate(90);
-//	data -> window.draw(line);
+//	controller -> window -> draw(line);
 
-	data -> window.display();
+	controller -> window -> display();
 }
 
 void MenuState::update(float dt) {
