@@ -16,6 +16,7 @@ class PlayerState: public State {
         vector<string> playerNames;
         Sprite addPlayerName;
         Text nameDisplay;
+        void replaceNameDisplay();
 };
 
 #endif
