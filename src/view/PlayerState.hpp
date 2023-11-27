@@ -15,8 +15,8 @@ class PlayerState: public State {
         const int nbPlayers;
         vector<string> playerNames;
         Sprite addPlayerName;
-        Text nameDisplay;
-        void replaceNameDisplay();
+        vector<Text> playerDisplayNames;
+        void repositionNameDisplay();
 };
 
 #endif

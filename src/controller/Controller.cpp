@@ -8,7 +8,7 @@ Controller::Controller(int width, int height, const string& title) {
     machine = new StateMachine();
     input = new InputManager();
     resource = new ResourceManager();
-	window = new RenderWindow(VideoMode(width, height), title);
+	window = new RenderWindow(VideoMode(width, height), title, Style::Fullscreen);
 	machine -> addState(StateRef(new MenuState(this)));
 
 	this -> run();
@@ -44,10 +44,10 @@ void Controller::run() {
 		machine -> getActiveState() -> draw(interpolation);
 	}
 }
-void Controller::setNewGame(Game<Board, GameConfig> *newGame) {
-    if (currentGame -> isGameDone()) {
- 		currentGame = newGame;
- 	} else {
- 		cout << "Game is not finished yet" << endl;
-    }
-}
+//void Controller::setNewGame(Game<Board, GameConfig> *newGame) {
+//    if (currentGame -> isGameDone()) {
+// 		currentGame = newGame;
+// 	} else {
+// 		cout << "Game is not finished yet" << endl;
+//    }
+//}

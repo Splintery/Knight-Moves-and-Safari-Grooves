@@ -16,6 +16,7 @@ class MenuState: public State {
 		Controller *controller;
 		Clock clock;
 
+        Text gameTitle;
 		Sprite butinButton;
 		Sprite gounkiButton;
 		Sprite safariButton;

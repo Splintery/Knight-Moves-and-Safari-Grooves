@@ -9,17 +9,23 @@ MenuState::MenuState(Controller *controller): controller{controller} {
 }
 
 void MenuState::init() {
-	cout << "creating MenuState" << endl;
-
 	controller -> resource -> loadTexture("butinLaunch", "./resources/ButinLaunchButton.png");
 	controller -> resource -> loadTexture("gounkiLaunch", "./resources/GounkiLaunchButton.png");
 	controller -> resource -> loadTexture("safariLaunch", "./resources/SafariLaunchButton.png");
+    controller -> resource -> loadTexture("background", "./resources/TmpBackground.png");
+    controller -> resource -> loadFont("pixel", "./resources/Minecraft.ttf");
 
-	Vector2f center = controller -> machine -> getCenter();
-
-	butinButton.setTexture(controller -> resource -> getTexture("butinLaunch"));
+    butinButton.setTexture(controller -> resource -> getTexture("butinLaunch"));
 	gounkiButton.setTexture(controller -> resource -> getTexture("gounkiLaunch"));
 	safariButton.setTexture(controller -> resource -> getTexture("safariLaunch"));
+    background.setTexture(controller -> resource -> getTexture("background"));
+    gameTitle.setFont(controller -> resource -> getFont("pixel"));
+
+    gameTitle.setString("Knight Moves and Safari Grooves");
+    gameTitle.setCharacterSize(TITLE_SIZE);
+    gameTitle.setFillColor(Color::Black);
+
+    Vector2f center = controller -> machine -> getCenter();
 
 	gounkiButton.setPosition(
 		center.x - TILE_SIZE, center.y - TILE_SIZE / 2
@@ -30,18 +36,11 @@ void MenuState::init() {
 	safariButton.setPosition(
 		center.x + TILE_SIZE * 2, center.y - TILE_SIZE / 2
 	);
+    background.setPosition(0, 0);
+    gameTitle.setPosition(
+        center.x - gameTitle.getGlobalBounds().width / 2, TILE_SIZE * 6
+    );
 }
-
-// {
-// 	if (Keyboard::isKeyPressed(Keyboard::Right))
-// 		testButton.move(1, 0);
-// 	if (Keyboard::isKeyPressed(Keyboard::Left))
-// 		testButton.move(-1, 0);
-// 	 if (Keyboard::isKeyPressed(Keyboard::Up))
-// 		testButton.move(0, -1);
-// 	if (Keyboard::isKeyPressed(Keyboard::Down))
-// 		testButton.move(0, 1);
-// }
 
 void MenuState::handleInput() {
 	Event event;
@@ -62,22 +61,12 @@ void MenuState::handleInput() {
 
 void MenuState::draw(float dt) {
 	controller -> window -> clear();
+    controller -> window -> draw(background);
+    controller -> window -> draw(gameTitle);
 
 	controller -> window -> draw(butinButton);
 	controller -> window -> draw(gounkiButton);
 	controller -> window -> draw(safariButton);
-
-//	Vector2f center = controller -> machine -> getCenter();
-
-//	RectangleShape line = RectangleShape(Vector2f(1080, 1));
-//	line.setPosition(center);
-//	controller -> window -> draw(line);
-//	line.rotate(90);
-//	controller -> window -> draw(line);
-//	line.rotate(90);
-//	controller -> window -> draw(line);
-//	line.rotate(90);
-//	controller -> window -> draw(line);
 
 	controller -> window -> display();
 }
