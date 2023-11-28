@@ -4,6 +4,9 @@ VIEW_CPP=src/view/InputManager.hpp src/view/StateMachine.hpp src/view/ResourceMa
 
 all: test clean
 
+Utilities.o: src/utilities/Utilities.cpp src/utilities/Utilities.hpp
+	$(GCC) -c src/utilities/Utilities.cpp
+
 InputManager.o: src/view/InputManager.cpp src/view/InputManager.hpp
 	$(GCC) -c src/view/InputManager.cpp $(SFML_FLAGS)
 
@@ -25,7 +28,7 @@ Controller.o: src/controller/Controller.cpp src/controller/Controller.hpp $(VIEW
 Butin.o: src/model/Butin.cpp src/model/Butin.hpp src/model/Game.hpp src/model/Player.hpp src/model/Board.hpp src/model/Piece.hpp src/model/ButinBoard.hpp
 	$(GCC) -c src/model/Butin.cpp
 
-ButinBoard.o: src/model/ButinBoard.cpp src/model/ButinBoard.hpp src/model/ButinPiece.hpp src/model/Piece.hpp src/utilities/Utilities.hpp src/model/Board.hpp
+ButinBoard.o: src/model/ButinBoard.cpp src/model/ButinBoard.hpp src/model/Board.hpp src/model/Piece.hpp
 	$(GCC) -c src/model/ButinBoard.cpp
 
 ButinPiece.o: src/model/ButinPiece.cpp src/model/ButinPiece.hpp src/model/Piece.hpp
@@ -34,8 +37,8 @@ ButinPiece.o: src/model/ButinPiece.cpp src/model/ButinPiece.hpp src/model/Piece.
 Player.o: src/model/Player.cpp src/model/Player.hpp
 	$(GCC) -c src/model/Player.cpp
 
-test: src/main.cpp Controller.o MenuState.o PlayerState.o StateMachine.o InputManager.o ResourceManager.o Player.o ButinPiece.o ButinBoard.o Butin.o src/settings/SETTINGS.hpp
-	$(GCC) src/main.cpp Controller.o MenuState.o PlayerState.o StateMachine.o InputManager.o ResourceManager.o Butin.o Player.o ButinPiece.o ButinBoard.o -o Tesssttt $(SFML_FLAGS)
+test: src/main.cpp Controller.o MenuState.o PlayerState.o StateMachine.o InputManager.o ResourceManager.o Player.o ButinPiece.o ButinBoard.o Butin.o Utilities.o src/settings/SETTINGS.hpp
+	$(GCC) src/main.cpp Controller.o MenuState.o PlayerState.o StateMachine.o InputManager.o ResourceManager.o Butin.o Player.o ButinPiece.o ButinBoard.o Utilities.o -o Tesssttt $(SFML_FLAGS)
 
 clean:
 	$(info Cleaning the scene...)

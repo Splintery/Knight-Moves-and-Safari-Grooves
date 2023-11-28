@@ -5,7 +5,6 @@
 #include <SFML/System/Vector2.hpp>
 using namespace sf;
 
-template<typename PieceType>
 class Board {
 public:
     virtual bool isGameDone() const = 0;
@@ -13,7 +12,7 @@ public:
     virtual void makeMove(const Vector2i& from, const Vector2i& to) = 0;
     virtual const vector<Vector2i> validMoves(const Vector2i& from) const = 0;
 protected:
-    vector<vector<PieceType*>> board;
+    vector<vector<Piece*>> board;
 };
 
 #endif

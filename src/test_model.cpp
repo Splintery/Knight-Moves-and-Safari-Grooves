@@ -9,7 +9,7 @@ void printMoves(const vector<Vector2i>& moves) {
 }
 
 int main(void){
-    Butin *butin = new Butin();
+    Game *butin = new Butin();
     vector<vector<vector<string>>> tmp = butin->getBoardState();
     vector<string> names;
     names.push_back("lucas");
@@ -25,7 +25,7 @@ int main(void){
     cout << butin->isGameDone() << endl;
     butin->initializeGame(t);
     cout << butin->isGameDone() << endl;
-    butin->makeMove(Vector2i {2, 2}, Vector2i {1, 2});
+    butin->makeMove(Vector2i {1, 0}, Vector2i {1, 2});
     UtilityFunctions::printBoard(butin->getBoardState());
 
     Vector2i from;

@@ -1,6 +1,6 @@
 #include "Utilities.hpp"
 
-const string Utilities::getButinPieceString(ButinPieceType type) {
+const string UtilityFunctions::getButinPieceString(ButinPieceType type) {
     switch (type) {
         case ButinPieceType::Red: return "../resources/RedButinSprite.png";
         case ButinPieceType::Yellow: return "../resources/YellowButinSprite.png";
@@ -10,7 +10,7 @@ const string Utilities::getButinPieceString(ButinPieceType type) {
     }
 }
 
-const string Utilities::getSafariPieceString(SafariPieceType type) {
+const string UtilityFunctions::getSafariPieceString(SafariPieceType type) {
     switch (type) {
         case SafariPieceType::Elephant: return "";
         case SafariPieceType::Rhinoceros: return "";
@@ -21,7 +21,7 @@ const string Utilities::getSafariPieceString(SafariPieceType type) {
     }
 }
 
-const string Utilities::getGounkiPieceString(GounkiPieceType type) {
+const string UtilityFunctions::getGounkiPieceString(GounkiPieceType type) {
     switch (type) {
         case GounkiPieceType::BlackSquare: return "";
         case GounkiPieceType::BlackCircle: return "";
@@ -32,7 +32,7 @@ const string Utilities::getGounkiPieceString(GounkiPieceType type) {
     }
 }
 
-void Utilities::printBoard(const std::vector<std::vector<std::vector<std::string>>> &board) {
+void UtilityFunctions::printBoard(const std::vector<std::vector<std::vector<std::string>>> &board) {
     if (board.empty()) return; // Handle empty board
 
     // Find the maximum length in each row

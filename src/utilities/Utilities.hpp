@@ -1,4 +1,3 @@
-#pragma once
 #ifndef UTILITIES_HPP
 #define UTILITIES_HPP
 
@@ -30,17 +29,15 @@ enum class GounkiPieceType {
     EmptyGounki
 };
 
-#define TMP 99
+namespace UtilityFunctions {
 
-class Utilities {
+    const string getButinPieceString(ButinPieceType type);
 
-    const static string getButinPieceString(ButinPieceType type);
+    const string getSafariPieceString(SafariPieceType type);
 
-    const static string getSafariPieceString(SafariPieceType type);
+    const string getGounkiPieceString(GounkiPieceType type);
 
-    const static string getGounkiPieceString(GounkiPieceType type);
-
-    void static printBoard(const std::vector<std::vector<std::vector<std::string>>>& board);
-};
+    void printBoard(const std::vector<std::vector<std::vector<std::string>>>& board);
+}
 
 #endif

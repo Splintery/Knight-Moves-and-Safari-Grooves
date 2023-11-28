@@ -5,7 +5,7 @@
 #include "ButinBoard.hpp"
 #include "ButinConfig.hpp"
 
-class Butin : public Game<ButinBoard, ButinConfig> {
+class Butin : public Game {
 private:
     virtual ~Butin();
 public:
@@ -14,7 +14,7 @@ public:
 
     // TODO END GAME AJOUTER LES POINTS RESTANTS DU PLATEAU
     virtual bool isGameDone() const;
-    virtual void initializeGame(const ButinConfig &);
+    virtual void initializeGame(const GameConfig &);
     virtual void makeMove(const Vector2i& from, const Vector2i& to);
     virtual const vector<Vector2i> validMoves(const Vector2i& from) const;
     virtual const vector<vector<vector<string>>> getBoardState() const;

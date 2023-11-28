@@ -14,7 +14,7 @@
 
 #define BOARD_SIZE 8
 
-class ButinBoard : public Board<ButinPiece> {
+class ButinBoard : public Board {
 private:
     void generateDefaultBoard();
     bool isWithinBounds(Vector2i pos) const;
