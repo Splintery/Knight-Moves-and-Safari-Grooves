@@ -8,7 +8,7 @@ Controller::Controller(int width, int height, const string& title) {
     machine = new StateMachine();
     input = new InputManager();
     resource = new ResourceManager();
-	window = new RenderWindow(VideoMode(width, height), title, Style::Fullscreen);
+	window = new RenderWindow(VideoMode(width, height), title);
 	machine -> addState(StateRef(new MenuState(this)));
 
 	this -> run();

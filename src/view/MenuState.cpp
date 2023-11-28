@@ -8,12 +8,49 @@ MenuState::MenuState(Controller *controller): controller{controller} {
 	// do stuff in init rather then here
 }
 
+void MenuState::buttonFactory() {
+    Sprite buttonFrameSprite = Sprite();
+    Texture frameButton = Texture();
+    frameButton.loadFromFile("./resources/ButtonParts/ButtonFrame.png");
+    buttonFrameSprite.setTexture(frameButton);
+    rd.draw(buttonFrameSprite);
+    Text butinText;
+    butinText.setFont(controller -> resource -> getFont("pixel"));
+    butinText.setString("Safari");
+    butinText.setStyle(Text::Bold);
+    butinText.setCharacterSize(TEXT_SIZE);
+    butinText.setFillColor(Color::Black);
+    buttonFrameSprite.setPosition(0, 0);
+    butinText.setPosition(
+        buttonFrameSprite.getGlobalBounds().width / 2 - butinText.getGlobalBounds().width / 2,
+        buttonFrameSprite.getGlobalBounds().height / 2 - butinText.getGlobalBounds().height / 2 - 10
+    );
+
+    Image purpleBg;
+    purpleBg.create(240, 120, Color(143, 86, 59));
+    Texture bg;
+    bg.loadFromImage(purpleBg);
+    Sprite bgSprite;
+    bgSprite.setTexture(bg);
+    bgSprite.setPosition(0, 0);
+
+    rd.create(240, 120);
+    rd.clear();
+    rd.draw(bgSprite);
+    rd.draw(buttonFrameSprite);
+    rd.draw(butinText);
+    rd.display();
+//    rd.getTexture().copyToImage().saveToFile("resources/SafariButton.png");
+}
+
 void MenuState::init() {
-	controller -> resource -> loadTexture("butinLaunch", "./resources/ButinLaunchButton.png");
-	controller -> resource -> loadTexture("gounkiLaunch", "./resources/GounkiLaunchButton.png");
-	controller -> resource -> loadTexture("safariLaunch", "./resources/SafariLaunchButton.png");
-    controller -> resource -> loadTexture("background", "./resources/TmpBackground.png");
+	controller -> resource -> loadTexture("butinLaunch", "./resources/ButinButton.png");
     controller -> resource -> loadFont("pixel", "./resources/Minecraft.ttf");
+//    buttonFactory();
+
+	controller -> resource -> loadTexture("gounkiLaunch", "./resources/GounkiButton.png");
+	controller -> resource -> loadTexture("safariLaunch", "./resources/SafariButton.png");
+    controller -> resource -> loadTexture("background", "./resources/Background.png");
 
     butinButton.setTexture(controller -> resource -> getTexture("butinLaunch"));
 	gounkiButton.setTexture(controller -> resource -> getTexture("gounkiLaunch"));
@@ -28,13 +65,13 @@ void MenuState::init() {
     Vector2f center = controller -> machine -> getCenter();
 
 	gounkiButton.setPosition(
-		center.x - TILE_SIZE, center.y - TILE_SIZE / 2
+		center.x - gounkiButton.getGlobalBounds().width / 2, center.y - TILE_SIZE / 2
 	);
 	butinButton.setPosition(
-		center.x - TILE_SIZE * 4, center.y - TILE_SIZE / 2
+		center.x - butinButton.getGlobalBounds().width * 1.5 - TILE_SIZE, center.y - TILE_SIZE / 2
 	);
 	safariButton.setPosition(
-		center.x + TILE_SIZE * 2, center.y - TILE_SIZE / 2
+		center.x + safariButton.getGlobalBounds().width / 2 + TILE_SIZE, center.y - TILE_SIZE / 2
 	);
     background.setPosition(0, 0);
     gameTitle.setPosition(
@@ -67,6 +104,11 @@ void MenuState::draw(float dt) {
 	controller -> window -> draw(butinButton);
 	controller -> window -> draw(gounkiButton);
 	controller -> window -> draw(safariButton);
+
+    Sprite tmp;
+    tmp.setTexture(rd.getTexture());
+    tmp.setPosition(250, 250);
+    controller -> window -> draw(tmp);
 
 	controller -> window -> display();
 }

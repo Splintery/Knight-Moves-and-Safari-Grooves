@@ -7,15 +7,23 @@ PlayerState::PlayerState(Controller *controller): controller{controller}, nbPlay
 }
 
 void PlayerState::init() {
+    title.setFont(controller -> resource -> getFont("pixel"));
     playerDisplayNames[0].setFont(controller -> resource -> getFont("pixel"));
     background.setTexture(controller -> resource -> getTexture("background"));
-    addPlayerName.setTexture(controller -> resource -> getTexture("butinLaunch"));
+    addPlayerNameButton.setTexture(controller -> resource -> getTexture("butinLaunch"));
 
     Vector2f center = controller -> machine -> getCenter();
 
     background.setPosition(0, 0);
-    addPlayerName.setPosition(
-        center.x - addPlayerName.getGlobalBounds().width / 2, center.y + addPlayerName.getGlobalBounds().height * 2
+    addPlayerNameButton.setPosition(
+        center.x - addPlayerNameButton.getGlobalBounds().width / 2, center.y + addPlayerNameButton.getGlobalBounds().height * 2
+    );
+
+    title.setCharacterSize(TITLE_SIZE);
+    title.setFillColor(Color::Black);
+    title.setString("Enter the names of the 2 players");
+    title.setPosition(
+        center.x - title.getGlobalBounds().width / 2, center.y - TILE_SIZE * 5
     );
 
     playerDisplayNames[0].setCharacterSize(TEXT_SIZE);
@@ -32,7 +40,7 @@ void PlayerState::handleInput() {
                 controller -> window -> close();
                 break;
             case sf::Event::TextEntered:
-                if (event.text.unicode < 128 && event.text.unicode != 8) {
+                if (event.text.unicode < 128 && event.text.unicode != 8 && event.text.unicode != 13) {
                     playerDisplayNames[0].setString(
                         playerDisplayNames[0].getString() + (char)event.text.unicode
                     );
@@ -45,20 +53,13 @@ void PlayerState::handleInput() {
                         playerDisplayNames[0].getString().substring(0, playerDisplayNames[0].getString().getSize() - 1)
                     );
                     repositionNameDisplay();
+                } else if (Keyboard::isKeyPressed(Keyboard::Enter)) {
+                    saveName();
                 }
                 break;
             case sf::Event::MouseButtonPressed:
-                if (controller -> input -> isSpriteClicked(addPlayerName, Mouse::Left, *controller -> window)) {
-                    if ((int) playerNames.size() < nbPlayers) {
-                        playerNames.push_back(playerDisplayNames[playerDisplayNames.size() - 1].getString());
-
-                        playerDisplayNames.insert(playerDisplayNames.begin(), Text());
-                        playerDisplayNames[0].setFont(controller -> resource -> getFont("pixel"));
-                        playerDisplayNames[0].setCharacterSize(TEXT_SIZE);
-                        playerDisplayNames[0].setFillColor(Color::Black);
-                        playerDisplayNames[0].setString("");
-                        repositionNameDisplay();
-                    }
+                if (controller -> input -> isSpriteClicked(addPlayerNameButton, Mouse::Left, *controller -> window)) {
+                    saveName();
                 }
 
             default:
@@ -66,6 +67,18 @@ void PlayerState::handleInput() {
         }
     }
 }
+void PlayerState::saveName() {
+    if ((int) playerNames.size() < nbPlayers && playerDisplayNames[0].getString().getSize() > 0) {
+        playerNames.push_back(playerDisplayNames[playerDisplayNames.size() - 1].getString());
+        playerDisplayNames.insert(playerDisplayNames.begin(), Text());
+        playerDisplayNames[0].setFont(controller -> resource -> getFont("pixel"));
+        playerDisplayNames[0].setCharacterSize(TEXT_SIZE);
+        playerDisplayNames[0].setFillColor(Color::Black);
+        playerDisplayNames[0].setString("");
+        repositionNameDisplay();
+    }
+}
+
 void PlayerState::repositionNameDisplay() {
     Vector2f center = controller -> machine -> getCenter();
 
@@ -84,10 +97,10 @@ void PlayerState::draw(float dt) {
     controller -> window -> clear();
 
     controller -> window -> draw(background);
-    controller -> window -> draw(addPlayerName);
+    controller -> window -> draw(title);
+    controller -> window -> draw(addPlayerNameButton);
     for (Text t : playerDisplayNames) {
         controller -> window -> draw(t);
     }
-
     controller -> window -> display();
 }

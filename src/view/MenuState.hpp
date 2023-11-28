@@ -20,6 +20,9 @@ class MenuState: public State {
 		Sprite butinButton;
 		Sprite gounkiButton;
 		Sprite safariButton;
+
+        RenderTexture rd;
+        void buttonFactory();
 };
 
 #endif

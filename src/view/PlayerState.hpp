@@ -14,9 +14,11 @@ class PlayerState: public State {
         Controller *controller;
         const int nbPlayers;
         vector<string> playerNames;
-        Sprite addPlayerName;
+        Sprite addPlayerNameButton;
+        Text title;
         vector<Text> playerDisplayNames;
         void repositionNameDisplay();
+        void saveName();
 };
 
 #endif
