@@ -2,10 +2,10 @@
 
 const string UtilityFunctions::getButinPieceString(ButinPieceType type) {
     switch (type) {
-        case ButinPieceType::Red: return "../resources/RedButinSprite.png";
-        case ButinPieceType::Yellow: return "../resources/YellowButinSprite.png";
-        case ButinPieceType::Black: return "../resources/BlackButinSprite.png";
-        case ButinPieceType::EmptyButin: return "../resources/EmptyButinSprite.png";
+        case ButinPieceType::Red: return "redPiece";
+        case ButinPieceType::Yellow: return "yellowPiece";
+        case ButinPieceType::Black: return "blackPiece";
+        case ButinPieceType::EmptyButin: return "";
         default: return "";
     }
 }

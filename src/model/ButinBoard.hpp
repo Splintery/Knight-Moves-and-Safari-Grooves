@@ -12,8 +12,6 @@
 #include "Board.hpp"
 #include "../settings/SETTINGS.hpp"
 
-#define BOARD_SIZE 8
-
 class ButinBoard : public Board {
 private:
     void generateDefaultBoard();

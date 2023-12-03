@@ -5,7 +5,7 @@
 
 class ButinConfig : public GameConfig {
 public:
-    ButinConfig(const vector<string> names, const vector<Vector2i> deleted_pieces);
+    ButinConfig(const vector<Vector2i> deleted_pieces);
     ButinConfig(const ButinConfig&);
     virtual ~ButinConfig();
     const vector<Vector2i> deleted_pieces;

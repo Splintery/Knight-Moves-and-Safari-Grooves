@@ -1,21 +1,26 @@
 #include "Butin.hpp"
 
 Butin::Butin() {
+    gameStarted = false;
     board = new ButinBoard();
     cout << "Construction of " << *this;
 }
-
+bool Butin::hasGameStarted() const {
+    return gameStarted;
+}
 bool Butin::isGameDone() const{
     return board->isGameDone();
 }
-
-void Butin::initializeGame(const GameConfig &gc) {
-    ButinConfig &bc = (ButinConfig &) gc;
-    for (string s : bc.names){
+void Butin::initPlayers(vector<std::string> playerNames) {
+    for (const string& s : playerNames){
         player_list.push_back(new Player(s));
     }
     currentPlayer = *player_list.begin();
+}
+void Butin::initializeGame(const GameConfig &gc) {
+    ButinConfig &bc = (ButinConfig &) gc;
     ((ButinBoard *) board)->initializeGame(bc.deleted_pieces);
+    gameStarted = true;
 }
 
 void Butin::makeMove(const Vector2i &from, const Vector2i &to) {
@@ -33,6 +38,11 @@ const string Butin::getCurrentPlayer() const {
 
 const vector<vector<vector<string>>> Butin::getBoardState() const {
     return board->getBoardState();
+}
+
+const pair<int, int> Butin::getMinMaxPlayers() const {
+    const pair<int, int> res(2, 2);
+    return res;
 }
 
 Butin::~Butin() {

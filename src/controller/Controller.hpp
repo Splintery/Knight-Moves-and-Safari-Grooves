@@ -10,8 +10,9 @@
 
 #include "../settings/SETTINGS.hpp"
 #include "../model/Game.hpp"
+#include "../model/Butin.hpp"
 //#include "../model/Board.hpp"
-//#include "../model/GameConfig.hpp"
+#include "../model/GameConfig.hpp"
 //#include "../utilities/Utilities.hpp"
 
 
@@ -24,12 +25,21 @@ class Controller {
         RenderWindow *window;
         InputManager *input;
         ResourceManager *resource;
+        Game *game;
 
+        void setNewGame(Game *, string name);
+        bool canStartNewGame() const;
+        string getGameName() const;
+        void setPlayerNames(vector<string> newNames);
 	private:
-		const float dt = 1.0f / FPS;
+        // 100000.0 représente 1 seconde en micro seconde
+        const float timePerUpdate = 1000000.0 / UPS;
+        const float timePerFrame = 1000000.0 / FPS;
 		Clock clock;
 
+        string gameName = "";
+        vector<string> playerNames;
+        void loadTextures() const;
         void run();
-//		 void setNewGame(Game *newGame);
 };
 #endif

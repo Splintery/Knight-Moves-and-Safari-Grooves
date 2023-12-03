@@ -45,7 +45,7 @@ ButinPiece::~ButinPiece() {
 }
 
 ostream &operator<<(ostream &o, const ButinPiece &bp) {
-    o << "Piece: Butin" << endl << "\t Value: " << bp.value << endl;
+    o << "piece: Butin" << endl << "\t Value: " << bp.value << endl;
     return o;
 }
 

@@ -6,18 +6,22 @@
 class PlayerState: public State {
     public:
         PlayerState(Controller *controller);
+        virtual ~PlayerState();
 		void init();
 		void handleInput();
-		void update(float dt);
-		void draw(float dt);
+		void update();
+		void draw();
     private:
         Controller *controller;
-        const int nbPlayers;
+        const int minPlayers;
+        const int maxPlayers;
         vector<string> playerNames;
-        Sprite addPlayerNameButton;
+        Sprite addPlayerButton;
+        Sprite startButton;
         Text title;
         vector<Text> playerDisplayNames;
         void repositionNameDisplay();
+        void goToGameState();
         void saveName();
 };
 

@@ -8,10 +8,11 @@ using namespace sf;
 class MenuState: public State {
 	public:
 		MenuState(Controller *controller);
+        virtual ~MenuState();
 		void init();
 		void handleInput();
-		void update(float dt);
-		void draw(float dt);
+		void update();
+		void draw();
 	private:
 		Controller *controller;
 		Clock clock;

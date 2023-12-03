@@ -1,22 +1,31 @@
 #include <iostream>
 #include "PlayerState.hpp"
+#include "ButinState.hpp"
 
-PlayerState::PlayerState(Controller *controller): controller{controller}, nbPlayers{2} {
+PlayerState::PlayerState(Controller *controller): controller{controller}, minPlayers{controller -> game -> getMinMaxPlayers().first}, maxPlayers{controller -> game -> getMinMaxPlayers().second} {
     playerDisplayNames.insert(playerDisplayNames.begin(), Text());
     //Do stuff in init
+
+}
+PlayerState::~PlayerState() {
+    cout << "Destroying PlayerState !!!!!" << endl;
 }
 
 void PlayerState::init() {
     title.setFont(controller -> resource -> getFont("pixel"));
     playerDisplayNames[0].setFont(controller -> resource -> getFont("pixel"));
     background.setTexture(controller -> resource -> getTexture("background"));
-    addPlayerNameButton.setTexture(controller -> resource -> getTexture("butinLaunch"));
+    addPlayerButton.setTexture(controller -> resource -> getTexture("enabledAddButton"));
+    startButton.setTexture(controller -> resource ->getTexture("disabledStartButton"));
 
     Vector2f center = controller -> machine -> getCenter();
 
     background.setPosition(0, 0);
-    addPlayerNameButton.setPosition(
-        center.x - addPlayerNameButton.getGlobalBounds().width / 2, center.y + addPlayerNameButton.getGlobalBounds().height * 2
+    addPlayerButton.setPosition(
+            center.x - addPlayerButton.getGlobalBounds().width * 1.5, center.y + addPlayerButton.getGlobalBounds().height * 2
+    );
+    startButton.setPosition(
+        center.x + startButton.getGlobalBounds().width * 0.5, center.y + startButton.getGlobalBounds().height * 2
     );
 
     title.setCharacterSize(TITLE_SIZE);
@@ -40,12 +49,15 @@ void PlayerState::handleInput() {
                 controller -> window -> close();
                 break;
             case sf::Event::TextEntered:
-                if (event.text.unicode < 128 && event.text.unicode != 8 && event.text.unicode != 13) {
-                    playerDisplayNames[0].setString(
-                        playerDisplayNames[0].getString() + (char)event.text.unicode
-                    );
-                    repositionNameDisplay();
+                if ((int) playerNames.size() < maxPlayers) {
+                    if (event.text.unicode < 128 && event.text.unicode != 8 && event.text.unicode != 13) {
+                        playerDisplayNames[0].setString(
+                                playerDisplayNames[0].getString() + (char)event.text.unicode
+                        );
+                        repositionNameDisplay();
+                    }
                 }
+
                 break;
             case sf::Event::KeyPressed:
                 if (Keyboard::isKeyPressed(Keyboard::BackSpace)) {
@@ -54,28 +66,53 @@ void PlayerState::handleInput() {
                     );
                     repositionNameDisplay();
                 } else if (Keyboard::isKeyPressed(Keyboard::Enter)) {
-                    saveName();
+                    if ((int) playerNames.size() == maxPlayers) {
+                        goToGameState();
+                    } else {
+                        saveName();
+                    }
                 }
                 break;
             case sf::Event::MouseButtonPressed:
-                if (controller -> input -> isSpriteClicked(addPlayerNameButton, Mouse::Left, *controller -> window)) {
+                if (controller -> input -> isSpriteClicked(addPlayerButton, Mouse::Left, *controller -> window)) {
                     saveName();
+                } else if (controller -> input -> isSpriteClicked(startButton, Mouse::Left, *controller -> window)) {
+                    if ((int) playerNames.size() >= minPlayers) {
+                        goToGameState();
+                    }
                 }
-
             default:
                 break;
         }
     }
 }
+void PlayerState::goToGameState() {
+    string gameToLaunch = controller -> getGameName();
+    controller -> game -> initPlayers(playerNames);
+    if (gameToLaunch == "butin") {
+        controller -> machine -> addState(new ButinState(controller), true);
+    } else if (gameToLaunch == "gounki") {
+        // TODO: launch GounkiGameState
+    } else if (gameToLaunch == "safari") {
+        // TODO: launch SafariGameState
+    } else {
+        cout << "no game is running" << endl;
+    }
+}
 void PlayerState::saveName() {
-    if ((int) playerNames.size() < nbPlayers && playerDisplayNames[0].getString().getSize() > 0) {
-        playerNames.push_back(playerDisplayNames[playerDisplayNames.size() - 1].getString());
-        playerDisplayNames.insert(playerDisplayNames.begin(), Text());
-        playerDisplayNames[0].setFont(controller -> resource -> getFont("pixel"));
-        playerDisplayNames[0].setCharacterSize(TEXT_SIZE);
-        playerDisplayNames[0].setFillColor(Color::Black);
-        playerDisplayNames[0].setString("");
-        repositionNameDisplay();
+    if (playerDisplayNames[0].getString().getSize() > 0) {
+        if ((int) playerNames.size()  < maxPlayers) {
+            playerNames.push_back(playerDisplayNames[playerDisplayNames.size() - 1].getString());
+            if ((int) playerNames.size() < maxPlayers) {
+                playerDisplayNames.insert(playerDisplayNames.begin(), Text());
+                playerDisplayNames[0].setFont(controller -> resource -> getFont("pixel"));
+                playerDisplayNames[0].setCharacterSize(TEXT_SIZE);
+                playerDisplayNames[0].setFillColor(Color::Black);
+                playerDisplayNames[0].setString("");
+                repositionNameDisplay();
+            }
+        }
+
     }
 }
 
@@ -89,17 +126,23 @@ void PlayerState::repositionNameDisplay() {
     }
 }
 
-void PlayerState::update(float dt) {
-//    No Special updates for Player initilisation State
+void PlayerState::update() {
+    if ((int) playerNames.size() >= minPlayers) {
+        startButton.setTexture(controller -> resource -> getTexture("enabledStartButton"));
+    }
+    if ((int) playerNames.size() == maxPlayers) {
+        addPlayerButton.setTexture(controller -> resource -> getTexture("disabledAddButton"));
+    }
 }
 
-void PlayerState::draw(float dt) {
+void PlayerState::draw() {
     controller -> window -> clear();
 
     controller -> window -> draw(background);
     controller -> window -> draw(title);
-    controller -> window -> draw(addPlayerNameButton);
-    for (Text t : playerDisplayNames) {
+    controller -> window -> draw(addPlayerButton);
+    controller -> window -> draw(startButton);
+    for (Text const &t : playerDisplayNames) {
         controller -> window -> draw(t);
     }
     controller -> window -> display();

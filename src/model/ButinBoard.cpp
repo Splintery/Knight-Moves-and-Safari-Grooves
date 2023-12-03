@@ -15,7 +15,7 @@ vector<int> calculatePieceDistribution() {
     const int yellow_default_ratio = 34;
     const int red_default_ratio = 20;
     const int black_default_ratio = 10;
-    double factor = (double) (BOARD_SIZE * BOARD_SIZE) / 64.0;
+    double factor = (double) (BUTIN_BOARD_SIZE * BUTIN_BOARD_SIZE) / 64.0;
 
     int yellow_ratio = (int) (round(yellow_default_ratio * factor));
     int red_ratio = (int) (round(red_default_ratio * factor));
@@ -34,14 +34,14 @@ void ButinBoard::generateDefaultBoard() {
     srand(time(nullptr));
     random_shuffle(all_pieces.begin(), all_pieces.end());
 
-    board.resize(BOARD_SIZE);
+    board.resize(BUTIN_BOARD_SIZE);
     for (auto &row : board) {
-        row.resize(BOARD_SIZE, nullptr);
+        row.resize(BUTIN_BOARD_SIZE, nullptr);
     }
 
     int count = 0;
-    for (int i = 0; i < BOARD_SIZE; i++) {
-        for (int j = 0; j < BOARD_SIZE; j++) {
+    for (int i = 0; i < BUTIN_BOARD_SIZE; i++) {
+        for (int j = 0; j < BUTIN_BOARD_SIZE; j++) {
             board[i][j] = new ButinPiece(all_pieces[count++], Vector2i {i, j});
         }
     }
@@ -63,10 +63,10 @@ void ButinBoard::initializeGame(vector<Vector2i> deleted_pieces) {
 }
 
 const vector<vector<vector<string>>> ButinBoard::getBoardState() const {
-    // initialize a vector of BOARD_SIZE elements of vector<vector<string>> initalized at BOARD_SIZE
-    vector<vector<vector<string>>> boardState(BOARD_SIZE, vector<vector<string>>(BOARD_SIZE));
-    for (int i = 0; i < BOARD_SIZE; i++) {
-        for (int j = 0; j < BOARD_SIZE; j++) {
+    // initialize a vector of BUTIN_BOARD_SIZE elements of vector<vector<string>> initalized at BUTIN_BOARD_SIZE
+    vector<vector<vector<string>>> boardState(BUTIN_BOARD_SIZE, vector<vector<string>>(BUTIN_BOARD_SIZE));
+    for (int i = 0; i < BUTIN_BOARD_SIZE; i++) {
+        for (int j = 0; j < BUTIN_BOARD_SIZE; j++) {
             string s;
             if (board[i][j] == nullptr) {
                 s = UtilityFunctions::getButinPieceString(ButinPieceType::EmptyButin);
@@ -103,7 +103,7 @@ ButinPieceType ButinBoard::getJumpedPieceType(const Vector2i &from, const Vector
 }
 
 bool ButinBoard::isWithinBounds(Vector2i pos) const {
-    return (pos.x >= 0 && pos.x < BOARD_SIZE && pos.y >= 0 && pos.y < BOARD_SIZE);
+    return (pos.x >= 0 && pos.x < BUTIN_BOARD_SIZE && pos.y >= 0 && pos.y < BUTIN_BOARD_SIZE);
 }
 
 const vector<Vector2i> ButinBoard::validMoves(const Vector2i &from) const {

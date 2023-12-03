@@ -12,7 +12,7 @@ using namespace sf;
 
 class GameConfig {
 public:
-    vector<string> names;
+
 };
 
 #endif

@@ -1,7 +1,8 @@
 #include "StateMachine.hpp"
 #include "../settings/SETTINGS.hpp"
+#include <iostream>
 
-void StateMachine::addState(StateRef newState, bool isReplacing) {
+void StateMachine::addState(State *newState, bool isReplacing) {
 	this -> isAdding = true;
 	this -> isReplacing = isReplacing;
 	this -> newState = std::move(newState);
@@ -12,8 +13,8 @@ void StateMachine::removeState() {
 
 void StateMachine::processStateChanges() {
 	if (isRemoving && !states.empty()) {
-		states.pop();
-
+        delete(states.top());
+        states.pop();
 		if (!states.empty()) {
 			states.top() -> resume();
 		}
@@ -35,7 +36,7 @@ void StateMachine::processStateChanges() {
 	}
 }
 
-StateRef &StateMachine::getActiveState() {
+State *StateMachine::getActiveState() {
 	return states.top();
 }
 
