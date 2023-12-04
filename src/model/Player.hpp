@@ -17,6 +17,7 @@ public:
     void increaseScore(ButinPieceType type);
 
     friend ostream &operator<<(ostream &, const Player &);
+    int getScore() const;
 private:
     int score;
 };

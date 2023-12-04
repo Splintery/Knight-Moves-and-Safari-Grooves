@@ -1,7 +1,7 @@
 #include "ButinConfig.hpp"
 
 ButinConfig::ButinConfig(const vector<Vector2i> deleted_pieces):deleted_pieces {deleted_pieces} {
-    cout << "Construction of ButinConfig" << endl;
+//    cout << "Construction of ButinConfig" << endl;
 }
 
 ButinConfig::ButinConfig(const ButinConfig &) {

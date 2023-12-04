@@ -21,6 +21,7 @@ public:
     virtual const vector<Vector2i> validMoves(const Vector2i& from) const;
     virtual const vector<vector<vector<string>>> getBoardState() const;
     virtual const string getCurrentPlayer() const;
+    virtual const string getCurrentPlayerScore() const;
     virtual const pair<int, int> getMinMaxPlayers() const;
 
     friend ostream &operator<<(ostream &, const Butin &);

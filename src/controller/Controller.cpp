@@ -11,7 +11,7 @@ Controller::Controller(int width, int height, const string& title) {
 
 	window = new RenderWindow(VideoMode(width, height), title, Style::Fullscreen | Style::Resize | Style::Close);
     sf::Mouse::setPosition(Vector2i(0, 0), *window);
-    
+
 
     machine -> addState(new MenuState(this));
     game = nullptr;
@@ -31,6 +31,8 @@ void Controller::loadTextures() const {
     resource -> loadTexture("yellowPiece", "./resources/piece/YellowPiece.png");
     resource -> loadTexture("redPiece", "./resources/piece/RedPiece.png");
     resource -> loadTexture("blackPiece", "./resources/piece/BlackPiece.png");
+    resource -> loadTexture("redTile", "./resources/board/RedTile.png");
+    resource -> loadTexture("blueTile", "./resources/board/BlueTile.png");
 
 }
 

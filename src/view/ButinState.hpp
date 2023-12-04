@@ -20,18 +20,27 @@ class ButinState: public State {
 		vector<vector<vector<string>>> pieces;
         Sprite board;
         Sprite *pieceSprite;
-        Text currentPlayer;
+        Text currentPlayerDisplay;
+        Text currentPlayerScoreDisplay;
 
+        // Those 2 fields are only ever used for the gameConfig to be built and displayed
         vector<Vector2i> piecesToRemove;
-        Sprite displayPiecesToRemove;
+        Sprite redTileSprite;
 
         RenderTexture rd;
         void boardFactory();
-		Vector2i fromTile;
-		Vector2i toTile;
+
+        Sprite blueTileSprite;
+		Vector2i *fromTile = nullptr;
+		Vector2i *toTile = nullptr;
+        vector<Vector2i> movesPossible;
 		bool moveReady;
-        void buildPieces(vector<vector<vector<string>>> sprites);
+        bool playerPlayed;
+
         void addPieceToRemove(Vector2i v);
+        void positionRedTile(Vector2i v);
+        void positionBlueTile(Vector2i v);
+
 };
 
 #endif

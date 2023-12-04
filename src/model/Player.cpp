@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
 Player::Player(string name):name{name}, score {0} {
-    cout << "Construction of " << *this;
+//    cout << "Construction of " << *this;
 }
 
 Player::~Player() {
@@ -15,4 +15,8 @@ ostream &operator<<(ostream &o, const Player &p) {
 
 void Player::increaseScore(ButinPieceType type) {
     score += ButinPiece::getValueFromColor(type);
+}
+
+int Player::getScore() const {
+    return score;
 }

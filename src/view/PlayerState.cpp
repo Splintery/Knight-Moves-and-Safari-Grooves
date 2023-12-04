@@ -101,8 +101,9 @@ void PlayerState::goToGameState() {
 }
 void PlayerState::saveName() {
     if (playerDisplayNames[0].getString().getSize() > 0) {
-        if ((int) playerNames.size()  < maxPlayers) {
-            playerNames.push_back(playerDisplayNames[playerDisplayNames.size() - 1].getString());
+        string newPlayerName = playerDisplayNames[0].getString();
+        if ((int) playerNames.size()  < maxPlayers && find(playerNames.begin(), playerNames.end(), newPlayerName) == playerNames.end()) {
+            playerNames.push_back(playerDisplayNames[0].getString());
             if ((int) playerNames.size() < maxPlayers) {
                 playerDisplayNames.insert(playerDisplayNames.begin(), Text());
                 playerDisplayNames[0].setFont(controller -> resource -> getFont("pixel"));

@@ -48,7 +48,7 @@ void ButinBoard::generateDefaultBoard() {
 }
 
 ButinBoard::ButinBoard() {
-    cout << "Construction of " << *this;
+//    cout << "Construction of " << *this;
     generateDefaultBoard();
 }
 
