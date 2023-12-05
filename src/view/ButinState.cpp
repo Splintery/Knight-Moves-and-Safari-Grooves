@@ -1,10 +1,9 @@
 #include "ButinState.hpp"
-#include "../model/ButinConfig.hpp"
-#include "../model/Player.hpp"
+#include "../model/Butin.hpp"
 
 using namespace std;
 
-ButinState::ButinState(Controller *controller): controller{controller}, moveReady{false}, playerPlayed{false} {
+ButinState::ButinState(Controller *controller): controller{controller}, currentPlayerIndex{0}, moveReady{false}, playerPlayed{false}, printWinner{false} {
 	// do stuff in init rather then here
 }
 ButinState::~ButinState() {
@@ -13,28 +12,31 @@ ButinState::~ButinState() {
 }
 
 void ButinState::init() {
+    Vector2f center = controller -> machine -> getCenter();
+
+    winner.setFont(controller -> resource -> getFont("pixel"));
+    winner.setFillColor(Color(9, 109, 8));
+    winner.setCharacterSize(TITLE_SIZE * 3);
+    winner.setRotation(10);
 
     pieceSprite = new Sprite();
     boardFactory();
     board.setTexture(rd.getTexture());
     board.setScale(0.75, 0.75);
+    backBoard.setTexture(controller -> resource -> getTexture("backBoard"));
+    backBoard.setScale(0.80, 0.80);
+
     background.setTexture(controller -> resource -> getTexture("background"));
     background.setPosition(0, 0);
-    currentPlayerDisplay.setFont(controller -> resource -> getFont("pixel"));
-    currentPlayerDisplay.setCharacterSize(TEXT_SIZE);
-    currentPlayerDisplay.setFillColor(Color::Black);
-    currentPlayerDisplay.setString(controller -> game -> getCurrentPlayer());
-    currentPlayerDisplay.setPosition(0, 0);
-    currentPlayerScoreDisplay.setFont(controller -> resource -> getFont("pixel"));
-    currentPlayerScoreDisplay.setCharacterSize(TEXT_SIZE);
-    currentPlayerScoreDisplay.setFillColor(Color::Black);
-    currentPlayerScoreDisplay.setString(controller -> game -> getCurrentPlayerScore());
-    currentPlayerScoreDisplay.setPosition(100, 0);
 
-    Vector2f center = controller -> machine -> getCenter();
     board.setPosition(
         center.x - board.getGlobalBounds().width / 2, center.y - board.getGlobalBounds().height / 2
     );
+    backBoard.setPosition(
+        center.x - backBoard.getGlobalBounds().width / 2, center.y - backBoard.getGlobalBounds().height / 2
+    );
+    initializePlayerDisplays();
+    colorCurrentPlayer();
     redTileSprite.setTexture(controller -> resource -> getTexture("redTile"));
     redTileSprite.setScale(0.75, 0.75);
     blueTileSprite.setTexture(controller -> resource -> getTexture("blueTile"));
@@ -79,6 +81,10 @@ void ButinState::handleInput() {
                             addPieceToRemove(tileClicked);
                             if (piecesToRemove.size() >= controller -> game -> player_list.size()) {
                                 controller -> game -> initializeGame(ButinConfig(piecesToRemove));
+                                if (controller -> game -> hasGameStarted() && controller -> game -> isGameDone()) {
+                                    winner.setString(controller -> game -> getWinner());
+                                    printWinner = true;
+                                }
                             }
                         }
                     } else if (pieces[tileClicked.x][tileClicked.y][0] == "") {
@@ -100,64 +106,75 @@ void ButinState::handleInput() {
 	}
 }
 
+
+void ButinState::drawPlayerDisplay() {
+    for (Text t : playerNamesDisplay) {
+        controller -> window -> draw(t);
+    }
+    for (Text t : playerScoresDisplay) {
+        controller -> window -> draw(t);
+    }
+}
 void ButinState::draw() {
 	controller -> window -> clear();
 
     controller -> window -> draw(background);
+    controller -> window -> draw(backBoard);
     controller -> window -> draw(board);
 
-    if (controller -> game -> hasGameStarted()) {
-        controller -> window -> draw(currentPlayerDisplay);
-        controller -> window -> draw(currentPlayerScoreDisplay);
+    if (printWinner) {
+        controller -> window -> draw(winner);
+    } else {
+        if (controller -> game -> hasGameStarted()) {
 
-        if (fromTile != nullptr) {
-            positionBlueTile(*fromTile);
-            controller -> window -> draw(blueTileSprite);
-            for (Vector2i v : movesPossible) {
+            if (fromTile != nullptr) {
+                positionBlueTile(*fromTile);
+                controller -> window -> draw(blueTileSprite);
+                for (Vector2i v : movesPossible) {
+                    positionRedTile(v);
+                    controller -> window -> draw(redTileSprite);
+                }
+            }
+        } else {
+            // Highlights the Tiles that will be removed by the players
+            for (Vector2i v : piecesToRemove) {
                 positionRedTile(v);
                 controller -> window -> draw(redTileSprite);
             }
         }
-    } else {
-        // Highlights the Tiles that will be removed by the players
-        for (Vector2i v : piecesToRemove) {
-            positionRedTile(v);
-            controller -> window -> draw(redTileSprite);
-        }
-    }
 
-    // Draws all the pieces on their Tiles
-    for (int i = 0; i < (int) pieces.size(); i++) {
-        for (int j = 0; j < (int) pieces.size(); j++) {
-            if (pieces[i][j][0] != "") {
-                pieceSprite -> setTexture(controller -> resource -> getTexture(pieces[i][j][0]));
-                pieceSprite -> setScale(1.25, 1.25);
-                Vector2i v{i, j};
-                controller -> input -> positionPieceWithinBoard(pieceSprite, board, v, BUTIN_BOARD_SIZE);
-                controller -> window -> draw(*pieceSprite);
+        // Draws all the pieces on their Tiles
+        for (int i = 0; i < (int) pieces.size(); i++) {
+            for (int j = 0; j < (int) pieces.size(); j++) {
+                if (pieces[i][j][0] != "") {
+                    pieceSprite -> setTexture(controller -> resource -> getTexture(pieces[i][j][0]));
+                    pieceSprite -> setScale(1.25, 1.25);
+                    Vector2i v{i, j};
+                    controller -> input -> positionPieceWithinBoard(pieceSprite, board, v, BUTIN_BOARD_SIZE);
+                    controller -> window -> draw(*pieceSprite);
+                }
             }
         }
     }
-
-
+    drawPlayerDisplay();
 	controller -> window -> display();
 }
 
 void ButinState::update() {
 	pieces = controller -> game -> getBoardState();
     if (moveReady) {
+        int oldPlayerIndex = currentPlayerIndex;
         moveReady = false;
         controller -> game -> makeMove(*fromTile, *toTile);
-        currentPlayerScoreDisplay.setString(controller -> game -> getCurrentPlayerScore());
+        currentPlayerIndex = controller -> game -> getCurrentPlayerIndex();
         movesPossible.clear();
 
-        string name = controller -> game -> getCurrentPlayer();
-        if (name != currentPlayerDisplay.getString()) {
+        if (currentPlayerIndex != oldPlayerIndex) {
             delete(fromTile);
             delete(toTile);
             fromTile = nullptr;
             toTile = nullptr;
-            currentPlayerDisplay.setString(name);
+            colorCurrentPlayer();
             playerPlayed = false;
         } else {
             delete(fromTile);
@@ -166,12 +183,27 @@ void ButinState::update() {
             toTile = nullptr;
             movesPossible = controller -> game -> validMoves(*fromTile);
         }
+
+        if (controller -> game -> hasGameStarted() && controller -> game -> isGameDone()) {
+            winner.setString(controller -> game -> getWinner());
+            winner.setPosition(controller -> machine -> getCenter().x - winner.getGlobalBounds().width / 2, controller -> machine -> getCenter().y - winner.getGlobalBounds().height / 2);
+
+            printWinner = true;
+        }
+        vector<string> newScores = ((Butin *) controller -> game) -> getPlayerScores();
+        for (size_t i = 0; i < playerScoresDisplay.size(); i++) {
+            playerScoresDisplay[i].setString(newScores[i]);
+        }
     }
 }
 void ButinState::boardFactory() {
     Sprite whiteTileSprite = Sprite();
     Texture whiteTile = Texture();
-    whiteTile.loadFromFile("./resources/board/WhiteTile.png");
+    if (DARK_MODE) {
+        whiteTile.loadFromFile("./resources/board/BlackTile.png");
+    } else {
+        whiteTile.loadFromFile("./resources/board/WhiteTile.png");
+    }
     whiteTileSprite.setTexture(whiteTile);
 
 
@@ -187,10 +219,12 @@ void ButinState::boardFactory() {
 }
 
 void ButinState::addPieceToRemove(sf::Vector2i v) {
-    for (Vector2i vct : piecesToRemove) {
-        if (vct == v) return;
+    auto it = find(piecesToRemove.begin(), piecesToRemove.end(),v);
+    if (it != piecesToRemove.end()) {
+        piecesToRemove.erase(it);
+    } else {
+        piecesToRemove.push_back(v);
     }
-    piecesToRemove.push_back(v);
 }
 void ButinState::positionRedTile(Vector2i v) {
     redTileSprite.setPosition(
@@ -203,4 +237,34 @@ void ButinState::positionBlueTile(sf::Vector2i v) {
         board.getGlobalBounds().left + v.x * board.getGlobalBounds().width / BUTIN_BOARD_SIZE,
         board.getGlobalBounds().top + v.y * board.getGlobalBounds().height / BUTIN_BOARD_SIZE
     );
+}
+void ButinState::colorCurrentPlayer() {
+    for (size_t i = 0; i < playerNamesDisplay.size(); i++) {
+        playerNamesDisplay[i].setFillColor(Color::Black);
+    }
+    playerNamesDisplay[currentPlayerIndex].setFillColor(Color(172, 50, 50));
+}
+
+void ButinState::initializePlayerDisplays() {
+    for (size_t i = 0; i < controller -> game -> getPlayerNames().size(); i++) {
+        playerNamesDisplay.push_back(Text());
+        playerNamesDisplay[i].setFont(controller -> resource -> getFont("pixel"));
+        playerNamesDisplay[i].setCharacterSize(TEXT_SIZE);
+        playerNamesDisplay[i].setFillColor(Color::Black);
+        playerNamesDisplay[i].setString(controller -> game -> getPlayerNames()[i]);
+        playerNamesDisplay[i].setPosition(
+            TILE_SIZE * 2.5,
+            board.getGlobalBounds().top + TILE_SIZE * i
+        );
+
+        playerScoresDisplay.push_back(Text());
+        playerScoresDisplay[i].setFont(controller -> resource -> getFont("pixel"));
+        playerScoresDisplay[i].setCharacterSize(TEXT_SIZE);
+        playerScoresDisplay[i].setFillColor(Color::Black);
+        playerScoresDisplay[i].setString(to_string(0));
+        playerScoresDisplay[i].setPosition(
+            TILE_SIZE * 3 + playerNamesDisplay[i].getGlobalBounds().width,
+            board.getGlobalBounds().top + TILE_SIZE * i
+        );
+    }
 }

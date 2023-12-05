@@ -28,9 +28,14 @@ void PlayerState::init() {
         center.x + startButton.getGlobalBounds().width * 0.5, center.y + startButton.getGlobalBounds().height * 2
     );
 
-    title.setCharacterSize(TITLE_SIZE);
+    title.setCharacterSize(TEXT_SIZE);
     title.setFillColor(Color::Black);
-    title.setString("Enter the names of the 2 players");
+    string titleString = "Enter at least "
+            + to_string(controller -> game -> getMinMaxPlayers().first)
+            + " and at most "
+            + to_string(controller -> game -> getMinMaxPlayers().second)
+            + " player names";
+    title.setString(titleString);
     title.setPosition(
         center.x - title.getGlobalBounds().width / 2, center.y - TILE_SIZE * 5
     );
@@ -49,7 +54,7 @@ void PlayerState::handleInput() {
                 controller -> window -> close();
                 break;
             case sf::Event::TextEntered:
-                if ((int) playerNames.size() < maxPlayers) {
+                if ((int) playerNames.size() < maxPlayers && playerDisplayNames[0].getString().getSize() < MAX_NAME_LENGTH) {
                     if (event.text.unicode < 128 && event.text.unicode != 8 && event.text.unicode != 13) {
                         playerDisplayNames[0].setString(
                                 playerDisplayNames[0].getString() + (char)event.text.unicode
@@ -113,7 +118,6 @@ void PlayerState::saveName() {
                 repositionNameDisplay();
             }
         }
-
     }
 }
 

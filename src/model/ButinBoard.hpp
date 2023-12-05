@@ -27,6 +27,7 @@ public:
     virtual void makeMove(const Vector2i& from, const Vector2i& to);
     virtual ButinPieceType getJumpedPieceType(const Vector2i &from, const Vector2i &to) const;
     virtual const vector<Vector2i> validMoves(const Vector2i& from) const;
+    virtual const int getBoardTotalPoints() const;
 
     virtual ~ButinBoard();
     friend ostream &operator<<(ostream &, const ButinBoard &);

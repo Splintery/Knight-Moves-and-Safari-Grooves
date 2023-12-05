@@ -2,9 +2,12 @@
 
 bool ButinBoard::isGameDone() const {
     for (const vector<Piece*> &column: board) {
-        for (const Piece* bp : column) {
-            if (!this->validMoves(bp->getPosition()).empty())
-                return false;
+        for (Piece* bp : column) {
+            if (bp != nullptr) {
+                if (!validMoves(((ButinPiece *) bp)->getPosition()).empty()) {
+                    return false;
+                }
+            }
         }
     }
     return true;
@@ -126,6 +129,18 @@ const vector<Vector2i> ButinBoard::validMoves(const Vector2i &from) const {
         }
     }
     return moves;
+}
+
+const int ButinBoard::getBoardTotalPoints() const {
+    int sum = 0;
+    for (vector<Piece *> v : board) {
+        for (Piece *p : v) {
+            if (p != nullptr) {
+                sum += ((ButinPiece *) p) -> value;
+            }
+        }
+    }
+    return sum;
 }
 
 ButinBoard::~ButinBoard() {

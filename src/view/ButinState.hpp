@@ -19,9 +19,12 @@ class ButinState: public State {
 
 		vector<vector<vector<string>>> pieces;
         Sprite board;
-        Sprite *pieceSprite;
-        Text currentPlayerDisplay;
-        Text currentPlayerScoreDisplay;
+        Sprite backBoard;
+        Sprite *pieceSprite = nullptr;
+
+        int currentPlayerIndex;
+        vector<Text> playerNamesDisplay;
+        vector<Text> playerScoresDisplay;
 
         // Those 2 fields are only ever used for the gameConfig to be built and displayed
         vector<Vector2i> piecesToRemove;
@@ -36,10 +39,16 @@ class ButinState: public State {
         vector<Vector2i> movesPossible;
 		bool moveReady;
         bool playerPlayed;
+        bool printWinner;
+        Text winner;
 
         void addPieceToRemove(Vector2i v);
         void positionRedTile(Vector2i v);
         void positionBlueTile(Vector2i v);
+        void colorCurrentPlayer();
+
+        void initializePlayerDisplays();
+        void drawPlayerDisplay();
 
 };
 

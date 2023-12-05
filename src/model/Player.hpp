@@ -15,6 +15,7 @@ public:
 
     const string name;
     void increaseScore(ButinPieceType type);
+    void increaseScore(int amount);
 
     friend ostream &operator<<(ostream &, const Player &);
     int getScore() const;

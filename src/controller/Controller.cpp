@@ -33,7 +33,7 @@ void Controller::loadTextures() const {
     resource -> loadTexture("blackPiece", "./resources/piece/BlackPiece.png");
     resource -> loadTexture("redTile", "./resources/board/RedTile.png");
     resource -> loadTexture("blueTile", "./resources/board/BlueTile.png");
-
+    resource -> loadTexture("backBoard", "./resources/board/BackBoard.png");
 }
 
 void Controller::run() {

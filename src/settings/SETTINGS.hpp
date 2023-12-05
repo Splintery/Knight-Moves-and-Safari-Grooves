@@ -1,10 +1,13 @@
 #define FPS 144.0
-#define UPS 100
+#define UPS 200
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
 #define TILE_SIZE 60.0f
 #define TEXT_SIZE 48
 #define TITLE_SIZE 92
+#define MAX_NAME_LENGTH 10
+
+#define DARK_MODE false
 
 #define BUTIN_BOARD_SIZE 8
 
