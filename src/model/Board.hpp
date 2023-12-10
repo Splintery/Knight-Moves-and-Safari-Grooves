@@ -12,7 +12,7 @@ public:
     virtual void makeMove(const Vector2i& from, const Vector2i& to) = 0;
     virtual const vector<Vector2i> validMoves(const Vector2i& from) const = 0;
 protected:
-    vector<vector<Piece*>> board;
+    vector<vector<vector<Piece*>>> board;
 };
 
 #endif

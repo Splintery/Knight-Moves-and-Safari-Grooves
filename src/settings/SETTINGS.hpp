@@ -11,6 +11,8 @@
 
 #define BUTIN_BOARD_SIZE 8
 
+//BACK_BOARD_COLOR (24, 24, 24)
+
 //Green color = (9, 109, 8)
 //Pastel Blue color = (61, 68, 144)
 //Butin (purple) color = (75, 36, 76)

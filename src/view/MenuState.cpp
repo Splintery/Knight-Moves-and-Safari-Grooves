@@ -98,6 +98,7 @@ void MenuState::handleInput() {
             if (controller -> input -> isSpriteClicked(butinButton, Mouse::Left, *controller -> window)) {
                 cout << "pressed buttin" << endl;
                 controller -> setNewGame(new Butin(), "butin");
+                cout << "in menuState going to player...\n";
                 controller -> machine -> addState(new PlayerState(controller), false);
             } else if (controller -> input -> isSpriteClicked(gounkiButton, Mouse::Left, *controller -> window)) {
                 cout << "pressed gounki" << endl;
