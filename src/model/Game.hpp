@@ -12,11 +12,10 @@ using namespace std;
 
 class Game {
 protected:
-    Player* currentPlayer;
     bool gameStarted;
     int currentPlayerIndex = 0;
 public:
-    vector<Player*> player_list;
+    vector<Player*> playerList;
     Board* board;
 
     virtual bool isGameDone() const = 0;
@@ -26,7 +25,6 @@ public:
     virtual void initializeGame(const GameConfig&) = 0;
     virtual void makeMove(const Vector2i& from, const Vector2i& to) = 0;
     virtual const vector<Vector2i> validMoves(const Vector2i& from) const = 0;
-    virtual const string getCurrentPlayer() const = 0;
     virtual const int getCurrentPlayerIndex() const = 0;
     virtual vector<string> getPlayerNames() const = 0;
     virtual const vector<vector<vector<string>>> getBoardState() const = 0;

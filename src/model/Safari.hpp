@@ -1,16 +1,15 @@
-#ifndef BUTIN_HPP
-#define BUTIN_HPP
+#ifndef SAFARI_HPP
+#define SAFARI_HPP
 
 #include "Game.hpp"
-#include "ButinBoard.hpp"
-#include "ButinConfig.hpp"
+#include "SafariConfig.hpp"
 
-class Butin : public Game {
+class Safari : public Game {
 private:
-    virtual ~Butin();
+    virtual ~Safari();
 public:
-    Butin();
-    Butin(const Butin &) = delete;
+    Safari();
+    Safari(const Safari &) = delete;
 
     virtual bool isGameDone() const;
     virtual string getWinner() const;
@@ -25,7 +24,7 @@ public:
     virtual vector<string> getPlayerNames() const;
     virtual const pair<int, int> getMinMaxPlayers() const;
 
-    friend ostream &operator<<(ostream &, const Butin &);
+    friend ostream &operator<<(ostream &, const Safari &);
 };
 
 #endif

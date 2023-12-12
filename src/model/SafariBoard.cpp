@@ -17,12 +17,19 @@ SafariBoard::SafariBoard() {
 
     cout << "Construction of " << *this << endl;
 }
+
 SafariBoard::~SafariBoard() {
     cout << "destruction of " << *this << endl;
 }
+
+bool SafariBoard::isCaptured(const Vector2i &pos) const {
+    return false;
+}
+
 bool SafariBoard::isGameDone() const {
     return false;
 }
+
 const vector<vector<vector<string>>> SafariBoard::getBoardState() const {
     // initialize a vector of SAFARI_BOARD_SIZE elements of vector<vector<string>> initalized at SAFARI_BOARD_SIZE
     vector<vector<vector<string>>> boardState(SAFARI_BOARD_SIZE, vector<vector<string>>(SAFARI_BOARD_SIZE));
@@ -42,9 +49,11 @@ const vector<vector<vector<string>>> SafariBoard::getBoardState() const {
     }
     return boardState;
 }
+
 void SafariBoard::makeMove(const Vector2i &from, const Vector2i &to, const int playerIndex) {
 
 }
+
 const vector<Vector2i> SafariBoard::validMoves(const Vector2i &from, const int playerIndex) const {
     vector<Vector2i> moves;
     SafariPiece* piece = (SafariPiece *)board[from.x][from.y][0];
@@ -110,28 +119,28 @@ const vector<Vector2i> SafariBoard::validMoves(const Vector2i &from, const int p
     }
     return moves;
 }
+
 bool SafariBoard::isWithinBounds(Vector2i pos) const {
     return (pos.x >= 0 && pos.x < SAFARI_BOARD_SIZE && pos.y >= 0 && pos.y < SAFARI_BOARD_SIZE);
 }
 
-void SafariBoard::initializeGame(const vector<Vector2i> crocodiles, const vector<Vector2i> elephants, const vector<Vector2i> lions, vector<Vector2i> fences) {
-
-    // Making the Board a SAFARI_BOARD_SIZE x SAFARI_BOARD_SIZE of nullptr
+void SafariBoard::initializeGame(const GameConfig& gc) {
+    SafariConfig& sc = (SafariConfig&) gc;
     board.resize(SAFARI_BOARD_SIZE);
     for (vector<vector<Piece *>> &column : board) {
         column.resize(SAFARI_BOARD_SIZE);
     }
 
-    for (Vector2i crocPos : crocodiles) {
+    for (Vector2i crocPos : sc.crocodiles) {
         board[crocPos.x][crocPos.y].push_back(new SafariPiece(SafariPieceType::Crocodile, crocPos));
     }
-    for (Vector2i elePos : elephants) {
+    for (Vector2i elePos : sc.elephants) {
         board[elePos.x][elePos.y].push_back(new SafariPiece(SafariPieceType::Elephant, elePos));
     }
-    for (Vector2i lioPos : lions) {
+    for (Vector2i lioPos : sc.lions) {
         board[lioPos.x][lioPos.y].push_back(new SafariPiece(SafariPieceType::Lion, lioPos));
     }
-    for (Vector2i fenPos : fences) {
+    for (Vector2i fenPos : sc.fences) {
         board[fenPos.x][fenPos.y].push_back(new SafariPiece(SafariPieceType::Fence, fenPos));
     }
 }
