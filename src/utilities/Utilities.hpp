@@ -13,9 +13,12 @@ enum class ButinPieceType {
     EmptyButin
 };
 
+// Crocodile => Player 1
+// Elephant => Player 2
+// Lion => Player 3
 enum class SafariPieceType {
+    Crocodile,
     Elephant,
-    Rhinoceros,
     Lion,
     Fence,
     EmptySafari
@@ -27,6 +30,11 @@ enum class GounkiPieceType {
     WhiteSquare,
     WhiteCircle,
     EmptyGounki
+};
+
+enum class ActionKey {
+    LeftClick,
+    RightClick
 };
 
 namespace UtilityFunctions {

@@ -41,7 +41,7 @@ void Butin::initializeGame(const GameConfig &gc) {
 
 void Butin::makeMove(const Vector2i &from, const Vector2i &to) {
     currentPlayer->increaseScore(((ButinBoard *) board)->getJumpedPieceType(from, to));
-    board->makeMove(from, to);
+    board->makeMove(from, to, currentPlayerIndex);
 
     if (validMoves(to).empty()) {
         currentPlayerIndex = (currentPlayerIndex + 1) % (int) player_list.size();
@@ -50,7 +50,7 @@ void Butin::makeMove(const Vector2i &from, const Vector2i &to) {
 }
 
 const vector<Vector2i> Butin::validMoves(const Vector2i &from) const {
-    return board->validMoves(from);
+    return board->validMoves(from, currentPlayerIndex);
 }
 
 const string Butin::getCurrentPlayer() const {

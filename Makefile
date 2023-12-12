@@ -49,6 +49,15 @@ Player.o: src/model/Player.cpp src/model/Player.hpp
 test: src/main.cpp Controller.o MenuState.o PlayerState.o GameState.o ButinState.o StateMachine.o InputManager.o ResourceManager.o Player.o ButinPiece.o ButinBoard.o Butin.o ButinConfig.o Utilities.o src/settings/SETTINGS.hpp
 	$(GCC) src/main.cpp Controller.o MenuState.o PlayerState.o GameState.o ButinState.o StateMachine.o InputManager.o ResourceManager.o Butin.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Utilities.o -o Tesssttt.exe $(SFML_FLAGS)
 
+SafariPiece.o: src/model/SafariPiece.hpp src/model/SafariPiece.cpp src/model/Piece.hpp
+	$(GCC) -c src/model/SafariPiece.cpp
+
+SafariBoard.o: src/model/SafariBoard.hpp src/model/SafariBoard.cpp src/model/Board.hpp src/model/Piece.hpp
+	$(GCC) -c src/model/SafariBoard.cpp
+
+testSaf: src/model/TestSafari.cpp SafariPiece.o SafariBoard.o Utilities.o
+	$(GCC) src/model/TestSafari.cpp SafariPiece.o SafariBoard.o Utilities.o -o TestSaf.exe $(SFML_FLAGS)
+
 clean:
 	$(info Cleaning the scene...)
 	rm *.o

@@ -5,7 +5,10 @@ bool ButinBoard::isGameDone() const {
         for (const vector<Piece *> &line: column) {
             for (Piece *bp: line) {
                 if (bp != nullptr) {
-                    if (!validMoves(((ButinPiece *) bp)->getPosition()).empty()) {
+                    // In this game the game is finished no matter wich Player turn it is,
+                    // because none of the Pieces belong to a specific Player,
+                    // so we just check it from 0
+                    if (!validMoves(bp -> getPosition(), 0).empty()) {
                         return false;
                     }
                 }
@@ -27,7 +30,6 @@ vector<int> calculatePieceDistribution() {
     int black_ratio = (int) (round(black_default_ratio * factor));
     return {yellow_ratio, red_ratio, black_ratio};
 }
-
 void ButinBoard::generateDefaultBoard() {
     vector<int> pieces_ratio = calculatePieceDistribution();
     vector<ButinPieceType> all_pieces;
@@ -52,12 +54,10 @@ void ButinBoard::generateDefaultBoard() {
         }
     }
 }
-
 ButinBoard::ButinBoard() {
 //    cout << "Construction of " << *this;
     generateDefaultBoard();
 }
-
 // TODO jsp si c'est nécessaire de mettre nullptr dedans
 void ButinBoard::initializeGame(vector<Vector2i> deleted_pieces) {
     for (Vector2i &v: deleted_pieces) {
@@ -67,7 +67,6 @@ void ButinBoard::initializeGame(vector<Vector2i> deleted_pieces) {
             delete tmp;
     }
 }
-
 const vector<vector<vector<string>>> ButinBoard::getBoardState() const {
     // initialize a vector of BUTIN_BOARD_SIZE elements of vector<vector<string>> initalized at BUTIN_BOARD_SIZE
     vector<vector<vector<string>>> boardState(BUTIN_BOARD_SIZE, vector<vector<string>>(BUTIN_BOARD_SIZE));
@@ -85,12 +84,10 @@ const vector<vector<vector<string>>> ButinBoard::getBoardState() const {
     }
     return boardState;
 }
-
 const Vector2i ButinBoard::calculateJumpedPos(const Vector2i &from, const Vector2i &to) const {
     return Vector2i((from.x + to.x) / 2, (from.y + to.y) / 2);
 }
-
-void ButinBoard::makeMove(const Vector2i &from, const Vector2i &to) {
+void ButinBoard::makeMove(const Vector2i &from, const Vector2i &to, const int playerIndex) {
     const Vector2i jumpedPos = calculateJumpedPos(from, to);
     ButinPiece* jumpedPiece = (ButinPiece*) board[jumpedPos.x][jumpedPos.y][0];
     ButinPiece* toPiece = (ButinPiece*) board[to.x][to.y][0];
@@ -102,17 +99,14 @@ void ButinBoard::makeMove(const Vector2i &from, const Vector2i &to) {
     delete jumpedPiece;
     delete toPiece;
 }
-
 ButinPieceType ButinBoard::getJumpedPieceType(const Vector2i &from, const Vector2i &to) const{
     const Vector2i jumpedPos = calculateJumpedPos(from, to);
     return ((ButinPiece*) board[jumpedPos.x][jumpedPos.y][0])->color;
 }
-
 bool ButinBoard::isWithinBounds(Vector2i pos) const {
     return (pos.x >= 0 && pos.x < BUTIN_BOARD_SIZE && pos.y >= 0 && pos.y < BUTIN_BOARD_SIZE);
 }
-
-const vector<Vector2i> ButinBoard::validMoves(const Vector2i &from) const {
+const vector<Vector2i> ButinBoard::validMoves(const Vector2i &from, const int playerIndex) const {
     vector<Vector2i> moves;
     ButinPiece* piece = (ButinPiece *)board[from.x][from.y][0];
 

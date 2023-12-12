@@ -12,11 +12,11 @@ const string UtilityFunctions::getButinPieceString(ButinPieceType type) {
 
 const string UtilityFunctions::getSafariPieceString(SafariPieceType type) {
     switch (type) {
-        case SafariPieceType::Elephant: return "";
-        case SafariPieceType::Rhinoceros: return "";
-        case SafariPieceType::Lion: return "";
-        case SafariPieceType::Fence: return "";
-        case SafariPieceType::EmptySafari: return "";
+        case SafariPieceType::Crocodile: return "Krokodil";
+        case SafariPieceType::Elephant: return "elefan";
+        case SafariPieceType::Lion: return "lion";
+        case SafariPieceType::Fence: return "fence";
+        case SafariPieceType::EmptySafari: return "emptySafari";
         default: return "";
     }
 }

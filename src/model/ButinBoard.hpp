@@ -15,7 +15,6 @@
 class ButinBoard : public Board {
 private:
     void generateDefaultBoard();
-    bool isWithinBounds(Vector2i pos) const;
     const Vector2i calculateJumpedPos(const Vector2i &from, const Vector2i &to) const;
 public:
     ButinBoard();
@@ -24,9 +23,10 @@ public:
     virtual bool isGameDone() const;
     virtual void initializeGame(const vector<Vector2i> deleted_pieces);
     virtual const vector<vector<vector<string>>> getBoardState() const;
-    virtual void makeMove(const Vector2i& from, const Vector2i& to);
+    virtual void makeMove(const Vector2i& from, const Vector2i& to, const int playerIndex);
     virtual ButinPieceType getJumpedPieceType(const Vector2i &from, const Vector2i &to) const;
-    virtual const vector<Vector2i> validMoves(const Vector2i& from) const;
+    virtual const vector<Vector2i> validMoves(const Vector2i& from, const int playerIndex) const;
+    virtual bool isWithinBounds(Vector2i pos) const;
     virtual const int getBoardTotalPoints() const;
 
     virtual ~ButinBoard();
