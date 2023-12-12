@@ -13,9 +13,9 @@ enum class ButinPieceType {
     EmptyButin
 };
 
-// Crocodile => Player 1
-// Elephant => Player 2
-// Lion => Player 3
+// Crocodile => Player 0
+// Elephant => Player 1
+// Lion => Player 2
 enum class SafariPieceType {
     Crocodile,
     Elephant,

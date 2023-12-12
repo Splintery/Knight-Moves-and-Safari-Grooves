@@ -10,7 +10,7 @@
 #define DARK_MODE false
 
 #define BUTIN_BOARD_SIZE 8
-#define SAFARI_BOARD_SIZE 8
+#define SAFARI_BOARD_SIZE 16
 
 //BACK_BOARD_COLOR (24, 24, 24)
 

@@ -3,10 +3,8 @@
 
 
 int main() {
-    SafariPiece *sp = new SafariPiece(SafariPieceType::Lion, Vector2i(7, 7));
-//    for (Vector2i v : sp -> getMovementPatterns()) {
-//        cout << "[" << v.x << ", " << v.y << "]" << endl;
-//    }
+    SafariPiece *sp = new SafariPiece(SafariPieceType::Lion, Vector2i(0, 0));
+
     vector<Vector2i> cro;
     vector<Vector2i> ele;
     vector<Vector2i> lio;
@@ -14,16 +12,16 @@ int main() {
     vector<Vector2i> fen;
 
     SafariBoard *sb = new SafariBoard();
-    sb -> initializeGame(
-         cro, ele, lio, fen
-    );
+
     cout << sb -> board.size() << endl;
-    sb -> board[7][7][0] -> movePiece(sp -> getPosition());
+    vector<Piece *> vp;
+    vp.push_back(sp);
+    sb -> board[0][0] = vp;
+    sb -> board[0][0][0] -> movePiece(sp -> getPosition());
 
     cout << "Moves Possible :" << endl;
 
-
-    for (Vector2i v : sb -> validMoves(sp -> getPosition(), 3)) {
+    for (Vector2i v : sb -> validMoves(sp -> getPosition(), 2)) {
         cout << "\t[" << v.x << ", " << v.y << "]" << endl;
     }
     return EXIT_SUCCESS;

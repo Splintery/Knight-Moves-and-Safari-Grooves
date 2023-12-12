@@ -4,10 +4,10 @@
 #include <cmath>
 
 SafariBoard::SafariBoard() {
-    // Making the Board a BUTIN_BOARD_SIZE x BUTIN_BOARD_SIZE of nullptr
-    board.resize(BUTIN_BOARD_SIZE);
+    // Making the Board a SAFARI_BOARD_SIZE x SAFARI_BOARD_SIZE of nullptr
+    board.resize(SAFARI_BOARD_SIZE);
     for (vector<vector<Piece *>> &column : board) {
-        column.resize(BUTIN_BOARD_SIZE);
+        column.resize(SAFARI_BOARD_SIZE);
     }
     for (size_t x = 0; x < board.size(); x++) {
         for (size_t y = 0; y < board[x].size(); y++) {
@@ -24,7 +24,7 @@ bool SafariBoard::isGameDone() const {
     return false;
 }
 const vector<vector<vector<string>>> SafariBoard::getBoardState() const {
-    // initialize a vector of BUTIN_BOARD_SIZE elements of vector<vector<string>> initalized at BUTIN_BOARD_SIZE
+    // initialize a vector of SAFARI_BOARD_SIZE elements of vector<vector<string>> initalized at SAFARI_BOARD_SIZE
     vector<vector<vector<string>>> boardState(SAFARI_BOARD_SIZE, vector<vector<string>>(SAFARI_BOARD_SIZE));
     for (int i = 0; i < SAFARI_BOARD_SIZE; i++) {
         for (int j = 0; j < SAFARI_BOARD_SIZE; j++) {
@@ -46,29 +46,27 @@ void SafariBoard::makeMove(const Vector2i &from, const Vector2i &to, const int p
 
 }
 const vector<Vector2i> SafariBoard::validMoves(const Vector2i &from, const int playerIndex) const {
-    cout << "tmp\n";
     vector<Vector2i> moves;
     SafariPiece* piece = (SafariPiece *)board[from.x][from.y][0];
     // Permet de vérifier que la case clické n'est pas vide
     if (piece == nullptr) {
         return moves;
     }
-    cout << "yeah" << endl;
     // Permet de vérifier que la Piece selectionné est un animal et qu'elle appartient
     // au joueur dont c'est le tour
     switch (piece -> animal) {
         case SafariPieceType::Crocodile:
-            if (playerIndex == 0) {
+            if (playerIndex != 0) {
                 return moves;
             }
             break;
         case SafariPieceType::Elephant:
-            if (playerIndex == 1) {
+            if (playerIndex != 1) {
                 return moves;
             }
             break;
         case SafariPieceType::Lion:
-            if (playerIndex == 2) {
+            if (playerIndex != 2) {
                 return moves;
             }
             break;
@@ -76,7 +74,6 @@ const vector<Vector2i> SafariBoard::validMoves(const Vector2i &from, const int p
             return moves;
     }
 
-    cout << "player checks out\n";
     vector<Vector2i> patterns = piece -> getMovementPatterns();
     bool noFence = true;
     for (const Vector2i &pattern : patterns) {
@@ -84,8 +81,7 @@ const vector<Vector2i> SafariBoard::validMoves(const Vector2i &from, const int p
 
 
         if (isWithinBounds(endPos)) {
-            cout << "endPos is within Bounds" << endl;
-            if (board[endPos.x][endPos.y][0] == nullptr) {
+            if (((SafariPiece *)board[endPos.x][endPos.y][0]) -> animal == SafariPieceType::EmptySafari) {
                 // Multiplier will change the sign of x and y to be able to check
                 // every Tile from "from" to "endPos" in a straight line
                 int xMultiplier = (endPos.x < 0) ? -1:1;
@@ -107,7 +103,7 @@ const vector<Vector2i> SafariBoard::validMoves(const Vector2i &from, const int p
                     }
                 }
                 if (noFence) {
-                    patterns.push_back(endPos);
+                    moves.push_back(endPos);
                 }
             }
         }
@@ -120,10 +116,10 @@ bool SafariBoard::isWithinBounds(Vector2i pos) const {
 
 void SafariBoard::initializeGame(const vector<Vector2i> crocodiles, const vector<Vector2i> elephants, const vector<Vector2i> lions, vector<Vector2i> fences) {
 
-    // Making the Board a BUTIN_BOARD_SIZE x BUTIN_BOARD_SIZE of nullptr
-    board.resize(BUTIN_BOARD_SIZE);
+    // Making the Board a SAFARI_BOARD_SIZE x SAFARI_BOARD_SIZE of nullptr
+    board.resize(SAFARI_BOARD_SIZE);
     for (vector<vector<Piece *>> &column : board) {
-        column.resize(BUTIN_BOARD_SIZE);
+        column.resize(SAFARI_BOARD_SIZE);
     }
 
     for (Vector2i crocPos : crocodiles) {
