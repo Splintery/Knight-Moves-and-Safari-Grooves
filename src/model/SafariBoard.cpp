@@ -3,6 +3,7 @@
 
 #include <cmath>
 
+// TODO ne pas créer d'objet vide et juste stocker un nullptr
 SafariBoard::SafariBoard() {
     // Making the Board a SAFARI_BOARD_SIZE x SAFARI_BOARD_SIZE of nullptr
     board.resize(SAFARI_BOARD_SIZE);
@@ -14,12 +15,7 @@ SafariBoard::SafariBoard() {
             board[x][y].push_back(new SafariPiece(SafariPieceType::EmptySafari, Vector2i(x, y)));
         }
     }
-
     cout << "Construction of " << *this << endl;
-}
-
-SafariBoard::~SafariBoard() {
-    cout << "destruction of " << *this << endl;
 }
 
 bool SafariBoard::isCaptured(const Vector2i &pos) const {
@@ -126,6 +122,7 @@ bool SafariBoard::isWithinBounds(Vector2i pos) const {
 
 void SafariBoard::initializeGame(const GameConfig& gc) {
     SafariConfig& sc = (SafariConfig&) gc;
+    
     board.resize(SAFARI_BOARD_SIZE);
     for (vector<vector<Piece *>> &column : board) {
         column.resize(SAFARI_BOARD_SIZE);
@@ -143,6 +140,10 @@ void SafariBoard::initializeGame(const GameConfig& gc) {
     for (Vector2i fenPos : sc.fences) {
         board[fenPos.x][fenPos.y].push_back(new SafariPiece(SafariPieceType::Fence, fenPos));
     }
+}
+
+SafariBoard::~SafariBoard() {
+    cout << "destruction of " << *this << endl;
 }
 
 ostream &operator<<(ostream &out, const SafariBoard &) {

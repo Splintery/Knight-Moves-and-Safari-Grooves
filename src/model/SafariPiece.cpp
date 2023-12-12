@@ -3,15 +3,17 @@
 
 SafariPiece::SafariPiece(SafariPieceType animal, Vector2i position): animal{animal} {
     this -> position = position;
+    cout << "Construction of " << *this;
 }
 
 SafariPiece::~SafariPiece() {
-    cout << "destroying Safari Piece" << *this << endl;
+    cout << "Destruction of " << *this;
 }
 
 void SafariPiece::movePiece(Vector2i position) {
     this -> position = position;
 }
+
 vector<Vector2i> SafariPiece::getMovementPatterns() const {
     vector<Vector2i> patterns;
 
@@ -40,6 +42,7 @@ vector<Vector2i> SafariPiece::getMovementPatterns() const {
     }
     return patterns;
 }
+
 const Vector2i SafariPiece::getPosition() const {
     return this -> position;
 }

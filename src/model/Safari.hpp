@@ -3,10 +3,12 @@
 
 #include "Game.hpp"
 #include "SafariConfig.hpp"
+#include "SafariBoard.hpp"
 
 class Safari : public Game {
 private:
     virtual ~Safari();
+    int currentStep;
 public:
     Safari();
     Safari(const Safari &) = delete;
@@ -19,7 +21,6 @@ public:
     virtual void makeMove(const Vector2i& from, const Vector2i& to);
     virtual const vector<Vector2i> validMoves(const Vector2i& from) const;
     virtual const vector<vector<vector<string>>> getBoardState() const;
-    virtual vector<string> getPlayerScores() const;
     virtual const int getCurrentPlayerIndex() const;
     virtual vector<string> getPlayerNames() const;
     virtual const pair<int, int> getMinMaxPlayers() const;

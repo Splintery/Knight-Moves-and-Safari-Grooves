@@ -39,7 +39,7 @@ void Butin::initPlayers(vector<std::string> playerNames) {
 }
 
 void Butin::initializeGame(const GameConfig &gc) {
-    ((ButinBoard *) board)->initializeGame(gc);
+    board->initializeGame(gc);
     gameStarted = true;
 }
 
@@ -57,6 +57,10 @@ const vector<Vector2i> Butin::validMoves(const Vector2i &from) const {
     return board->validMoves(from, currentPlayerIndex);
 }
 
+const vector<vector<vector<string>>> Butin::getBoardState() const {
+    return board->getBoardState();
+}
+
 vector<string> Butin::getPlayerScores() const {
     vector<string> res;
     for (Player* p : playerList) {
@@ -71,14 +75,10 @@ const int Butin::getCurrentPlayerIndex() const {
 
 vector<string> Butin::getPlayerNames() const {
     vector<string> res;
-    for (Player *p : playerList) {
+    for (Player* p : playerList) {
         res.push_back(p -> name);
     }
     return res;
-}
-
-const vector<vector<vector<string>>> Butin::getBoardState() const {
-    return board->getBoardState();
 }
 
 const pair<int, int> Butin::getMinMaxPlayers() const {

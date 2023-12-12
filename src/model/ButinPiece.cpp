@@ -3,7 +3,7 @@
 
 ButinPiece::ButinPiece(ButinPieceType color, Vector2i position):value {getValueFromColor(color)}, color {color} {
     this->position = position;
-//    cout << "Construction of " << *this;
+    cout << "Construction of " << *this;
 }
 
 vector<Vector2i> ButinPiece::getMovementPatterns() const {
@@ -41,7 +41,7 @@ void ButinPiece::movePiece(Vector2i position) {
 }
 
 ButinPiece::~ButinPiece() {
-//    cout << "Destruction of " << *this;
+    cout << "Destruction of " << *this;
 }
 
 ostream &operator<<(ostream &o, const ButinPiece &bp) {

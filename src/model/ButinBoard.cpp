@@ -1,5 +1,15 @@
 #include "ButinBoard.hpp"
 
+ButinBoard::ButinBoard() {
+    // Making the Board a BUTIN_BOARD_SIZE x BUTIN_BOARD_SIZE of nullptr
+    board.resize(BUTIN_BOARD_SIZE);
+    for (vector<vector<Piece *>> &column : board) {
+        column.resize(BUTIN_BOARD_SIZE);
+    }
+    generateDefaultBoard();
+    cout << "Construction of " << *this;
+}
+
 bool ButinBoard::isGameDone() const {
     for (const vector<vector<Piece *>> &column : board) {
         for (const vector<Piece *> &line: column) {
@@ -42,12 +52,6 @@ void ButinBoard::generateDefaultBoard() {
     srand(time(nullptr));
     random_shuffle(all_pieces.begin(), all_pieces.end());
 
-    board.resize(BUTIN_BOARD_SIZE);
-    for (vector<vector<Piece *>> &column : board) {
-        column.resize(BUTIN_BOARD_SIZE);
-    }
-
-
     int count = 0;
     for (int i = 0; i < BUTIN_BOARD_SIZE; i++) {
         for (int j = 0; j < BUTIN_BOARD_SIZE; j++) {
@@ -56,10 +60,6 @@ void ButinBoard::generateDefaultBoard() {
     }
 }
 
-ButinBoard::ButinBoard() {
-//    cout << "Construction of " << *this;
-    generateDefaultBoard();
-}
 
 // TODO jsp si c'est nécessaire de mettre nullptr dedans
 void ButinBoard::initializeGame(const GameConfig& gc) {
