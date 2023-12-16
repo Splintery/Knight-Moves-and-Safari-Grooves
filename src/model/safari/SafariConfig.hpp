@@ -1,7 +1,7 @@
 #ifndef SAFARICONFIG_HPP
 #define SAFARICONFIG_HPP
 
-#include "GameConfig.hpp"
+#include "../GameConfig.hpp"
 
 class SafariConfig : public GameConfig {
 public:

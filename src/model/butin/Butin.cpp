@@ -43,9 +43,9 @@ void Butin::initializeGame(const GameConfig &gc) {
     gameStarted = true;
 }
 
-void Butin::makeMove(const Vector2i &from, const Vector2i &to) {
+void Butin::makeMove(ActionKey action, const Vector2i &from, const Vector2i &to) {
     playerList[currentPlayerIndex]->increaseScore(((ButinBoard *) board)->getJumpedPieceType(from, to));
-    board->makeMove(from, to, currentPlayerIndex);
+    board->makeMove(action, currentPlayerIndex, from, to);
 
     // skip to the next player is no more moves are available
     if (validMoves(to).empty()) {

@@ -10,10 +10,8 @@
 
 #include "../settings/SETTINGS.hpp"
 #include "../model/Game.hpp"
-#include "../model/Butin.hpp"
-//#include "../model/Board.hpp"
+#include "../model/butin/Butin.hpp"
 #include "../model/GameConfig.hpp"
-//#include "../utilities/Utilities.hpp"
 
 
 using namespace std;

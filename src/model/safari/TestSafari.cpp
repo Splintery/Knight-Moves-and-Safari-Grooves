@@ -18,9 +18,6 @@ int main() {
     sb -> board[0][3][0] = f3;
     sb -> board[2][3][0] = f4;
 
-//    for (Vector2i v : sb -> validMoves(sp -> getPosition(), 2)) {
-//        cout << "\t[" << v.x << ", " << v.y << "]" << endl;
-//    }
     cout << "isCaptured: " << (bool) sb -> isCaptured(sp) << endl;
     return EXIT_SUCCESS;
 }

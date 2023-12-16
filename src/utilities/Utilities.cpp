@@ -32,6 +32,20 @@ const string UtilityFunctions::getGounkiPieceString(GounkiPieceType type) {
     }
 }
 
+const int UtilityFunctions::getValueFromColor(ButinPieceType type){
+    switch (type) {
+        case ButinPieceType::Black:
+            return 3;
+        case ButinPieceType::Red:
+            return 2;
+        case ButinPieceType::Yellow:
+            return 1;
+        case ButinPieceType::EmptyButin:
+            return -1;
+    }
+    return 0;
+}
+
 void UtilityFunctions::printBoard(const std::vector<std::vector<std::vector<std::string>>> &board) {
     if (board.empty()) return; // Handle empty board
 

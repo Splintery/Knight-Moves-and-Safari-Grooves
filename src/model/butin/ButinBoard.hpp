@@ -9,9 +9,9 @@
 #include <algorithm>
 
 #include "ButinPiece.hpp"
-#include "Board.hpp"
+#include "../Board.hpp"
 #include "ButinConfig.hpp"
-#include "../settings/SETTINGS.hpp"
+#include "../../settings/SETTINGS.hpp"
 
 class ButinBoard : public Board {
 private:
@@ -25,7 +25,7 @@ public:
     virtual bool isGameDone() const;
     virtual void initializeGame(const GameConfig&);
     virtual const vector<vector<vector<string>>> getBoardState() const;
-    virtual void makeMove(const Vector2i& from, const Vector2i& to, const int playerIndex);
+    virtual void makeMove(ActionKey action, const int playerIndex, const Vector2i& from, const Vector2i& to);
     virtual const vector<Vector2i> validMoves(const Vector2i& from, const int playerIndex) const;
     virtual bool isWithinBounds(Vector2i pos) const;
     ButinPieceType getJumpedPieceType(const Vector2i &from, const Vector2i &to) const;

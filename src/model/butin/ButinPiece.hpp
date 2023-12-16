@@ -1,8 +1,8 @@
 #ifndef BUTINPIECE_HPP
 #define BUTINPIECE_HPP
 
-#include "Piece.hpp"
-#include "../utilities/Utilities.hpp"
+#include "../Piece.hpp"
+#include "../../utilities/Utilities.hpp"
 
 class ButinPiece : public Piece {
 public:
@@ -18,7 +18,6 @@ public:
     virtual void movePiece(Vector2i position);
 
     friend ostream &operator<<(ostream &, const ButinPiece &);
-    static int getValueFromColor(ButinPieceType color);
 };
 
 

@@ -31,8 +31,8 @@ void Safari::initializeGame(const GameConfig &gc) {
     currentStep = 0;
 }
 
-void Safari::makeMove(const Vector2i &from, const Vector2i &to) {
-    board->makeMove(from, to, currentPlayerIndex);
+void Safari::makeMove(ActionKey action, const Vector2i &from, const Vector2i &to) {
+    board->makeMove(action, from, to, currentPlayerIndex);
     currentStep++;
     if (currentStep == 2) {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
@@ -69,7 +69,7 @@ Safari::~Safari() {
     cout << "Destruction of " << *this;
 }
 
-ostream &operator<<(ostream &o, const Safari &s) {
+ostream &operator<<(ostream &o, const Safari &) {
     o << "Game: Safari" << endl;
     return o;
 }

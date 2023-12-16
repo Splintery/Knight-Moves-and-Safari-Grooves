@@ -94,7 +94,8 @@ const Vector2i ButinBoard::calculateJumpedPos(const Vector2i &from, const Vector
     return Vector2i((from.x + to.x) / 2, (from.y + to.y) / 2);
 }
 
-void ButinBoard::makeMove(const Vector2i &from, const Vector2i &to, const int playerIndex) {
+// No matter if it is a Left or Right-click the action stays the same
+void ButinBoard::makeMove(ActionKey action, const int playerIndex, const Vector2i &from, const Vector2i &to) {
     const Vector2i jumpedPos = calculateJumpedPos(from, to);
     ButinPiece* jumpedPiece = (ButinPiece*) board[jumpedPos.x][jumpedPos.y][0];
     ButinPiece* toPiece = (ButinPiece*) board[to.x][to.y][0];

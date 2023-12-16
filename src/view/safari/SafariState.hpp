@@ -1,7 +1,7 @@
 #ifndef SAFARISTATE_HPP
 #define SAFARISTATE_HPP
 
-#include "GameState.hpp"
+#include "../GameState.hpp"
 
 class SafariState : public GameState {
     public:

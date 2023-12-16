@@ -1,7 +1,7 @@
 #ifndef BUTINCONFIG_HPP
 #define BUTINCONFIG_HPP
 
-#include "GameConfig.hpp"
+#include "../GameConfig.hpp"
 
 class ButinConfig : public GameConfig {
 public:

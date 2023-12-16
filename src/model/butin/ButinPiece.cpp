@@ -1,7 +1,7 @@
 #include "ButinPiece.hpp"
 
 
-ButinPiece::ButinPiece(ButinPieceType color, Vector2i position):value {getValueFromColor(color)}, color {color} {
+ButinPiece::ButinPiece(ButinPieceType color, Vector2i position):value {UtilityFunctions::getValueFromColor(color)}, color {color} {
     this->position = position;
     cout << "Construction of " << *this;
 }
@@ -20,20 +20,6 @@ vector<Vector2i> ButinPiece::getMovementPatterns() const {
     patterns.push_back(Vector2i(2, 0));
     patterns.push_back(Vector2i(-2, 0));
     return patterns;
-}
-
-int ButinPiece::getValueFromColor(ButinPieceType type){
-    switch (type) {
-        case ButinPieceType::Black:
-            return 3;
-        case ButinPieceType::Red:
-            return 2;
-        case ButinPieceType::Yellow:
-            return 1;
-        case ButinPieceType::EmptyButin:
-            return -1;
-    }
-    return 0;
 }
 
 void ButinPiece::movePiece(Vector2i position) {

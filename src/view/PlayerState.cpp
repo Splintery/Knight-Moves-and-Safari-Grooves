@@ -1,6 +1,6 @@
 #include <iostream>
 #include "PlayerState.hpp"
-#include "ButinState.hpp"
+#include "butin/ButinState.hpp"
 
 PlayerState::PlayerState(Controller *controller): controller{controller}, minPlayers{controller -> game -> getMinMaxPlayers().first}, maxPlayers{controller -> game -> getMinMaxPlayers().second} {
     playerDisplayNames.insert(playerDisplayNames.begin(), Text());

@@ -1,9 +1,8 @@
 #include "SafariPiece.hpp"
-#include "../settings/SETTINGS.hpp"
+#include "../../settings/SETTINGS.hpp"
 
 SafariPiece::SafariPiece(SafariPieceType animal, Vector2i position): animal{animal} {
     this -> position = position;
-//    cout << "Construction of " << *this;
 }
 
 SafariPiece::~SafariPiece() {

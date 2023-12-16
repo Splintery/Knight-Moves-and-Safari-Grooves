@@ -1,7 +1,7 @@
 #ifndef BUTINSTATE_H
 #define BUTINSTATE_H
 
-#include "GameState.hpp"
+#include "../GameState.hpp"
 
 using namespace sf;
 

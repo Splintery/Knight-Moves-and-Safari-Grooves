@@ -1,5 +1,5 @@
 #include "ButinState.hpp"
-#include "../model/Butin.hpp"
+#include "../../model/butin/Butin.hpp"
 
 using namespace std;
 
@@ -151,7 +151,7 @@ void ButinState::update() {
     if (moveReady) {
         int oldPlayerIndex = currentPlayerIndex;
         moveReady = false;
-        controller -> game -> makeMove(*fromTile, *toTile);
+        controller -> game -> makeMove(ActionKey::LeftClick, *fromTile, *toTile);
         currentPlayerIndex = controller -> game -> getCurrentPlayerIndex();
         movesPossible.clear();
 

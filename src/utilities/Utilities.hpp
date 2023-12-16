@@ -45,6 +45,8 @@ namespace UtilityFunctions {
 
     const string getGounkiPieceString(GounkiPieceType type);
 
+    const int getValueFromColor(ButinPieceType color);
+
     void printBoard(const std::vector<std::vector<std::vector<std::string>>>& board);
 }
 

@@ -1,8 +1,8 @@
 #ifndef SAFARIPIECE_HPP
 #define SAFARIPIECE_HPP
 
-#include "Piece.hpp"
-#include "../utilities/Utilities.hpp"
+#include "../Piece.hpp"
+#include "../../utilities/Utilities.hpp"
 
 class SafariPiece : public Piece {
     public:

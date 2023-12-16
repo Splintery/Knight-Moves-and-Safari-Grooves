@@ -1,7 +1,8 @@
 #include "SafariBoard.hpp"
-#include "../settings/SETTINGS.hpp"
+#include "../../settings/SETTINGS.hpp"
 
 #include <cmath>
+#include <memory>
 
 // TODO ne pas créer d'objet vide et juste stocker un nullptr
 SafariBoard::SafariBoard(): tilesToCapture{8} {
@@ -19,27 +20,26 @@ SafariBoard::SafariBoard(): tilesToCapture{8} {
 }
 
 bool SafariBoard::isCaptured(const SafariPiece *piece) const {
-    auto *mark = new vector<vector<bool>>(SAFARI_BOARD_SIZE);
+    unique_ptr<vector<vector<bool>>> mark(new vector<vector<bool>>(SAFARI_BOARD_SIZE));
+
     for (auto &v : *mark) {
         for (int j = 0; j < SAFARI_BOARD_SIZE; j++) {
             v.push_back(false);
         }
     }
-//    int tmp = getAccessibleTiles(piece -> getPosition(), piece -> getMovementPatterns(), mark);
-//    cout << "Accessible tiles from pos[" << piece -> getPosition().x << ", " << piece -> getPosition().y << "] = " << tmp << endl;
-    delete(mark);
-    return getAccessibleTiles(piece -> getPosition(), piece -> getMovementPatterns(), mark) > tilesToCapture;
+    return getAccessibleTiles(piece -> getPosition(), piece -> getMovementPatterns(), mark.get()) > tilesToCapture;
 }
 int SafariBoard::getAccessibleTiles(const Vector2i &from, const vector<Vector2i> &patterns, vector<vector<bool>> *mark) const {
     (*mark)[from.x][from.y] = true;
+    int res = 1;
     vector<Vector2i> moves = getPositionFromPatterns(from, patterns);
     for (Vector2i pos : moves) {
         if (!(*mark)[pos.x][pos.y]) {
-            return getAccessibleTiles(pos, patterns, mark) + 1;
+            res += getAccessibleTiles(pos, patterns, mark);
+            return res;
         }
     }
-    // The tile we are currently on
-    return 1;
+    return res;
 }
 vector<Vector2i> SafariBoard::getPositionFromPatterns(const Vector2i &from, const vector<Vector2i> &patterns) const {
     vector<Vector2i> moves;
@@ -109,9 +109,12 @@ bool SafariBoard::isGameDone() const {
             }
         }
     }
+    // For this game, it is considered to be finished if there is only one species of animal not captured on the board
+    // Or it is a tie if all the animals got captured
     return (crocodileCaptured == ANIMALS_PER_PLAYER && elephantCaptured == ANIMALS_PER_PLAYER && lionCaptured < ANIMALS_PER_PLAYER)
         || (crocodileCaptured == ANIMALS_PER_PLAYER && elephantCaptured < ANIMALS_PER_PLAYER && lionCaptured == ANIMALS_PER_PLAYER)
-        || (crocodileCaptured < ANIMALS_PER_PLAYER && elephantCaptured == ANIMALS_PER_PLAYER && lionCaptured == ANIMALS_PER_PLAYER);
+        || (crocodileCaptured < ANIMALS_PER_PLAYER && elephantCaptured == ANIMALS_PER_PLAYER && lionCaptured == ANIMALS_PER_PLAYER)
+        || (crocodileCaptured == ANIMALS_PER_PLAYER && elephantCaptured == ANIMALS_PER_PLAYER && lionCaptured == ANIMALS_PER_PLAYER);
 }
 void SafariBoard::initializeGame(const GameConfig& gc) {
     auto& sc = (SafariConfig&) gc;
@@ -134,22 +137,36 @@ const vector<vector<vector<string>>> SafariBoard::getBoardState() const {
     vector<vector<vector<string>>> boardState(SAFARI_BOARD_SIZE, vector<vector<string>>(SAFARI_BOARD_SIZE));
     for (int i = 0; i < SAFARI_BOARD_SIZE; i++) {
         for (int j = 0; j < SAFARI_BOARD_SIZE; j++) {
-            string s;
-            if (board[i][j][0] == nullptr) {
-                s = UtilityFunctions::getSafariPieceString(SafariPieceType::EmptySafari);
-            }
-            else {
-                s = UtilityFunctions::getSafariPieceString(
-                ((SafariPiece *) board[i][j][0]) -> animal
-                );
-            }
-            boardState[i][j].push_back(s);
+            boardState[i][j].push_back(
+                UtilityFunctions::getSafariPieceString(((SafariPiece *) board[i][j][0]) -> animal)
+            );
         }
     }
     return boardState;
 }
-void SafariBoard::makeMove(const Vector2i &from, const Vector2i &to, const int playerIndex) {
-
+// In order to place a fence only "from" is necessary hence why we have a default value for "to"
+// it makes it cleaner in the View of Safari
+void SafariBoard::makeMove(ActionKey action, const int playerIndex, const Vector2i &from, const Vector2i &to = Vector2i(0, 0)) {
+    SafariPiece *fromPiece;
+    SafariPiece *toPiece;
+    SafariPiece *newFence;
+    switch (action) {
+        // Left-click = move animal
+        case ActionKey::LeftClick:
+            fromPiece = (SafariPiece *) board[from.x][from.y][0];
+            toPiece = (SafariPiece *) board[to.x][to.y][0];
+            board[to.x][to.y][0] = fromPiece;
+            board[from.x][from.y][0] = toPiece;
+            break;
+        // Right-click = place Fence
+        case ActionKey::RightClick:
+            newFence = new SafariPiece(SafariPieceType::Fence, Vector2i(from.x, from.y));
+            delete(board[from.x][from.y][0]);
+            board[from.x][from.y][0] = newFence;
+            break;
+        default:
+            break;
+    }
 }
 const vector<Vector2i> SafariBoard::validMoves(const Vector2i &from, const int playerIndex) const {
     vector<Vector2i> moves;

@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "Board.hpp"
+#include "../Board.hpp"
 #include "SafariPiece.hpp"
 #include "SafariConfig.hpp"
 
@@ -21,7 +21,7 @@ public:
     virtual bool isGameDone() const;
     virtual void initializeGame(const GameConfig&);
     virtual const vector<vector<vector<string>>> getBoardState() const;
-    virtual void makeMove(const Vector2i &from, const Vector2i &to, const int playerIndex);
+    virtual void makeMove(ActionKey action, const int playerIndex, const Vector2i &from, const Vector2i &to);
     virtual const vector<Vector2i> validMoves(const Vector2i &from, const int playerIndex) const;
     bool isWithinBounds(Vector2i pos) const;
 
