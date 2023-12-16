@@ -12,6 +12,19 @@ void GameState::drawBase() {
     controller -> window -> draw(backBoard);
     controller -> window -> draw(board);
 }
+void GameState::drawPieces() {
+    for (int i = 0; i < (int) pieces.size(); i++) {
+        for (int j = 0; j < (int) pieces.size(); j++) {
+            if (pieces[i][j][0] != "") {
+                pieceSprite -> setTexture(controller -> resource -> getTexture(pieces[i][j][0]));
+                pieceSprite -> setScale(1.25, 1.25);
+                Vector2i v{i, j};
+                controller -> input -> positionPieceWithinBoard(pieceSprite, board, v, BUTIN_BOARD_SIZE);
+                controller -> window -> draw(*pieceSprite);
+            }
+        }
+    }
+}
 void GameState::updateScoresDisplay() {
     vector<string> newScores = ((Butin *) controller -> game) -> getPlayerScores();
     for (size_t i = 0; i < playerScoresDisplay.size(); i++) {

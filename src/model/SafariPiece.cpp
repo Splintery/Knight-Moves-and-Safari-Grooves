@@ -3,7 +3,7 @@
 
 SafariPiece::SafariPiece(SafariPieceType animal, Vector2i position): animal{animal} {
     this -> position = position;
-    cout << "Construction of " << *this;
+//    cout << "Construction of " << *this;
 }
 
 SafariPiece::~SafariPiece() {
@@ -23,19 +23,19 @@ vector<Vector2i> SafariPiece::getMovementPatterns() const {
             return patterns;
         default:
             // Move to the right
-            for (int i = 1; i < SAFARI_BOARD_SIZE; i++) {
+            for (int i = 0; i < SAFARI_BOARD_SIZE; i+=2) {
                 patterns.push_back(Vector2i(i, 0));
             }
             // Move to the left
-            for (int i = SAFARI_BOARD_SIZE - 1; i >= 0; i--) {
+            for (int i = SAFARI_BOARD_SIZE - 1; i >= 0; i-=2) {
                 patterns.push_back(Vector2i(-i, 0));
             }
             // Move to the top
-            for (int i = 0; i < SAFARI_BOARD_SIZE; i++) {
+            for (int i = 0; i < SAFARI_BOARD_SIZE; i+=2) {
                 patterns.push_back(Vector2i(0, i));
             }
             // Move to the bottom
-            for (int i = SAFARI_BOARD_SIZE - 1; i >= 0; i--) {
+            for (int i = SAFARI_BOARD_SIZE - 1; i >= 0; i-=2) {
                 patterns.push_back(Vector2i(0, -i));
             }
             break;

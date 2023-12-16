@@ -1,7 +1,6 @@
 #ifndef BUTINSTATE_H
 #define BUTINSTATE_H
 
-#include "../controller/Controller.hpp"
 #include "GameState.hpp"
 
 using namespace sf;
@@ -15,7 +14,6 @@ class ButinState: public GameState {
 		void update();
 		void draw();
 	private:
-        void drawPieces();
         void boardFactory();
         Texture& backBoardFactory();
         vector<Vector2i> piecesToRemove;

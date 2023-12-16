@@ -117,19 +117,6 @@ void ButinState::handleInput() {
 	}
 }
 
-void ButinState::drawPieces() {
-    for (int i = 0; i < (int) pieces.size(); i++) {
-        for (int j = 0; j < (int) pieces.size(); j++) {
-            if (pieces[i][j][0] != "") {
-                pieceSprite -> setTexture(controller -> resource -> getTexture(pieces[i][j][0]));
-                pieceSprite -> setScale(1.25, 1.25);
-                Vector2i v{i, j};
-                controller -> input -> positionPieceWithinBoard(pieceSprite, board, v, BUTIN_BOARD_SIZE);
-                controller -> window -> draw(*pieceSprite);
-            }
-        }
-    }
-}
 void ButinState::draw() {
 	controller -> window -> clear();
 
@@ -153,7 +140,7 @@ void ButinState::draw() {
         }
 
         // Draws all the pieces on their Tiles
-        drawPieces();
+        GameState::drawPieces();
     }
     GameState::drawPlayerDisplay();
 	controller -> window -> display();

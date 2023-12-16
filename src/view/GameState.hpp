@@ -32,7 +32,7 @@ class GameState: public State {
         // one Sprite will have its texture changed and position replaced to draw all the pieces
         // insted of having a sprite for each of the pieces on the board
         Sprite *pieceSprite = nullptr;
-        virtual void drawPieces() = 0;
+        virtual void drawPieces();
 
         int currentPlayerIndex;
         vector<Text> playerNamesDisplay;

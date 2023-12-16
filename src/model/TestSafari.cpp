@@ -5,24 +5,22 @@
 int main() {
     SafariPiece *sp = new SafariPiece(SafariPieceType::Lion, Vector2i(0, 0));
 
-    vector<Vector2i> cro;
-    vector<Vector2i> ele;
-    vector<Vector2i> lio;
-    lio.push_back(sp -> getPosition());
-    vector<Vector2i> fen;
-
     SafariBoard *sb = new SafariBoard();
 
-    cout << sb -> board.size() << endl;
-    vector<Piece *> vp;
-    vp.push_back(sp);
-    sb -> board[0][0] = vp;
-    sb -> board[0][0][0] -> movePiece(sp -> getPosition());
+    sb -> board[0][0][0] = sp;
 
-    cout << "Moves Possible :" << endl;
+    SafariPiece *f1 = new SafariPiece(SafariPieceType::Fence, Vector2i(3, 0));
+    SafariPiece *f2 = new SafariPiece(SafariPieceType::Fence, Vector2i(3, 2));
+    SafariPiece *f3 = new SafariPiece(SafariPieceType::Fence, Vector2i(0, 3));
+    SafariPiece *f4 = new SafariPiece(SafariPieceType::Fence, Vector2i(2, 3));
+    sb -> board[3][0][0] = f1;
+    sb -> board[3][2][0] = f2;
+    sb -> board[0][3][0] = f3;
+    sb -> board[2][3][0] = f4;
 
-    for (Vector2i v : sb -> validMoves(sp -> getPosition(), 2)) {
-        cout << "\t[" << v.x << ", " << v.y << "]" << endl;
-    }
+//    for (Vector2i v : sb -> validMoves(sp -> getPosition(), 2)) {
+//        cout << "\t[" << v.x << ", " << v.y << "]" << endl;
+//    }
+    cout << "isCaptured: " << (bool) sb -> isCaptured(sp) << endl;
     return EXIT_SUCCESS;
 }
