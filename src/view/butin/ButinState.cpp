@@ -73,7 +73,7 @@ void ButinState::handleInput() {
 
                             if (fromTile == nullptr) {
                                 fromTile = new Vector2i(tileClicked);
-                                movesPossible = controller -> game -> validMoves(*fromTile);
+                                movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
                             } else {
                                 if (!playerPlayed) {
                                     if (*fromTile == tileClicked) {
@@ -83,7 +83,7 @@ void ButinState::handleInput() {
                                     } else {
                                         delete(fromTile);
                                         fromTile = new Vector2i(tileClicked);
-                                        movesPossible = controller -> game -> validMoves(*fromTile);
+                                        movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
                                     }
                                 }
                             }
@@ -167,7 +167,7 @@ void ButinState::update() {
             fromTile = new Vector2i(*toTile);
             delete(toTile);
             toTile = nullptr;
-            movesPossible = controller -> game -> validMoves(*fromTile);
+            movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
         }
 
         if (controller -> game -> hasGameStarted() && controller -> game -> isGameDone()) {

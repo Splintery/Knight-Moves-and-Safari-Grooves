@@ -32,7 +32,7 @@ void Safari::initializeGame(const GameConfig &gc) {
 }
 
 void Safari::makeMove(ActionKey action, const Vector2i &from, const Vector2i &to) {
-    board->makeMove(action, from, to, currentPlayerIndex);
+    board->makeMove(action, currentPlayerIndex, from, to);
     currentStep++;
     if (currentStep == 2) {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
@@ -40,8 +40,8 @@ void Safari::makeMove(ActionKey action, const Vector2i &from, const Vector2i &to
     }
 }
 
-const vector<Vector2i> Safari::validMoves(const Vector2i &from) const {
-    return board->validMoves(from, currentPlayerIndex);
+const vector<Vector2i> Safari::validMoves(ActionKey action, const Vector2i &from) const {
+    return board->validMoves(action, currentPlayerIndex, from);
 }
 
 const vector<vector<vector<string>>> Safari::getBoardState() const {

@@ -1,8 +1,4 @@
 #include "SafariBoard.hpp"
-#include "../../settings/SETTINGS.hpp"
-
-#include <cmath>
-#include <memory>
 
 // TODO ne pas créer d'objet vide et juste stocker un nullptr
 SafariBoard::SafariBoard(): tilesToCapture{8} {
@@ -29,6 +25,7 @@ bool SafariBoard::isCaptured(const SafariPiece *piece) const {
     }
     return getAccessibleTiles(piece -> getPosition(), piece -> getMovementPatterns(), mark.get()) > tilesToCapture;
 }
+
 int SafariBoard::getAccessibleTiles(const Vector2i &from, const vector<Vector2i> &patterns, vector<vector<bool>> *mark) const {
     (*mark)[from.x][from.y] = true;
     int res = 1;
@@ -41,6 +38,7 @@ int SafariBoard::getAccessibleTiles(const Vector2i &from, const vector<Vector2i>
     }
     return res;
 }
+
 vector<Vector2i> SafariBoard::getPositionFromPatterns(const Vector2i &from, const vector<Vector2i> &patterns) const {
     vector<Vector2i> moves;
     bool noFence;
@@ -81,6 +79,7 @@ vector<Vector2i> SafariBoard::getPositionFromPatterns(const Vector2i &from, cons
     }
     return moves;
 }
+
 bool SafariBoard::isGameDone() const {
     int crocodileCaptured = 0;
     int elephantCaptured = 0;
@@ -116,6 +115,7 @@ bool SafariBoard::isGameDone() const {
         || (crocodileCaptured < ANIMALS_PER_PLAYER && elephantCaptured == ANIMALS_PER_PLAYER && lionCaptured == ANIMALS_PER_PLAYER)
         || (crocodileCaptured == ANIMALS_PER_PLAYER && elephantCaptured == ANIMALS_PER_PLAYER && lionCaptured == ANIMALS_PER_PLAYER);
 }
+
 void SafariBoard::initializeGame(const GameConfig& gc) {
     auto& sc = (SafariConfig&) gc;
 
@@ -132,6 +132,7 @@ void SafariBoard::initializeGame(const GameConfig& gc) {
         board[fenPos.x][fenPos.y].push_back(new SafariPiece(SafariPieceType::Fence, fenPos));
     }
 }
+
 const vector<vector<vector<string>>> SafariBoard::getBoardState() const {
     // initialize a vector of SAFARI_BOARD_SIZE elements of vector<vector<string>> initalized at SAFARI_BOARD_SIZE
     vector<vector<vector<string>>> boardState(SAFARI_BOARD_SIZE, vector<vector<string>>(SAFARI_BOARD_SIZE));
@@ -144,9 +145,10 @@ const vector<vector<vector<string>>> SafariBoard::getBoardState() const {
     }
     return boardState;
 }
+
 // In order to place a fence only "from" is necessary hence why we have a default value for "to"
 // it makes it cleaner in the View of Safari
-void SafariBoard::makeMove(ActionKey action, const int playerIndex, const Vector2i &from, const Vector2i &to = Vector2i(0, 0)) {
+void SafariBoard::makeMove(ActionKey action, int playerIndex, const Vector2i &from, const Vector2i &to = Vector2i(0, 0)) {
     SafariPiece *fromPiece;
     SafariPiece *toPiece;
     SafariPiece *newFence;
@@ -168,7 +170,8 @@ void SafariBoard::makeMove(ActionKey action, const int playerIndex, const Vector
             break;
     }
 }
-const vector<Vector2i> SafariBoard::validMoves(const Vector2i &from, const int playerIndex) const {
+
+const vector<Vector2i> SafariBoard::validMoves(ActionKey action, int playerIndex, const Vector2i &from) const {
     vector<Vector2i> moves;
     auto* piece = (SafariPiece *)board[from.x][from.y][0];
     // Permet de vérifier que la case clické n'est pas vide
@@ -201,12 +204,13 @@ const vector<Vector2i> SafariBoard::validMoves(const Vector2i &from, const int p
     return moves;
 
 }
+
 bool SafariBoard::isWithinBounds(Vector2i pos) const {
     return (pos.x >= 0 && pos.x < SAFARI_BOARD_SIZE && pos.y >= 0 && pos.y < SAFARI_BOARD_SIZE);
 }
 
 SafariBoard::~SafariBoard() {
-    cout << "destruction of " << *this << endl;
+    cout << "Destruction of " << *this << endl;
 }
 
 ostream &operator<<(ostream &out, const SafariBoard &) {

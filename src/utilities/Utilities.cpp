@@ -23,11 +23,11 @@ const string UtilityFunctions::getSafariPieceString(SafariPieceType type) {
 
 const string UtilityFunctions::getGounkiPieceString(GounkiPieceType type) {
     switch (type) {
-        case GounkiPieceType::BlackSquare: return "";
-        case GounkiPieceType::BlackCircle: return "";
-        case GounkiPieceType::WhiteSquare: return "";
-        case GounkiPieceType::WhiteCircle: return "";
-        case GounkiPieceType::EmptyGounki: return "";
+        case GounkiPieceType::BlackSquare: return "BlackSquare";
+        case GounkiPieceType::BlackCircle: return "BlackCircle";
+        case GounkiPieceType::WhiteSquare: return "WhiteSquare";
+        case GounkiPieceType::WhiteCircle: return "WhiteCircle";
+        case GounkiPieceType::EmptyGounki: return "EmptyGounki";
         default: return "";
     }
 }

@@ -10,6 +10,7 @@
 #define DARK_MODE false
 
 #define BUTIN_BOARD_SIZE 8
+#define GOUNKI_BOARD_SIZE 8
 #define SAFARI_BOARD_SIZE 15
 #define ANIMALS_PER_PLAYER 3
 

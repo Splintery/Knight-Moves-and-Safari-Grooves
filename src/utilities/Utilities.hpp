@@ -4,7 +4,9 @@
 #include <unordered_map>
 #include <iostream>
 #include <vector>
+#include <SFML/System/Vector2.hpp>
 using namespace std;
+using namespace sf;
 
 enum class ButinPieceType {
     Red,
