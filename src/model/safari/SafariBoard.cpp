@@ -18,7 +18,7 @@ SafariBoard::SafariBoard(): tilesToCapture{8} {
 bool SafariBoard::isCaptured(const SafariPiece *piece) const {
     unique_ptr<vector<vector<bool>>> mark(new vector<vector<bool>>(SAFARI_BOARD_SIZE));
 
-    for (auto &v : *mark) {
+    for (vector<bool>& v : *mark) {
         for (int j = 0; j < SAFARI_BOARD_SIZE; j++) {
             v.push_back(false);
         }
@@ -117,7 +117,7 @@ bool SafariBoard::isGameDone() const {
 }
 
 void SafariBoard::initializeGame(const GameConfig& gc) {
-    auto& sc = (SafariConfig&) gc;
+    SafariConfig& sc = (SafariConfig&) gc;
 
     for (Vector2i crocPos : sc.crocodiles) {
         board[crocPos.x][crocPos.y].push_back(new SafariPiece(SafariPieceType::Crocodile, crocPos));
@@ -149,9 +149,9 @@ const vector<vector<vector<string>>> SafariBoard::getBoardState() const {
 // In order to place a fence only "from" is necessary hence why we have a default value for "to"
 // it makes it cleaner in the View of Safari
 void SafariBoard::makeMove(ActionKey action, int playerIndex, const Vector2i &from, const Vector2i &to = Vector2i(0, 0)) {
-    SafariPiece *fromPiece;
-    SafariPiece *toPiece;
-    SafariPiece *newFence;
+    SafariPiece* fromPiece;
+    SafariPiece* toPiece;
+    SafariPiece* newFence;
     switch (action) {
         // Left-click = move animal
         case ActionKey::LeftClick:
@@ -163,7 +163,7 @@ void SafariBoard::makeMove(ActionKey action, int playerIndex, const Vector2i &fr
         // Right-click = place Fence
         case ActionKey::RightClick:
             newFence = new SafariPiece(SafariPieceType::Fence, Vector2i(from.x, from.y));
-            delete(board[from.x][from.y][0]);
+            delete((SafariPiece*)board[from.x][from.y][0]);
             board[from.x][from.y][0] = newFence;
             break;
         default:
@@ -202,7 +202,6 @@ const vector<Vector2i> SafariBoard::validMoves(ActionKey action, int playerIndex
 
     moves = getPositionFromPatterns(from, piece -> getMovementPatterns());
     return moves;
-
 }
 
 bool SafariBoard::isWithinBounds(Vector2i pos) const {

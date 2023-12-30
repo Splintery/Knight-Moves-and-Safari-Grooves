@@ -15,7 +15,12 @@ bool Gounki::isGameDone() const {
 }
 
 string Gounki::getWinner() const {
-    return std::string();
+    for (Player * p : playerList) {
+        if (p->getScore() == GOUNKI_BOARD_SIZE * 2)
+            return p->name;
+    }
+    int index = ((GounkiBoard*)board)->getWinnerIndex();
+    return playerList[index]->name;
 }
 
 bool Gounki::hasGameStarted() const {
@@ -33,26 +38,29 @@ void Gounki::initializeGame(const GameConfig &) {
     gameStarted = true;
 }
 
-void Gounki::makeMove(ActionKey action, const Vector2i &from, const Vector2i &to) {
-    GounkiBoard * board = (GounkiBoard*) board;
-    if (action == ActionKey::LeftClick && board->isLandedCaseEnnemy(from, to)) {
+void Gounki::makeMove(ActionKey action, const Vector2i& from, const Vector2i& to) {
+    GounkiBoard* gounkiBoard = (GounkiBoard*) board;
+    if (action == ActionKey::LeftClick && gounkiBoard->isLandedCaseEnnemy(from, to)) {
         playerList[currentPlayerIndex]->increaseScore(board->board[to.x][to.y].size());
     }
     board->makeMove(action, currentPlayerIndex, from, to);
 
-    // a classic movement is done in one step
-    if (action == ActionKey::LeftClick) {
-        currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
-    }
-    else if (action == ActionKey::RightClick) {
-        size_t currentDeploymentSize = board->currentDeploymentSize();
-        // it's the next player's turn if the deployment is done
-        // or if the deployment can't be finished
-        if (currentDeploymentSize == 0
-        || board->validMoves(action, currentPlayerIndex, to).size() == 0)
+    switch (action) {
+        // a classic movement is done in one step
+        case ActionKey::LeftClick:
             currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
+            break;
+        case ActionKey::RightClick:
+            size_t currentDeploymentSize = gounkiBoard->currentDeploymentSize();
+            // it's the next player's turn if the deployment is done
+            // or if the deployment can't be finished
+            if (currentDeploymentSize == 0
+            || board->validMoves(action, currentPlayerIndex, to).size() == 0) {
+                currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
+                gounkiBoard->clearDeploymentStatus();
+            }
+            break;
     }
-
 }
 
 const vector<Vector2i> Gounki::validMoves(ActionKey action, const Vector2i &from) const {
