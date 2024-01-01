@@ -12,11 +12,11 @@ const string UtilityFunctions::getButinPieceString(ButinPieceType type) {
 
 const string UtilityFunctions::getSafariPieceString(SafariPieceType type) {
     switch (type) {
-        case SafariPieceType::Crocodile: return "Krokodil";
-        case SafariPieceType::Elephant: return "elefan";
-        case SafariPieceType::Lion: return "lion";
+        case SafariPieceType::Crocodile: return "crocodilePiece";
+        case SafariPieceType::Elephant: return "elephantPiece";
+        case SafariPieceType::Lion: return "lionPiece";
         case SafariPieceType::Fence: return "fence";
-        case SafariPieceType::EmptySafari: return "emptySafari";
+        case SafariPieceType::EmptySafari: return "";
         default: return "";
     }
 }
@@ -32,8 +32,8 @@ const string UtilityFunctions::getGounkiPieceString(GounkiPieceType type) {
     }
 }
 
-const int UtilityFunctions::getValueFromColor(ButinPieceType type){
-    switch (type) {
+const int UtilityFunctions::getValueFromColor(ButinPieceType color){
+    switch (color) {
         case ButinPieceType::Black:
             return 3;
         case ButinPieceType::Red:
@@ -44,6 +44,16 @@ const int UtilityFunctions::getValueFromColor(ButinPieceType type){
             return -1;
     }
     return 0;
+}
+const SafariPieceType UtilityFunctions::getSafariPieceType(string type) {
+    if (type == "crocodilePiece")   return SafariPieceType::Crocodile;
+    if (type == "elephantPiece")    return SafariPieceType::Elephant;
+    if (type == "lionPiece")    return SafariPieceType::Lion;
+    if (type == "fence")    return SafariPieceType::Fence;
+    return SafariPieceType::EmptySafari;
+}
+int UtilityFunctions::getPlayerFromAnimal(SafariPieceType animal) {
+    return (int) animal;
 }
 
 void UtilityFunctions::printBoard(const std::vector<std::vector<std::vector<std::string>>> &board) {

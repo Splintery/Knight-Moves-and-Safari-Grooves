@@ -1,9 +1,8 @@
 #include "ButinState.hpp"
-#include "../../model/butin/Butin.hpp"
 
 using namespace std;
 
-ButinState::ButinState(Controller *controller) : GameState(controller) {
+ButinState::ButinState(Controller *controller): GameState(controller, BUTIN_BOARD_SIZE) {
 	// do stuff in init rather then here
 }
 ButinState::~ButinState() {
@@ -21,12 +20,13 @@ void ButinState::init() {
     initInstructions.setFont(controller -> resource -> getFont("pixel"));
     initInstructions.setFillColor(Color(172, 50, 50));
     initInstructions.setCharacterSize(TEXT_SIZE);
-    initInstructions.setString("Each player select a yellow tile to remove from the game");
+    initInstructions.setString("Each player must select a yellow tile to remove from the game");
     initInstructions.setPosition(
         center.x - initInstructions.getGlobalBounds().width / 2, TILE_SIZE * 0.25
     );
 
     pieceSprite = new Sprite();
+    pieceSprite -> setScale(1.25, 1.25);
 
     boardFactory();
     board.setTexture(render.getTexture());
@@ -63,10 +63,8 @@ void ButinState::handleInput() {
                 break;
             case sf::Event::MouseButtonPressed:
                 if (controller -> input -> isSpriteClicked(board, Mouse::Left, *controller -> window)) {
-                    Vector2i tileClicked = controller -> input -> getTileWithinBoard(
-                        board,
-                        controller -> input -> getMousePosition(*controller -> window),
-                        BUTIN_BOARD_SIZE
+                    Vector2i tileClicked = GameState::getTileWithinBoard(
+                        controller -> input -> getMousePosition(*controller -> window)
                     );
                     if (pieces[tileClicked.x][tileClicked.y][0] == "yellowPiece") {
                         if (controller -> game -> hasGameStarted()) {
@@ -127,8 +125,8 @@ void ButinState::draw() {
     } else {
         if (controller -> game -> hasGameStarted()) {
             if (fromTile != nullptr) {
-                GameState::drawSelectedTile();
                 GameState::drawMovesPossible();
+                GameState::drawSelectedTile();
             }
         } else {
             controller -> window -> draw(initInstructions);
@@ -176,6 +174,7 @@ void ButinState::update() {
         GameState::updateScoresDisplay();
     }
 }
+
 void ButinState::boardFactory() {
     Sprite whiteTileSprite = Sprite();
     Texture whiteTile = Texture();

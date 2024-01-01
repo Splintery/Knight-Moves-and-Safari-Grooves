@@ -9,12 +9,13 @@
 
 class SafariBoard : public Board {
 private:
+    const int nbPlayers;
     const int tilesToCapture;
     bool isCaptured(const SafariPiece *) const;
     int getAccessibleTiles(const Vector2i &from, const vector<Vector2i> &patterns, vector<vector<bool>> *mark) const;
     vector<Vector2i> getPositionFromPatterns(const Vector2i &from, const vector<Vector2i> &patterns) const;
 public:
-    SafariBoard();
+    SafariBoard(int nbPlayers);
     virtual ~ SafariBoard();
     SafariBoard(const SafariBoard &) = delete;
 

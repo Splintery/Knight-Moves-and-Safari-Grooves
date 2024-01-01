@@ -25,7 +25,7 @@ void MenuState::buttonFactory() {
     rd.draw(buttonFrameSprite);
     Text butinText;
     butinText.setFont(controller -> resource -> getFont("pixel"));
-    butinText.setString("Add");
+    butinText.setString("end turn");
     butinText.setStyle(Text::Bold);
     butinText.setCharacterSize(TEXT_SIZE);
     butinText.setFillColor(Color::Black);
@@ -36,7 +36,7 @@ void MenuState::buttonFactory() {
     );
 
     Image colorBg;
-    colorBg.create(240, 120, Color(61, 68, 144));
+    colorBg.create(240, 120, Color(247, 194, 52));
     Texture bg;
     bg.loadFromImage(colorBg);
     Sprite bgSprite;
@@ -49,7 +49,7 @@ void MenuState::buttonFactory() {
     rd.draw(buttonFrameSprite);
     rd.draw(butinText);
     rd.display();
-//    rd.getTexture().copyToImage().saveToFile("resources/button/EnabledAddButton.png");
+//    rd.getTexture().copyToImage().saveToFile("resources/button/EnabledEndTurnButton.png");
 }
 
 void MenuState::init() {
@@ -104,6 +104,9 @@ void MenuState::handleInput() {
                 cout << "pressed gounki" << endl;
             } else if (controller -> input -> isSpriteClicked(safariButton, Mouse::Left, *controller -> window)) {
                 cout << "pressed safari" << endl;
+                controller -> setNewGame(new Safari(), "safari");
+                cout << "in menuState going to player...\n";
+                controller -> machine -> addState(new PlayerState(controller), false);
             }
         }
 

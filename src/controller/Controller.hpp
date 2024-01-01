@@ -11,6 +11,7 @@
 #include "../settings/SETTINGS.hpp"
 #include "../model/Game.hpp"
 #include "../model/butin/Butin.hpp"
+#include "../model/safari/Safari.hpp"
 #include "../model/GameConfig.hpp"
 
 

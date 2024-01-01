@@ -1,7 +1,6 @@
 #include "Safari.hpp"
 
-Safari::Safari() {
-    board = new SafariBoard();
+Safari::Safari(): currentWinner{currentPlayerIndex} {
     cout << "Construction of " << *this;
 }
 
@@ -9,9 +8,8 @@ bool Safari::isGameDone() const {
     return board->isGameDone();
 }
 
-// TODO getWinner
 string Safari::getWinner() const {
-    return std::string();
+    return playerList[currentWinner] -> name;
 }
 
 bool Safari::hasGameStarted() const {
@@ -23,6 +21,7 @@ void Safari::initPlayers(vector<string> playerNames) {
         playerList.push_back(new Player(s));
     }
     currentPlayerIndex = 0;
+    board = new SafariBoard(playerNames.size());
 }
 
 void Safari::initializeGame(const GameConfig &gc) {
@@ -32,9 +31,10 @@ void Safari::initializeGame(const GameConfig &gc) {
 }
 
 void Safari::makeMove(ActionKey action, const Vector2i &from, const Vector2i &to) {
-    board->makeMove(action, from, to, currentPlayerIndex);
+    board->makeMove(action, currentPlayerIndex, from, to);
     currentStep++;
     if (currentStep == 2) {
+        currentWinner = currentPlayerIndex;
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
         currentStep = 0;
     }

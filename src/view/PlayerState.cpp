@@ -1,6 +1,7 @@
 #include <iostream>
 #include "PlayerState.hpp"
 #include "butin/ButinState.hpp"
+#include "safari/SafariState.hpp"
 
 PlayerState::PlayerState(Controller *controller): controller{controller}, minPlayers{controller -> game -> getMinMaxPlayers().first}, maxPlayers{controller -> game -> getMinMaxPlayers().second} {
     playerDisplayNames.insert(playerDisplayNames.begin(), Text());
@@ -99,7 +100,7 @@ void PlayerState::goToGameState() {
     } else if (gameToLaunch == "gounki") {
         // TODO: launch GounkiGameState
     } else if (gameToLaunch == "safari") {
-        // TODO: launch SafariGameState
+        controller -> machine -> addState(new SafariState(controller), true);
     } else {
         cout << "no game is running" << endl;
     }

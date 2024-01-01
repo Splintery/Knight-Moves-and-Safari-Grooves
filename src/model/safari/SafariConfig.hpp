@@ -8,10 +8,10 @@ public:
     SafariConfig();
     SafariConfig(const SafariConfig&);
     virtual ~SafariConfig();
-    const vector<Vector2i> crocodiles;
-    const vector<Vector2i> elephants;
-    const vector<Vector2i> lions;
-    const vector<Vector2i> fences;
+    vector<Vector2i> crocodiles;
+    vector<Vector2i> elephants;
+    vector<Vector2i> lions;
+    vector<Vector2i> fences;
 
     friend ostream &operator<<(ostream &, const SafariConfig &);
 };

@@ -15,8 +15,9 @@ class GameState: public State {
         virtual void pause() {}
         virtual void resume() {}
     protected:
-        GameState(Controller *controller);
+        GameState(Controller *controller, int BoardSize);
         Controller *controller;
+        int boardSize;
 
         // boolean values used by update() and handleInput() to communicate
         bool moveReady;
@@ -31,6 +32,9 @@ class GameState: public State {
         void drawBase();
         // one Sprite will have its texture changed and position replaced to draw all the pieces
         // insted of having a sprite for each of the pieces on the board
+        virtual Vector2i getTileWithinBoard(Vector2f mousePos);
+        virtual void positionPieceWithinBoard(Sprite *piece, Vector2i pos);
+
         Sprite *pieceSprite = nullptr;
         virtual void drawPieces();
 

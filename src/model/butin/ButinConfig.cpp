@@ -12,6 +12,6 @@ ButinConfig::~ButinConfig() {
     cout << "Destruction of ButinConfig" << endl;
 }
 
-ostream &operator<<(ostream &o, const ButinConfig &bc) {
+ostream &operator<<(ostream &o, const ButinConfig &) {
     return o;
 }

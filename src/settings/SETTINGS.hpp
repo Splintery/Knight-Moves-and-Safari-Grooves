@@ -6,6 +6,7 @@
 #define TEXT_SIZE 48
 #define TITLE_SIZE 92
 #define MAX_NAME_LENGTH 10
+#define INFO_HEIGHT 200
 
 #define DARK_MODE false
 
@@ -15,6 +16,7 @@
 
 //BACK_BOARD_COLOR (24, 24, 24)
 
+//Yellow color = (247, 194, 52)
 //Green color = (9, 109, 8)
 //Pastel Blue color = (61, 68, 144)
 //Butin (purple) color = (75, 36, 76)

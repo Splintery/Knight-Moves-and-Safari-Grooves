@@ -9,7 +9,7 @@ Controller::Controller(int width, int height, const string& title) {
     input = new InputManager();
     resource = new ResourceManager();
 
-	window = new RenderWindow(VideoMode(width, height), title, Style::Fullscreen | Style::Resize | Style::Close);
+	window = new RenderWindow(VideoMode(width, height), title, Style::Fullscreen | Style::Close);
     sf::Mouse::setPosition(Vector2i(0, 0), *window);
 
 
@@ -33,7 +33,15 @@ void Controller::loadTextures() const {
     resource -> loadTexture("blackPiece", "./resources/piece/BlackPiece.png");
     resource -> loadTexture("redTile", "./resources/board/RedTile.png");
     resource -> loadTexture("blueTile", "./resources/board/BlueTile.png");
-    resource -> loadTexture("backBoard", "./resources/board/BackBoard.png");
+    resource -> loadTexture("crocodilePiece", "./resources/piece/CrocodilePiece.png");
+    resource -> loadTexture("elephantPiece", "./resources/piece/ElephantPiece.png");
+    resource -> loadTexture("lionPiece", "./resources/piece/LionPiece.png");
+    resource -> loadTexture("redVerticalFence", "./resources/piece/RedVerticalFence.png");
+    resource -> loadTexture("redHorizontalFence", "./resources/piece/RedHorizontalFence.png");
+    resource -> loadTexture("verticalFence", "./resources/piece/VerticalFence.png");
+    resource -> loadTexture("horizontalFence", "./resources/piece/HorizontalFence.png");
+    resource -> loadTexture("enabledEndTurnButton", "./resources/button/EnabledEndTurnButton.png");
+    resource -> loadTexture("disabledEndTurnButton", "./resources/button/DisabledEndTurnButton.png");
 }
 
 void Controller::run() {

@@ -28,6 +28,9 @@ GameState.o: src/view/GameState.cpp src/view/GameState.hpp $(VIEW_CPP) src/contr
 ButinState.o: src/view/butin/ButinState.cpp src/view/butin/ButinState.hpp $(VIEW_CPP) src/view/GameState.hpp src/controller/Controller.hpp src/settings/SETTINGS.hpp src/model/butin/ButinConfig.hpp
 	$(GCC) -c src/view/butin/ButinState.cpp $(SFML_FLAGS)
 
+SafariState.o: src/view/safari/SafariState.cpp src/view/safari/SafariState.hpp $(VIEW_CPP) src/view/GameState.hpp src/controller/Controller.hpp src/settings/SETTINGS.hpp src/model/safari/SafariConfig.hpp
+	$(GCC) -c src/view/safari/SafariState.cpp $(SFML_FLAGS)
+
 Controller.o: src/controller/Controller.cpp src/controller/Controller.hpp $(VIEW_CPP) src/view/MenuState.hpp src/view/PlayerState.hpp src/settings/SETTINGS.hpp
 	$(GCC) -c src/controller/Controller.cpp $(SFML_FLAGS)
 
@@ -46,17 +49,23 @@ ButinConfig.o: src/model/butin/ButinConfig.cpp src/model/butin/ButinConfig.hpp s
 Player.o: src/model/Player.cpp src/model/Player.hpp
 	$(GCC) -c src/model/Player.cpp
 
-test: src/main.cpp Controller.o MenuState.o PlayerState.o GameState.o ButinState.o StateMachine.o InputManager.o ResourceManager.o Player.o ButinPiece.o ButinBoard.o Butin.o ButinConfig.o Utilities.o src/settings/SETTINGS.hpp
-	$(GCC) src/main.cpp Controller.o MenuState.o PlayerState.o GameState.o ButinState.o StateMachine.o InputManager.o ResourceManager.o Butin.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Utilities.o -o Tesssttt.exe $(SFML_FLAGS)
-
-SafariPiece.o: src/model/safari/SafariPiece.hpp src/model/safari/SafariPiece.cpp src/model/Piece.hpp
-	$(GCC) -c src/model/safari/SafariPiece.cpp
+Safari.o: src/model/safari/Safari.cpp src/model/safari/Safari.hpp src/model/Game.hpp src/model/Player.hpp src/model/Board.hpp src/model/Piece.hpp src/model/safari/SafariBoard.hpp
+	$(GCC) -c src/model/safari/Safari.cpp
 
 SafariBoard.o: src/model/safari/SafariBoard.hpp src/model/safari/SafariBoard.cpp src/model/Board.hpp src/model/Piece.hpp
 	$(GCC) -c src/model/safari/SafariBoard.cpp
 
+SafariPiece.o: src/model/safari/SafariPiece.hpp src/model/safari/SafariPiece.cpp src/model/Piece.hpp
+	$(GCC) -c src/model/safari/SafariPiece.cpp
+
+SafariConfig.o: src/model/safari/SafariConfig.cpp src/model/safari/SafariConfig.hpp src/model/GameConfig.hpp
+	$(GCC) -c src/model/safari/SafariConfig.cpp
+
 testSaf: src/model/safari/TestSafari.cpp SafariPiece.o SafariBoard.o Utilities.o
 	$(GCC) src/model/safari/TestSafari.cpp SafariPiece.o SafariBoard.o Utilities.o -o TestSaf.exe $(SFML_FLAGS)
+
+test: src/main.cpp SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o Utilities.o src/settings/SETTINGS.hpp
+	$(GCC) src/main.cpp SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o Utilities.o -o Tesssttt.exe $(SFML_FLAGS)
 
 clean:
 	$(info Cleaning the scene...)
