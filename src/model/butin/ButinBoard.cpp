@@ -18,7 +18,7 @@ bool ButinBoard::isGameDone() const {
                     // In this game the game is finished no matter wich Player turn it is,
                     // because none of the Pieces belong to a specific Player,
                     // so we just check it from 0
-                    if (!validMoves(bp -> getPosition(), 0).empty()) {
+                    if (!validMoves(ActionKey::LeftClick, 0, bp -> getPosition()).empty()) {
                         return false;
                     }
                 }
@@ -95,7 +95,7 @@ const Vector2i ButinBoard::calculateJumpedPos(const Vector2i &from, const Vector
 }
 
 // No matter if it is a Left or Right-click the action stays the same
-void ButinBoard::makeMove(ActionKey action, const int playerIndex, const Vector2i &from, const Vector2i &to) {
+void ButinBoard::makeMove(ActionKey action, int playerIndex, const Vector2i &from, const Vector2i &to) {
     const Vector2i jumpedPos = calculateJumpedPos(from, to);
     ButinPiece* jumpedPiece = (ButinPiece*) board[jumpedPos.x][jumpedPos.y][0];
     ButinPiece* toPiece = (ButinPiece*) board[to.x][to.y][0];
@@ -117,7 +117,7 @@ bool ButinBoard::isWithinBounds(Vector2i pos) const {
     return (pos.x >= 0 && pos.x < BUTIN_BOARD_SIZE && pos.y >= 0 && pos.y < BUTIN_BOARD_SIZE);
 }
 
-const vector<Vector2i> ButinBoard::validMoves(const Vector2i &from, const int playerIndex) const {
+const vector<Vector2i> ButinBoard::validMoves(ActionKey action, int playerIndex, const Vector2i &from) const {
     vector<Vector2i> moves;
     ButinPiece* piece = (ButinPiece *)board[from.x][from.y][0];
 

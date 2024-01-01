@@ -1,7 +1,6 @@
 #include "SafariPiece.hpp"
 #include "SafariBoard.hpp"
 
-
 int main() {
     SafariPiece *sp = new SafariPiece(SafariPieceType::Lion, Vector2i(0, 0));
 

@@ -1,7 +1,8 @@
 #ifndef SAFARIBOARD_HPP
 #define SAFARIBOARD_HPP
 
-#include <iostream>
+#include <cmath>
+#include <memory>
 
 #include "../Board.hpp"
 #include "SafariPiece.hpp"
@@ -22,8 +23,8 @@ public:
     virtual bool isGameDone() const;
     virtual void initializeGame(const GameConfig&);
     virtual const vector<vector<vector<string>>> getBoardState() const;
-    virtual void makeMove(ActionKey action, const int playerIndex, const Vector2i &from, const Vector2i &to);
-    virtual const vector<Vector2i> validMoves(const Vector2i &from, const int playerIndex) const;
+    virtual void makeMove(ActionKey action, int playerIndex, const Vector2i &from, const Vector2i &to);
+    virtual const vector<Vector2i> validMoves(ActionKey action, int playerIndex, const Vector2i &from) const;
     bool isWithinBounds(Vector2i pos) const;
 
     friend ostream &operator<<(ostream &, const SafariBoard &);

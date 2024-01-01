@@ -4,8 +4,8 @@
 #include <iostream>
 #include <array>
 #include <vector>
-using namespace std;
 #include <SFML/System/Vector2.hpp>
+using namespace std;
 using namespace sf;
 
 #include "../utilities/Utilities.hpp"

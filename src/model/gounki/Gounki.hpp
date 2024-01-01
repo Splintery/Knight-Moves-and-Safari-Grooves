@@ -1,16 +1,14 @@
-#ifndef BUTIN_HPP
-#define BUTIN_HPP
+#ifndef GOUNKI_HPP
+#define GOUNKI_HPP
 
 #include "../Game.hpp"
-#include "ButinBoard.hpp"
-#include "ButinConfig.hpp"
+#include "GounkiBoard.hpp"
 
-class Butin : public Game {
-private:
-    virtual ~Butin();
+class Gounki : public Game {
 public:
-    Butin();
-    Butin(const Butin &) = delete;
+    virtual ~Gounki();
+    Gounki();
+    Gounki(const Gounki &) = delete;
 
     virtual bool isGameDone() const;
     virtual string getWinner() const;
@@ -24,9 +22,7 @@ public:
     virtual vector<string> getPlayerNames() const;
     virtual const pair<int, int> getMinMaxPlayers() const;
 
-    vector<string> getPlayerScores() const;
-
-    friend ostream &operator<<(ostream &, const Butin &);
+    friend ostream &operator<<(ostream &, const Gounki &);
 };
 
 #endif

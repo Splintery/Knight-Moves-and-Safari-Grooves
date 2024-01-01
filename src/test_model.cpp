@@ -1,6 +1,6 @@
 #include <limits>
-#include "model/ButinConfig.hpp"
-#include "model/Butin.hpp"
+#include "model/butin/ButinConfig.hpp"
+#include "model/butin/Butin.hpp"
 
 void printMoves(const vector<Vector2i>& moves) {
     for (const auto& move : moves) {
@@ -20,7 +20,7 @@ int main(void){
     deleted_pieces.push_back(Vector2i {3,2});
     deleted_pieces.push_back(Vector2i {2,5});
     deleted_pieces.push_back(Vector2i {5,7});
-    ButinConfig t = ButinConfig(names, deleted_pieces);
+    // ButinConfig t = ButinConfig(names, deleted_pieces);
     // game has no possible moves when the board is not initiliazed with removes pieces
     cout << butin->isGameDone() << endl;
     butin->initializeGame(t);

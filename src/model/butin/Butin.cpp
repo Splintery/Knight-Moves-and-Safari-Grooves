@@ -48,13 +48,13 @@ void Butin::makeMove(ActionKey action, const Vector2i &from, const Vector2i &to)
     board->makeMove(action, currentPlayerIndex, from, to);
 
     // skip to the next player is no more moves are available
-    if (validMoves(to).empty()) {
+    if (validMoves(action, to).empty()) {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
     }
 }
 
-const vector<Vector2i> Butin::validMoves(const Vector2i &from) const {
-    return board->validMoves(from, currentPlayerIndex);
+const vector<Vector2i> Butin::validMoves(ActionKey action, const Vector2i &from) const {
+    return board->validMoves(action, currentPlayerIndex, from);
 }
 
 const vector<vector<vector<string>>> Butin::getBoardState() const {

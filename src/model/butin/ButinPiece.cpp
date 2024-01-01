@@ -1,9 +1,12 @@
 #include "ButinPiece.hpp"
 
-
 ButinPiece::ButinPiece(ButinPieceType color, Vector2i position):value {UtilityFunctions::getValueFromColor(color)}, color {color} {
     this->position = position;
     cout << "Construction of " << *this;
+}
+
+void ButinPiece::movePiece(Vector2i position) {
+    this->position = position;
 }
 
 vector<Vector2i> ButinPiece::getMovementPatterns() const {
@@ -22,8 +25,8 @@ vector<Vector2i> ButinPiece::getMovementPatterns() const {
     return patterns;
 }
 
-void ButinPiece::movePiece(Vector2i position) {
-    this->position = position;
+const Vector2i ButinPiece::getPosition() const {
+    return this->position;
 }
 
 ButinPiece::~ButinPiece() {
@@ -35,6 +38,3 @@ ostream &operator<<(ostream &o, const ButinPiece &bp) {
     return o;
 }
 
-const Vector2i ButinPiece::getPosition() const {
-    return this->position;
-}

@@ -16,6 +16,7 @@ ostream &operator<<(ostream &o, const Player &p) {
 void Player::increaseScore(ButinPieceType type) {
     score += UtilityFunctions::getValueFromColor(type);
 }
+
 void Player::increaseScore(int amount) {
     score += amount;
 }

@@ -40,8 +40,8 @@ void Safari::makeMove(ActionKey action, const Vector2i &from, const Vector2i &to
     }
 }
 
-const vector<Vector2i> Safari::validMoves(const Vector2i &from) const {
-    return board->validMoves(from, currentPlayerIndex);
+const vector<Vector2i> Safari::validMoves(ActionKey action, const Vector2i &from) const {
+    return board->validMoves(action, currentPlayerIndex, from);
 }
 
 const vector<vector<vector<string>>> Safari::getBoardState() const {
