@@ -7,11 +7,11 @@
 
 class Safari : public Game {
 private:
-    virtual ~Safari();
     int currentStep;
     void updateScores();
 public:
     Safari();
+    virtual ~Safari();
     Safari(const Safari &) = delete;
 
     virtual bool isGameDone() const;

@@ -18,6 +18,7 @@ public:
     vector<Player*> playerList;
     Board* board;
 
+    virtual ~Game() = 0;
     virtual bool isGameDone() const = 0;
     virtual string getWinner() const = 0;
     virtual bool hasGameStarted() const = 0;

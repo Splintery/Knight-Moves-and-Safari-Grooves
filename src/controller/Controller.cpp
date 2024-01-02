@@ -24,6 +24,14 @@ Controller::Controller(int width, int height, const string& title) {
 }
 
 void Controller::loadTextures() const {
+    resource -> loadFont("pixel", "./resources/Minecraft.ttf");
+	resource -> loadTexture("butinLaunch", "./resources/button/ButinButton.png");
+	resource -> loadTexture("gounkiLaunch", "./resources/button/GounkiButton.png");
+	resource -> loadTexture("safariLaunch", "./resources/button/SafariButton.png");
+    resource -> loadTexture("background", "./resources/Background.png");
+    resource -> loadTexture("resumeButton", "./resources/button/ResumeButton.png");
+    resource -> loadTexture("menuButton", "./resources/button/MenuButton.png");
+    resource -> loadTexture("exitButton", "./resources/button/ExitButton.png");
     resource -> loadTexture("enabledStartButton", "./resources/button/EnabledStartButton.png");
     resource -> loadTexture("disabledStartButton", "./resources/button/DisabledStartButton.png");
     resource -> loadTexture("enabledAddButton", "./resources/button/EnabledAddButton.png");
@@ -91,6 +99,10 @@ bool Controller::canStartNewGame() const {
 
 // Les vérifs necessaires seront faites avant d'appeler setNewGame
 void Controller::setNewGame(Game *newGame, string name) {
+    if (game != nullptr) {
+        delete(game);
+        game = nullptr;
+    }
     gameName = name;
     game = newGame;
 }
@@ -98,6 +110,13 @@ void Controller::setPlayerNames(vector<std::string> newNames) {
     playerNames = newNames;
 }
 
+Texture * Controller::getWindowAsTexture() {
+    Vector2u windowSize = window -> getSize();
+    Texture *texture = new Texture();
+    texture -> create(windowSize.x, windowSize.y);
+    texture -> update(*window);
+    return texture;
+}
 string Controller::getGameName() const {
     return gameName;
 }

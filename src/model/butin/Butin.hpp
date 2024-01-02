@@ -7,9 +7,9 @@
 
 class Butin : public Game {
 private:
-    virtual ~Butin();
 public:
     Butin();
+    virtual ~Butin();
     Butin(const Butin &) = delete;
 
     virtual bool isGameDone() const;

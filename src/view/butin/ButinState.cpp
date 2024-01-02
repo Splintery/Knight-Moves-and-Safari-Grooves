@@ -1,4 +1,5 @@
 #include "ButinState.hpp"
+#include "../PauseState.hpp"
 
 using namespace std;
 
@@ -61,7 +62,12 @@ void ButinState::handleInput() {
             case Event::Closed:
                 controller -> window -> close();
                 break;
-            case sf::Event::MouseButtonPressed:
+            case Event::KeyPressed:
+                if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+                    controller -> machine -> addState(new PauseState(controller, controller -> getWindowAsTexture()), false);
+                }
+                break;
+            case Event::MouseButtonPressed:
                 if (controller -> input -> isSpriteClicked(board, Mouse::Left, *controller -> window)) {
                     Vector2i tileClicked = GameState::getTileWithinBoard(
                         controller -> input -> getMousePosition(*controller -> window)

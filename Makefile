@@ -31,6 +31,9 @@ ButinState.o: src/view/butin/ButinState.cpp src/view/butin/ButinState.hpp $(VIEW
 SafariState.o: src/view/safari/SafariState.cpp src/view/safari/SafariState.hpp $(VIEW_CPP) src/view/GameState.hpp src/controller/Controller.hpp src/settings/SETTINGS.hpp src/model/safari/SafariConfig.hpp
 	$(GCC) -c src/view/safari/SafariState.cpp $(SFML_FLAGS)
 
+PauseState.o: src/view/PauseState.cpp src/view/PauseState.hpp $(VIEW_CPP) src/view/MenuState.hpp src/controller/Controller.hpp src/settings/SETTINGS.hpp
+	$(GCC) -c src/view/PauseState.cpp
+
 Controller.o: src/controller/Controller.cpp src/controller/Controller.hpp $(VIEW_CPP) src/view/MenuState.hpp src/view/PlayerState.hpp src/settings/SETTINGS.hpp
 	$(GCC) -c src/controller/Controller.cpp $(SFML_FLAGS)
 
@@ -64,8 +67,8 @@ SafariConfig.o: src/model/safari/SafariConfig.cpp src/model/safari/SafariConfig.
 testSaf: src/model/safari/TestSafari.cpp SafariPiece.o SafariBoard.o Utilities.o
 	$(GCC) src/model/safari/TestSafari.cpp SafariPiece.o SafariBoard.o Utilities.o -o TestSaf.exe $(SFML_FLAGS)
 
-test: src/main.cpp SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o Utilities.o src/settings/SETTINGS.hpp
-	$(GCC) src/main.cpp SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o Utilities.o -o Tesssttt.exe $(SFML_FLAGS)
+test: src/main.cpp SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PauseState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o Utilities.o src/settings/SETTINGS.hpp
+	$(GCC) src/main.cpp SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PauseState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o Utilities.o -o Tesssttt.exe $(SFML_FLAGS)
 
 clean:
 	$(info Cleaning the scene...)

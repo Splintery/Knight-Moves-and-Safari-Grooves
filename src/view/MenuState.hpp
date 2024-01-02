@@ -15,7 +15,6 @@ class MenuState: public State {
 		void draw();
 	private:
 		Controller *controller;
-		Clock clock;
 
         Text gameTitle;
 		Sprite butinButton;

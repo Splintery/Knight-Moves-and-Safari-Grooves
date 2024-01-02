@@ -1,5 +1,6 @@
 #include "Safari.hpp"
 
+
 Safari::Safari() {
     this -> board = new SafariBoard();
     cout << "Construction of " << *this;
@@ -12,15 +13,17 @@ void Safari::updateScores() {
 }
 
 bool Safari::isGameDone() const {
-    switch (playerList.size()) {
-        case 2:
-            return playerList[0]->getScore() == 0 || playerList[1]->getScore() == 0;
-        case 3:
-            return (playerList[0]->getScore() == 0 && playerList[1]->getScore() == 0)
-                || (playerList[1]->getScore() == 0 && playerList[2]->getScore() == 0)
-                || (playerList[2]->getScore() == 0 && playerList[0]->getScore() == 0);
+    if (gameStarted) {
+        switch (playerList.size()) {
+            case 2:
+                return playerList[0]->getScore() == 0 || playerList[1]->getScore() == 0;
+            case 3:
+                return (playerList[0]->getScore() == 0 && playerList[1]->getScore() == 0)
+                       || (playerList[1]->getScore() == 0 && playerList[2]->getScore() == 0)
+                       || (playerList[2]->getScore() == 0 && playerList[0]->getScore() == 0);
+        }
     }
-    return board->isGameDone();
+    return false;
 }
 
 string Safari::getWinner() const {

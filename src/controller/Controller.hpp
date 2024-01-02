@@ -30,6 +30,7 @@ class Controller {
         bool canStartNewGame() const;
         string getGameName() const;
         void setPlayerNames(vector<string> newNames);
+        Texture * getWindowAsTexture();
 	private:
         // 100000.0 représente 1 seconde en micro seconde
         const float timePerUpdate = 1000000.0 / UPS;

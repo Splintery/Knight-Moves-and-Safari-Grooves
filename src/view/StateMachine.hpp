@@ -8,8 +8,6 @@
 #include "State.hpp"
 
 
-//typedef std::unique_ptr<State> StateRef;
-
 class StateMachine {
 	public:
 		StateMachine() = default;
@@ -17,11 +15,11 @@ class StateMachine {
 		void addState(State *newState, bool isReplacing = true);
 		void removeState();
 		void processStateChanges();
+
+
 		sf::Vector2f getCenter();
 
 		State *getActiveState();
-//	private:
-//		std::stack<StateRef> states;
         std::stack<State *> states;
 		State *newState;
 		

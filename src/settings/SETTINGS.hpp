@@ -22,5 +22,5 @@
 //Pastel Blue color = (61, 68, 144)
 //Butin (purple) color = (75, 36, 76)
 //Gounki (red) color = (172, 50, 50)
-//Safari (brown) color = (143, 86, 59)
+//Safari (brown) color = (125, 90, 51)
 //Color & Opacity for disabled button = (44, 44, 44, 215)

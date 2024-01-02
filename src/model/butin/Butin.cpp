@@ -1,5 +1,9 @@
 #include "Butin.hpp"
 
+Game::~Game() {
+    cout << "destruction of game" << endl;
+}
+
 Butin::Butin() {
     gameStarted = false;
     board = new ButinBoard();
@@ -11,7 +15,7 @@ bool Butin::hasGameStarted() const {
 }
 
 bool Butin::isGameDone() const{
-    if (board -> isGameDone()) {
+    if (gameStarted && board -> isGameDone()) {
         int totalPointsRemaining = ((ButinBoard *) board) -> getBoardTotalPoints();
         playerList[(currentPlayerIndex - 1) % playerList.size()] -> increaseScore(-totalPointsRemaining);
         return true;

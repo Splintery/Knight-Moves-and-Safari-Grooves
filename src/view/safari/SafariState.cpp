@@ -1,4 +1,5 @@
 #include "SafariState.hpp"
+#include "../PauseState.hpp"
 
 SafariState::SafariState(Controller *controller): GameState(controller, SAFARI_BOARD_SIZE), moveAnimal{false}, placeFence{false}, fencePlaced{0}, canEndTurn{false}, boardScale{1} {
     // Do stuff in Init
@@ -95,6 +96,8 @@ void SafariState::handleInput() {
             case sf::Event::KeyPressed:
                 if (Keyboard::isKeyPressed(Keyboard::Enter)) {
                     endTurnButtonEffect();
+                } else if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+                    controller -> machine -> addState(new PauseState(controller, controller -> getWindowAsTexture()), false);
                 }
                 break;
             case sf::Event::MouseButtonPressed:
