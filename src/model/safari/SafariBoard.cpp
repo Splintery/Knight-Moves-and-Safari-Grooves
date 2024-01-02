@@ -1,7 +1,7 @@
 #include "SafariBoard.hpp"
 
 // TODO ne pas créer d'objet vide et juste stocker un nullptr
-SafariBoard::SafariBoard(int nbPlayers): nbPlayers{nbPlayers}, tilesToCapture{8} {
+SafariBoard::SafariBoard(): tilesToCapture{8} {
     // Making the Board a SAFARI_BOARD_SIZE x SAFARI_BOARD_SIZE of EmptySafari
     board.resize(SAFARI_BOARD_SIZE);
     for (vector<vector<Piece *>> &column : board) {
@@ -32,8 +32,8 @@ int SafariBoard::getAccessibleTiles(const Vector2i &from, const vector<Vector2i>
     vector<Vector2i> moves = getPositionFromPatterns(from, patterns);
     for (Vector2i pos : moves) {
         if (!(*mark)[pos.x][pos.y]) {
+            cout << "[" << pos.x << ", " << pos.y << "]\n";
             res += getAccessibleTiles(pos, patterns, mark);
-            return res;
         }
     }
     return res;
@@ -80,50 +80,23 @@ vector<Vector2i> SafariBoard::getPositionFromPatterns(const Vector2i &from, cons
     return moves;
 }
 
-bool SafariBoard::isGameDone() const {
-    int crocodileCaptured = 0;
-    int elephantCaptured = 0;
-    int lionCaptured = 0;
-    for (const vector<vector<Piece *>> &column : board) {
-        for (const vector<Piece *> &line : column) {
-            for (Piece *p : line) {
+int SafariBoard::getCapturedPieces(int playerIndex) const {
+    int capturedPieces = 0;
+    for (vector<vector<Piece *>> line : board) {
+        for (vector<Piece *> column : line) {
+            for (Piece *p : column) {
                 SafariPiece *sp = ((SafariPiece *) p);
-                if (sp -> animal != SafariPieceType::EmptySafari && sp -> animal != SafariPieceType::Fence) {
-                    if (isCaptured(sp)) {
-                        switch (sp -> animal) {
-                            case SafariPieceType::Crocodile:
-                                crocodileCaptured++;
-                                break;
-                            case SafariPieceType::Elephant:
-                                elephantCaptured++;
-                                break;
-                            case SafariPieceType::Lion:
-                                lionCaptured++;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+                if (UtilityFunctions::getPlayerFromAnimal(sp -> animal) == playerIndex) {
+                    if (isCaptured(sp))  capturedPieces++;
                 }
             }
         }
     }
-    // For this game, it is considered to be finished if there is only one species of animal not captured on the board
-    // Or it is a tie if all the animals got captured
-    switch (nbPlayers) {
-        case 2:
-            if (elephantCaptured >= ANIMALS_PER_PLAYER || crocodileCaptured >= ANIMALS_PER_PLAYER) {
-                return true;
-            }
-        case 3:
-            if ((crocodileCaptured >= ANIMALS_PER_PLAYER && elephantCaptured >= ANIMALS_PER_PLAYER)
-            || (elephantCaptured >= ANIMALS_PER_PLAYER && lionCaptured >= ANIMALS_PER_PLAYER)
-            || (lionCaptured >= ANIMALS_PER_PLAYER && crocodileCaptured >= ANIMALS_PER_PLAYER)) {
-                return true;
-            }
-        default:
-            return false;
-    }
+    return capturedPieces;
+}
+
+bool SafariBoard::isGameDone() const {
+    return false;
 }
 
 void SafariBoard::initializeGame(const GameConfig& gc) {
@@ -167,6 +140,8 @@ void SafariBoard::makeMove(ActionKey action, const int playerIndex, const Vector
         case ActionKey::LeftClick:
             fromPiece = (SafariPiece *) board[from.x][from.y][0];
             toPiece = (SafariPiece *) board[to.x][to.y][0];
+            fromPiece -> movePiece(to);
+            toPiece -> movePiece(from);
             board[to.x][to.y][0] = fromPiece;
             board[from.x][from.y][0] = toPiece;
             break;

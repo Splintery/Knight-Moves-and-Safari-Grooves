@@ -21,6 +21,10 @@ void Player::increaseScore(int amount) {
     score += amount;
 }
 
+void Player::setScore(int newScore) {
+    score = newScore;
+}
+
 int Player::getScore() const {
     return score;
 }

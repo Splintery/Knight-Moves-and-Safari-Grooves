@@ -27,6 +27,7 @@ class SafariState : public GameState {
         Texture& backBoardFactory();
         Sprite endTurnButton;
         bool canEndTurn;
+        void endTurnButtonEffect();
 
         SafariConfig config;
         void addCrocodile(Vector2i v);

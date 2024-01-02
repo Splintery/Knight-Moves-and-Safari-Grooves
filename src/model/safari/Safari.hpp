@@ -9,7 +9,7 @@ class Safari : public Game {
 private:
     virtual ~Safari();
     int currentStep;
-    int currentWinner;
+    void updateScores();
 public:
     Safari();
     Safari(const Safari &) = delete;
@@ -20,7 +20,7 @@ public:
     virtual void initPlayers(vector<string> playerNames);
     virtual void initializeGame(const GameConfig &);
     virtual void makeMove(ActionKey action, const Vector2i& from, const Vector2i& to = Vector2i(0, 0));
-    virtual const vector<Vector2i> validMoves(const Vector2i& from) const;
+    virtual const vector<Vector2i> validMoves(ActionKey action, const Vector2i& from) const;
     virtual const vector<vector<vector<string>>> getBoardState() const;
     virtual const int getCurrentPlayerIndex() const;
     virtual vector<string> getPlayerNames() const;

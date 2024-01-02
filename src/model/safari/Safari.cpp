@@ -1,15 +1,38 @@
 #include "Safari.hpp"
 
-Safari::Safari(): currentWinner{currentPlayerIndex} {
+Safari::Safari() {
+    this -> board = new SafariBoard();
     cout << "Construction of " << *this;
 }
 
+void Safari::updateScores() {
+    for (size_t i = 0; i < playerList.size(); i++) {
+        playerList[i]->setScore(ANIMALS_PER_PLAYER - ((SafariBoard *)board) -> getCapturedPieces(i));
+    }
+}
+
 bool Safari::isGameDone() const {
+    switch (playerList.size()) {
+        case 2:
+            return playerList[0]->getScore() == 0 || playerList[1]->getScore() == 0;
+        case 3:
+            return (playerList[0]->getScore() == 0 && playerList[1]->getScore() == 0)
+                || (playerList[1]->getScore() == 0 && playerList[2]->getScore() == 0)
+                || (playerList[2]->getScore() == 0 && playerList[0]->getScore() == 0);
+    }
     return board->isGameDone();
 }
 
 string Safari::getWinner() const {
-    return playerList[currentWinner] -> name;
+    int max = playerList[0] -> getScore();
+    int index = 0;
+    for (size_t i = 0; i < playerList.size(); i++) {
+        if (max < playerList[i] -> getScore()) {
+            max = playerList[i] -> getScore();
+            index = i;
+        }
+    }
+    return playerList[index] -> name;
 }
 
 bool Safari::hasGameStarted() const {
@@ -17,15 +40,16 @@ bool Safari::hasGameStarted() const {
 }
 
 void Safari::initPlayers(vector<string> playerNames) {
-    for (const string& s : playerNames){
-        playerList.push_back(new Player(s));
+    for (size_t i = 0; i < playerNames.size(); i++){
+        playerList.push_back(new Player(playerNames[i]));
+        playerList[i] -> increaseScore(3);
     }
     currentPlayerIndex = 0;
-    board = new SafariBoard(playerNames.size());
 }
 
 void Safari::initializeGame(const GameConfig &gc) {
     board->initializeGame(gc);
+    updateScores();
     gameStarted = true;
     currentStep = 0;
 }
@@ -33,10 +57,13 @@ void Safari::initializeGame(const GameConfig &gc) {
 void Safari::makeMove(ActionKey action, const Vector2i &from, const Vector2i &to) {
     board->makeMove(action, currentPlayerIndex, from, to);
     currentStep++;
+    updateScores();
     if (currentStep == 2) {
-        currentWinner = currentPlayerIndex;
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
         currentStep = 0;
+        if (playerList[currentPlayerIndex] -> getScore() == 0) {
+            currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
+        }
     }
 }
 

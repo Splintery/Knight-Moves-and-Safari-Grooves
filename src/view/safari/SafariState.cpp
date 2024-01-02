@@ -67,6 +67,23 @@ void SafariState::incrementPlayer() {
     colorCurrentPlayer();
 }
 
+void SafariState::endTurnButtonEffect() {
+    if (canEndTurn) {
+        if (controller -> game -> hasGameStarted()) {
+            moveReady = true;
+        } else {
+            canEndTurn = false;
+            fencePlaced = 0;
+            incrementPlayer();
+            if (currentPlayerIndex == 0) {
+                controller -> game -> initializeGame(config);
+                pieces = controller -> game -> getBoardState();
+                updateScoresDisplay();
+            }
+        }
+    }
+}
+
 void SafariState::handleInput() {
 	Event event;
 
@@ -75,19 +92,14 @@ void SafariState::handleInput() {
             case Event::Closed:
                 controller -> window -> close();
                 break;
+            case sf::Event::KeyPressed:
+                if (Keyboard::isKeyPressed(Keyboard::Enter)) {
+                    endTurnButtonEffect();
+                }
+                break;
             case sf::Event::MouseButtonPressed:
-                if (canEndTurn && controller -> input -> isSpriteClicked(endTurnButton, Mouse::Left, *controller -> window)) {
-                    if (controller -> game -> hasGameStarted()) {
-                        moveReady = true;
-                    } else {
-                        canEndTurn = false;
-                        fencePlaced = 0;
-                        incrementPlayer();
-                        if (currentPlayerIndex == 0) {
-                            controller -> game -> initializeGame(config);
-                            pieces = controller -> game -> getBoardState();
-                        }
-                    }
+                if (controller -> input -> isSpriteClicked(endTurnButton, Mouse::Left, *controller -> window)) {
+                    endTurnButtonEffect();
                 } else if (controller -> input -> isSpriteClicked(board, Mouse::Left, *controller -> window)) {
                     Vector2i pieceClicked = SafariState::getTileWithinBoard(
                     controller -> input -> getMousePosition(*controller -> window),
@@ -99,7 +111,7 @@ void SafariState::handleInput() {
                             if (pieceValue == currentPlayerIndex) {
                                 if (fromTile == nullptr) {
                                     fromTile = new Vector2i(pieceClicked);
-                                        movesPossible = controller -> game -> validMoves(*fromTile);
+                                        movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
                                     } else {
                                     if (!moveAnimal) {
                                         if (*fromTile == pieceClicked) {
@@ -109,7 +121,7 @@ void SafariState::handleInput() {
                                         } else {
                                             delete(fromTile);
                                             fromTile = new Vector2i(pieceClicked);
-                                            movesPossible = controller -> game -> validMoves(*fromTile);
+                                            movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
                                         }
                                     }
                                 }
