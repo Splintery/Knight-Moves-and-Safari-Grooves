@@ -15,7 +15,6 @@ public:
 
     const string name;
 
-    void increaseScore(ButinPieceType type);
     void increaseScore(int amount);
     void setScore(int newScore);
     int getScore() const;

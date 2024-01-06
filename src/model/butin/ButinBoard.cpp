@@ -11,8 +11,8 @@ ButinBoard::ButinBoard() {
 }
 
 bool ButinBoard::isGameDone() const {
-    for (const vector<vector<Piece *>> &column : board) {
-        for (const vector<Piece *> &line: column) {
+    for (const vector<vector<Piece *>>& column : board) {
+        for (const vector<Piece *>& line: column) {
             for (Piece *bp: line) {
                 if (bp != nullptr) {
                     // In this game the game is finished no matter wich Player turn it is,
@@ -64,7 +64,7 @@ void ButinBoard::generateDefaultBoard() {
 // TODO jsp si c'est nécessaire de mettre nullptr dedans
 void ButinBoard::initializeGame(const GameConfig& gc) {
     const ButinConfig& bc = (ButinConfig&) gc;
-    for (Vector2i v: bc.deleted_pieces) {
+    for (const Vector2i& v: bc.deleted_pieces) {
         ButinPiece* tmp = (ButinPiece *) board[v.x][v.y][0];
         board[v.x][v.y][0] = nullptr;
         if (tmp != nullptr)
@@ -141,9 +141,9 @@ vector<Vector2i> ButinBoard::validMoves(ActionKey action, int playerIndex, const
 
 int ButinBoard::getBoardTotalPoints() const {
     int sum = 0;
-    for (const vector<vector<Piece *>> &column : board) {
-        for (const vector<Piece *> &row : column) {
-            for (Piece *p : row) {
+    for (const vector<vector<Piece *>>& column : board) {
+        for (const vector<Piece *>& row : column) {
+            for (Piece* p : row) {
                 if (p != nullptr) {
                     sum += ((ButinPiece *) p) -> value;
                 }

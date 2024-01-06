@@ -2,7 +2,7 @@
 
 GounkiBoard::GounkiBoard() {
     board.resize(GOUNKI_BOARD_SIZE);
-    for (vector<vector<Piece *>> &column : board) {
+    for (vector<vector<Piece *>>& column : board) {
         column.resize(GOUNKI_BOARD_SIZE);
     }
     generateDefaultBoard();
@@ -258,7 +258,7 @@ GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
                 }
             }
             // removes the blocking patterns to not generate them at the next iteration
-            for (vector<Vector2i>::const_iterator it: blockingPatterns) {
+            for (const vector<Vector2i>::const_iterator& it: blockingPatterns) {
                 stackPieceMoves.erase(it);
             }
             blockingPatterns.clear();

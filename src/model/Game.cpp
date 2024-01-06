@@ -25,7 +25,7 @@ int Game::getCurrentPlayerIndex() const {
 
 vector<string> Game::getPlayerNames() const {
     vector<string> res;
-    for (Player *p: playerList) {
+    for (Player* p: playerList) {
         res.push_back(p->name);
     }
     return res;

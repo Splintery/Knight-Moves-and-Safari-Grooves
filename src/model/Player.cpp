@@ -4,10 +4,6 @@ Player::Player(string name):score {0}, name{name} {
     cout << "Construction of " << *this;
 }
 
-void Player::increaseScore(ButinPieceType type) {
-    score += UtilityFunctions::getValueFromColor(type);
-}
-
 void Player::increaseScore(int amount) {
     score += amount;
 }
