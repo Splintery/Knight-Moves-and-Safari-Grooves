@@ -116,7 +116,7 @@ void SafariBoard::initializeGame(const GameConfig& gc) {
     }
 }
 
-const vector<vector<vector<string>>> SafariBoard::getBoardState() const {
+vector<vector<vector<string>>> SafariBoard::getBoardState() const {
     // initialize a vector of SAFARI_BOARD_SIZE elements of vector<vector<string>> initalized at SAFARI_BOARD_SIZE
     vector<vector<vector<string>>> boardState(SAFARI_BOARD_SIZE, vector<vector<string>>(SAFARI_BOARD_SIZE));
     for (int i = 0; i < SAFARI_BOARD_SIZE; i++) {
@@ -156,9 +156,9 @@ void SafariBoard::makeMove(ActionKey action, const int playerIndex, const Vector
     }
 }
 
-const vector<Vector2i> SafariBoard::validMoves(ActionKey action, int playerIndex, const Vector2i &from) const {
+vector<Vector2i> SafariBoard::validMoves(ActionKey action, int playerIndex, const Vector2i &from) const {
     vector<Vector2i> moves;
-    auto* piece = (SafariPiece *)board[from.x][from.y][0];
+    SafariPiece* piece = (SafariPiece *)board[from.x][from.y][0];
     // Permet de vérifier que la case clické n'est pas vide
     if (piece == nullptr) {
         return moves;

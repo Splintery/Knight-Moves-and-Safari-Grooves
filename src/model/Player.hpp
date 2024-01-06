@@ -7,20 +7,21 @@
 using namespace std;
 
 class Player {
+private:
+    int score;
 public:
     Player(string name);
     Player(const Player &) = delete;
-    virtual ~Player();
 
     const string name;
+
     void increaseScore(ButinPieceType type);
     void increaseScore(int amount);
     void setScore(int newScore);
-
-    friend ostream &operator<<(ostream &, const Player &);
     int getScore() const;
-private:
-    int score;
+
+    virtual ~Player();
+    friend ostream &operator<<(ostream &, const Player &);
 };
 
 #endif

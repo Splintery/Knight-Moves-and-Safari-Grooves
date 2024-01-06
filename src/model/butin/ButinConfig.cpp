@@ -1,17 +1,18 @@
 #include "ButinConfig.hpp"
 
 ButinConfig::ButinConfig(const vector<Vector2i> deleted_pieces):deleted_pieces {deleted_pieces} {
-//    cout << "Construction of ButinConfig" << endl;
+    cout << "Construction of " << *this;
 }
 
 ButinConfig::ButinConfig(const ButinConfig &) {
-    cout << "Copy of ButinConfig" << endl;
+    cout << "Copy of " << *this;
 }
 
 ButinConfig::~ButinConfig() {
-    cout << "Destruction of ButinConfig" << endl;
+    cout << "Destruction of " << *this;
 }
 
 ostream &operator<<(ostream &o, const ButinConfig &) {
+    o << "Config: Butin" << endl;
     return o;
 }

@@ -32,7 +32,7 @@ bool GounkiBoard::isGameDone() const {
 
 void GounkiBoard::initializeGame(const GameConfig &) {}
 
-const vector<vector<vector<string>>> GounkiBoard::getBoardState() const {
+vector<vector<vector<string>>> GounkiBoard::getBoardState() const {
     vector<vector<vector<string>>> boardState(GOUNKI_BOARD_SIZE, vector<vector<string>>(GOUNKI_BOARD_SIZE));
     for (int i = 0; i < GOUNKI_BOARD_SIZE; i++) {
         for (int j = 0; j < GOUNKI_BOARD_SIZE; j++) {
@@ -77,7 +77,7 @@ GounkiPieceType GounkiBoard::determinePieceType(const Vector2i& from, const Vect
     Vector2i diff = to - from;
 
     // iterate through each piece type and its movement patterns
-    for (const pair<GounkiPieceType, vector<Vector2i>>& pair : GounkiPiece::gounkiMovements) {
+    for (const pair<const GounkiPieceType, vector<Vector2i>>& pair : GounkiPiece::gounkiMovements) {
         const vector<Vector2i>& movementPattern = pair.second;
 
         if (find(movementPattern.begin(), movementPattern.end(), diff)
@@ -221,7 +221,7 @@ int setMaximumRange(ActionKey action, int defaultRange) {
     return defaultRange;
 }
 
-const vector<pair<Vector2i, Vector2i>>
+vector<pair<Vector2i, Vector2i>>
 GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
     vector<pair<Vector2i, Vector2i>> moves;
     if (board[from.x][from.y].empty())
@@ -231,7 +231,7 @@ GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
     vector<vector<Vector2i>::const_iterator> blockingPatterns;
     // this maps holds each piece type and it's number of occurences of the original case
     map<GounkiPieceType, int> stackCount = calculatePieceDistribution(action, from);
-    for (const pair<GounkiPieceType, int> &pairs: stackCount) {
+    for (const pair<const GounkiPieceType, int>& pairs: stackCount) {
         vector<Vector2i> stackPieceMoves = GounkiPiece::gounkiMovements.at(pairs.first);
         range = setMaximumRange(action, pairs.second);
         for (int i = 1; i <= range; i++) {
@@ -279,18 +279,19 @@ void extractMoves(vector<Vector2i>& moves, const vector<pair<Vector2i, Vector2i>
 }
 
 void filterUniqueFirst(vector<pair<Vector2i, Vector2i>>& movesWithPattern) {
-    sort(movesWithPattern.begin(), movesWithPattern.end(),[](const pair<Vector2i, Vector2i> &a, const pair<Vector2i, Vector2i> &b) {
-        return a.first.x < b.first.x
-        || (a.first.x == b.first.x && a.first.y < b.first.y);
+    sort(movesWithPattern.begin(), movesWithPattern.end(),
+         [](const pair<Vector2i, Vector2i> &a, const pair<Vector2i, Vector2i> &b) {
+        return a.first.x < b.first.x || (a.first.x == b.first.x && a.first.y < b.first.y);
     });
 
-    movesWithPattern.erase(unique(movesWithPattern.begin(), movesWithPattern.end(),[](const pair<Vector2i, Vector2i> &a, const pair<Vector2i, Vector2i> &b) {
-        return a.first.x == b.first.x && a.first.y == b.first.y;
-    }),movesWithPattern.end());
+    movesWithPattern.erase(
+            unique(movesWithPattern.begin(), movesWithPattern.end(),[](const pair<Vector2i, Vector2i> &a, const pair<Vector2i, Vector2i> &b) {
+                return a.first.x == b.first.x && a.first.y == b.first.y;
+            }),movesWithPattern.end()
+            );
 }
 
-const vector<Vector2i>
-GounkiBoard::validMoves(ActionKey action, int playerIndex, const Vector2i& from) const {
+vector<Vector2i> GounkiBoard::validMoves(ActionKey action, int playerIndex, const Vector2i& from) const {
     vector<Vector2i> moves;
     vector<pair<Vector2i, Vector2i>> movesWithPattern = validMovesPattern(action, from);
     switch (action) {
@@ -336,12 +337,16 @@ int GounkiBoard::getWinnerIndex() const {
     return winningPlayer;
 }
 
+int GounkiBoard::getCaseSize(const Vector2i &pos) const {
+    return board[pos.x][pos.y].size();
+}
+
 GounkiBoard::~GounkiBoard() {
     // todo supprimer chaque pièce
     cout << "Destruction of " << *this << endl;
 }
 
-ostream &operator<<(ostream &out, const GounkiBoard &gb) {
+ostream &operator<<(ostream &out, const GounkiBoard &) {
     out << "Board: Gounki" << endl;
     return out;
 }

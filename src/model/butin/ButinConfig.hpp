@@ -7,9 +7,10 @@ class ButinConfig : public GameConfig {
 public:
     ButinConfig(const vector<Vector2i> deleted_pieces);
     ButinConfig(const ButinConfig&);
-    virtual ~ButinConfig();
+
     const vector<Vector2i> deleted_pieces;
 
+    virtual ~ButinConfig();
     friend ostream &operator<<(ostream &, const ButinConfig &);
 };
 

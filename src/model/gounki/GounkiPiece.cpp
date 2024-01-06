@@ -21,7 +21,7 @@ vector<Vector2i> GounkiPiece::getMovementPatterns() const {
     return gounkiMovements.at(type);
 }
 
-const Vector2i GounkiPiece::getPosition() const {
+const Vector2i& GounkiPiece::getPosition() const {
     return this->position;
 }
 

@@ -1,6 +1,5 @@
 #include "Safari.hpp"
 
-
 Safari::Safari() {
     this -> board = new SafariBoard();
     cout << "Construction of " << *this;
@@ -16,11 +15,15 @@ bool Safari::isGameDone() const {
     if (gameStarted) {
         switch (playerList.size()) {
             case 2:
-                return playerList[0]->getScore() == 0 || playerList[1]->getScore() == 0;
+                return playerList[0]->getScore() == 0 ||
+                       playerList[1]->getScore() == 0;
             case 3:
-                return (playerList[0]->getScore() == 0 && playerList[1]->getScore() == 0)
-                       || (playerList[1]->getScore() == 0 && playerList[2]->getScore() == 0)
-                       || (playerList[2]->getScore() == 0 && playerList[0]->getScore() == 0);
+                return (playerList[0]->getScore() == 0 &&
+                        playerList[1]->getScore() == 0)
+                       || (playerList[1]->getScore() == 0 &&
+                           playerList[2]->getScore() == 0)
+                       || (playerList[2]->getScore() == 0 &&
+                           playerList[0]->getScore() == 0);
         }
     }
     return false;
@@ -36,10 +39,6 @@ string Safari::getWinner() const {
         }
     }
     return playerList[index] -> name;
-}
-
-bool Safari::hasGameStarted() const {
-    return gameStarted;
 }
 
 void Safari::initPlayers(vector<string> playerNames) {
@@ -70,29 +69,8 @@ void Safari::makeMove(ActionKey action, const Vector2i &from, const Vector2i &to
     }
 }
 
-const vector<Vector2i> Safari::validMoves(ActionKey action, const Vector2i &from) const {
-    return board->validMoves(action, currentPlayerIndex, from);
-}
-
-const vector<vector<vector<string>>> Safari::getBoardState() const {
-    return board->getBoardState();
-}
-
-const int Safari::getCurrentPlayerIndex() const {
-    return currentPlayerIndex;
-}
-
-vector<string> Safari::getPlayerNames() const {
-    vector<string> res;
-    for (Player* p : playerList) {
-        res.push_back(p -> name);
-    }
-    return res;
-}
-
-const pair<int, int> Safari::getMinMaxPlayers() const {
-    const pair<int, int> res(2, 3);
-    return res;
+pair<int, int> Safari::getMinMaxPlayers() const {
+    return pair<int, int>(2, 3);
 }
 
 Safari::~Safari() {

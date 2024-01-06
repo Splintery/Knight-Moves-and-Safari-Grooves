@@ -5,10 +5,6 @@ SafariPiece::SafariPiece(SafariPieceType animal, Vector2i position): animal{anim
     this -> position = position;
 }
 
-SafariPiece::~SafariPiece() {
-    cout << "Destruction of " << *this;
-}
-
 void SafariPiece::movePiece(Vector2i position) {
     this -> position = position;
 }
@@ -42,8 +38,12 @@ vector<Vector2i> SafariPiece::getMovementPatterns() const {
     return patterns;
 }
 
-const Vector2i SafariPiece::getPosition() const {
+const Vector2i& SafariPiece::getPosition() const {
     return this -> position;
+}
+
+SafariPiece::~SafariPiece() {
+    cout << "Destruction of " << *this;
 }
 
 ostream &operator<<(ostream &out, const SafariPiece &sp) {

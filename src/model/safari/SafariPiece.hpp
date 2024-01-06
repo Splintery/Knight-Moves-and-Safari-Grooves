@@ -5,17 +5,17 @@
 #include "../../utilities/Utilities.hpp"
 
 class SafariPiece : public Piece {
-    public:
-        SafariPiece(SafariPieceType animal, Vector2i position);
-        virtual ~ SafariPiece();
-        SafariPiece(const SafariPiece &) = delete;
+public:
+    SafariPiece(SafariPieceType animal, Vector2i position);
+    SafariPiece(const SafariPiece &) = delete;
 
-        const SafariPieceType animal;
+    const SafariPieceType animal;
 
-        virtual void movePiece(Vector2i position);
-        virtual vector<Vector2i> getMovementPatterns() const;
-        virtual const Vector2i getPosition() const;
+    virtual void movePiece(Vector2i position);
+    virtual vector<Vector2i> getMovementPatterns() const;
+    virtual const Vector2i &getPosition() const;
 
+    virtual ~ SafariPiece();
     friend ostream &operator<<(ostream &, const SafariPiece &);
 
 };

@@ -16,15 +16,10 @@ public:
 
     virtual bool isGameDone() const;
     virtual string getWinner() const;
-    virtual bool hasGameStarted() const;
-    virtual void initPlayers(vector<string> playerNames);
+    void initPlayers(vector<string> playerNames) override;
     virtual void initializeGame(const GameConfig &);
     virtual void makeMove(ActionKey action, const Vector2i& from, const Vector2i& to = Vector2i(0, 0));
-    virtual const vector<Vector2i> validMoves(ActionKey action, const Vector2i& from) const;
-    virtual const vector<vector<vector<string>>> getBoardState() const;
-    virtual const int getCurrentPlayerIndex() const;
-    virtual vector<string> getPlayerNames() const;
-    virtual const pair<int, int> getMinMaxPlayers() const;
+    virtual pair<int, int> getMinMaxPlayers() const;
 
     friend ostream &operator<<(ostream &, const Safari &);
 };

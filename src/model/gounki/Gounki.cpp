@@ -1,7 +1,6 @@
 #include "Gounki.hpp"
 
 Gounki::Gounki() {
-    gameStarted = false;
     board = new GounkiBoard();
     cout << "Construction of " << *this;
 }
@@ -23,17 +22,6 @@ string Gounki::getWinner() const {
     return playerList[index]->name;
 }
 
-bool Gounki::hasGameStarted() const {
-    return gameStarted;
-}
-
-void Gounki::initPlayers(vector<string> playerNames) {
-    for (const string &s: playerNames) {
-        playerList.push_back(new Player(s));
-    }
-    currentPlayerIndex = 0;
-}
-
 void Gounki::initializeGame(const GameConfig &) {
     gameStarted = true;
 }
@@ -41,7 +29,7 @@ void Gounki::initializeGame(const GameConfig &) {
 void Gounki::makeMove(ActionKey action, const Vector2i& from, const Vector2i& to) {
     GounkiBoard* gounkiBoard = (GounkiBoard*) board;
     if (action == ActionKey::LeftClick && gounkiBoard->isLandedCaseEnnemy(from, to)) {
-        playerList[currentPlayerIndex]->increaseScore(board->board[to.x][to.y].size());
+        playerList[currentPlayerIndex]->increaseScore(gounkiBoard->getCaseSize(to));
     }
     board->makeMove(action, currentPlayerIndex, from, to);
 
@@ -63,27 +51,7 @@ void Gounki::makeMove(ActionKey action, const Vector2i& from, const Vector2i& to
     }
 }
 
-const vector<Vector2i> Gounki::validMoves(ActionKey action, const Vector2i &from) const {
-    return board->validMoves(action, currentPlayerIndex, from);
-}
-
-const vector<vector<vector<string>>> Gounki::getBoardState() const {
-    return board->getBoardState();
-}
-
-const int Gounki::getCurrentPlayerIndex() const {
-    return currentPlayerIndex;
-}
-
-vector<string> Gounki::getPlayerNames() const {
-    vector<string> res;
-    for (Player* p : playerList) {
-        res.push_back(p -> name);
-    }
-    return res;
-}
-
-const pair<int, int> Gounki::getMinMaxPlayers() const {
+pair<int, int> Gounki::getMinMaxPlayers() const {
     return pair<int, int>(2, 2);
 }
 

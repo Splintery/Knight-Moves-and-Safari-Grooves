@@ -7,7 +7,6 @@
 class ButinPiece : public Piece {
 public:
     ButinPiece(ButinPieceType color, Vector2i position);
-    virtual ~ButinPiece();
     ButinPiece(const ButinPiece &) = delete;
 
     const int value;
@@ -15,10 +14,10 @@ public:
 
     virtual void movePiece(Vector2i position);
     virtual vector<Vector2i> getMovementPatterns() const;
-    virtual const Vector2i getPosition() const;
+    virtual const Vector2i& getPosition() const;
 
+    virtual ~ButinPiece();
     friend ostream &operator<<(ostream &, const ButinPiece &);
 };
-
 
 #endif

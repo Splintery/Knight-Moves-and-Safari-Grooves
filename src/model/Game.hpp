@@ -12,24 +12,27 @@ using namespace std;
 
 class Game {
 protected:
-    bool gameStarted;
+    Board* board;
+    vector<Player*> playerList;
+    bool gameStarted = false;
     int currentPlayerIndex = 0;
 public:
-    vector<Player*> playerList;
-    Board* board;
+    virtual ~Game() {};
 
-    virtual ~Game() = 0;
+    // Pure virtual functions
     virtual bool isGameDone() const = 0;
     virtual string getWinner() const = 0;
-    virtual bool hasGameStarted() const = 0;
-    virtual void initPlayers(vector<string> playerNames) = 0;
     virtual void initializeGame(const GameConfig&) = 0;
     virtual void makeMove(ActionKey action, const Vector2i& from, const Vector2i& to) = 0;
-    virtual const vector<Vector2i> validMoves(ActionKey action, const Vector2i& from) const = 0;
-    virtual const vector<vector<vector<string>>> getBoardState() const = 0;
-    virtual const int getCurrentPlayerIndex() const = 0;
-    virtual vector<string> getPlayerNames() const = 0;
-    virtual const pair<int, int> getMinMaxPlayers() const = 0;
+    virtual pair<int, int> getMinMaxPlayers() const = 0;
+
+    // Virtual functions
+    virtual bool hasGameStarted() const;
+    virtual void initPlayers(vector<string> playerNames);
+    virtual vector<Vector2i> validMoves(ActionKey action, const Vector2i& from) const;
+    virtual vector<vector<vector<string>>> getBoardState() const;
+    virtual int getCurrentPlayerIndex() const;
+    virtual vector<string> getPlayerNames() const;
     // pair.first = minimum nb of players for game to start
     // pair.second = maximum nb of players for game to start
 };

@@ -1,17 +1,8 @@
 #include "Butin.hpp"
 
-Game::~Game() {
-    cout << "destruction of game" << endl;
-}
-
 Butin::Butin() {
-    gameStarted = false;
     board = new ButinBoard();
-//    cout << "Construction of " << *this;
-}
-
-bool Butin::hasGameStarted() const {
-    return gameStarted;
+    cout << "Construction of " << *this;
 }
 
 bool Butin::isGameDone() const{
@@ -35,13 +26,6 @@ string Butin::getWinner() const {
     return winner->name;
 }
 
-void Butin::initPlayers(vector<std::string> playerNames) {
-    for (const string& s : playerNames){
-        playerList.push_back(new Player(s));
-    }
-    currentPlayerIndex = 0;
-}
-
 void Butin::initializeGame(const GameConfig &gc) {
     board->initializeGame(gc);
     gameStarted = true;
@@ -57,14 +41,6 @@ void Butin::makeMove(ActionKey action, const Vector2i &from, const Vector2i &to)
     }
 }
 
-const vector<Vector2i> Butin::validMoves(ActionKey action, const Vector2i &from) const {
-    return board->validMoves(action, currentPlayerIndex, from);
-}
-
-const vector<vector<vector<string>>> Butin::getBoardState() const {
-    return board->getBoardState();
-}
-
 vector<string> Butin::getPlayerScores() const {
     vector<string> res;
     for (Player* p : playerList) {
@@ -73,21 +49,8 @@ vector<string> Butin::getPlayerScores() const {
     return res;
 }
 
-const int Butin::getCurrentPlayerIndex() const {
-    return currentPlayerIndex;
-}
-
-vector<string> Butin::getPlayerNames() const {
-    vector<string> res;
-    for (Player* p : playerList) {
-        res.push_back(p -> name);
-    }
-    return res;
-}
-
-const pair<int, int> Butin::getMinMaxPlayers() const {
-    const pair<int, int> res(2, 2);
-    return res;
+pair<int, int> Butin::getMinMaxPlayers() const {
+    return pair<int, int>(2, 2);
 }
 
 Butin::~Butin() {

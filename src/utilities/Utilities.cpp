@@ -1,6 +1,6 @@
 #include "Utilities.hpp"
 
-const string UtilityFunctions::getButinPieceString(ButinPieceType type) {
+string UtilityFunctions::getButinPieceString(ButinPieceType type) {
     switch (type) {
         case ButinPieceType::Red: return "redPiece";
         case ButinPieceType::Yellow: return "yellowPiece";
@@ -10,7 +10,7 @@ const string UtilityFunctions::getButinPieceString(ButinPieceType type) {
     }
 }
 
-const string UtilityFunctions::getSafariPieceString(SafariPieceType type) {
+string UtilityFunctions::getSafariPieceString(SafariPieceType type) {
     switch (type) {
         case SafariPieceType::Crocodile: return "crocodilePiece";
         case SafariPieceType::Elephant: return "elephantPiece";
@@ -21,7 +21,7 @@ const string UtilityFunctions::getSafariPieceString(SafariPieceType type) {
     }
 }
 
-const string UtilityFunctions::getGounkiPieceString(GounkiPieceType type) {
+string UtilityFunctions::getGounkiPieceString(GounkiPieceType type) {
     switch (type) {
         case GounkiPieceType::BlackSquare: return "BlackSquare";
         case GounkiPieceType::BlackCircle: return "BlackCircle";
@@ -32,7 +32,7 @@ const string UtilityFunctions::getGounkiPieceString(GounkiPieceType type) {
     }
 }
 
-const int UtilityFunctions::getValueFromColor(ButinPieceType color){
+int UtilityFunctions::getValueFromColor(ButinPieceType color){
     switch (color) {
         case ButinPieceType::Black:
             return 3;
@@ -45,7 +45,7 @@ const int UtilityFunctions::getValueFromColor(ButinPieceType color){
     }
     return 0;
 }
-const SafariPieceType UtilityFunctions::getSafariPieceType(string type) {
+SafariPieceType UtilityFunctions::getSafariPieceType(string type) {
     if (type == "crocodilePiece")   return SafariPieceType::Crocodile;
     if (type == "elephantPiece")    return SafariPieceType::Elephant;
     if (type == "lionPiece")    return SafariPieceType::Lion;

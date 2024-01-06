@@ -40,20 +40,13 @@ enum class ActionKey {
 };
 
 namespace UtilityFunctions {
-
-    const string getButinPieceString(ButinPieceType type);
-
-    const string getSafariPieceString(SafariPieceType type);
-
-    const string getGounkiPieceString(GounkiPieceType type);
-
-    const int getValueFromColor(ButinPieceType color);
-
-    const SafariPieceType getSafariPieceType(string type);
-
+    string getButinPieceString(ButinPieceType type);
+    string getSafariPieceString(SafariPieceType type);
+    string getGounkiPieceString(GounkiPieceType type);
+    int getValueFromColor(ButinPieceType color);
+    SafariPieceType getSafariPieceType(string type);
     int getPlayerFromAnimal(SafariPieceType animal);
-
-    void printBoard(const std::vector<std::vector<std::vector<std::string>>>& board);
+    void printBoard(const vector<vector<vector<string>>>& board);
 }
 
 #endif

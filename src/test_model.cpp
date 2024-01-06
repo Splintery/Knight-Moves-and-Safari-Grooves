@@ -9,6 +9,7 @@ void printMoves(const vector<Vector2i>& moves) {
 }
 
 int main(void){
+    /*
     Game *butin = new Butin();
     vector<vector<vector<string>>> tmp = butin->getBoardState();
     vector<string> names;
@@ -50,4 +51,5 @@ int main(void){
     }
 
     return 0;
+    */
 }

@@ -10,7 +10,6 @@ class GounkiPiece : public Piece {
 private:
 public:
     GounkiPiece(GounkiPieceType type, Vector2i position);
-    virtual ~GounkiPiece();
     GounkiPiece(const GounkiPiece &) = delete;
 
     const GounkiPieceType type;
@@ -18,8 +17,9 @@ public:
 
     virtual void movePiece(Vector2i position);
     virtual vector<Vector2i> getMovementPatterns() const;
-    virtual const Vector2i getPosition() const;
+    virtual const Vector2i& getPosition() const;
 
+    virtual ~GounkiPiece();
     friend ostream &operator<<(ostream &, const GounkiPiece &);
 };
 

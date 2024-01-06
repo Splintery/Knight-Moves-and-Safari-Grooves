@@ -1,6 +1,6 @@
-#include "GounkiPiece.hpp"
-#include "GounkiBoard.hpp"
-#include "Gounki.hpp"
+#include "model/gounki/GounkiPiece.hpp"
+#include "model/gounki/GounkiBoard.hpp"
+#include "model/gounki/Gounki.hpp"
 
 int main() {
     Gounki* g = new Gounki();

@@ -25,7 +25,7 @@ vector<Vector2i> ButinPiece::getMovementPatterns() const {
     return patterns;
 }
 
-const Vector2i ButinPiece::getPosition() const {
+const Vector2i& ButinPiece::getPosition() const {
     return this->position;
 }
 
@@ -37,4 +37,3 @@ ostream &operator<<(ostream &o, const ButinPiece &bp) {
     o << "piece: Butin" << endl << "\t Value: " << bp.value << endl;
     return o;
 }
-

@@ -12,7 +12,7 @@ using namespace sf;
 
 class GameConfig {
 public:
-
+    virtual ~GameConfig() {}
 };
 
 #endif
