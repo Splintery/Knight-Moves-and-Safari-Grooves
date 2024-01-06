@@ -25,7 +25,9 @@ private:
     bool isNextCaseTakeable(ActionKey action, const Vector2i &from, const Vector2i &to) const;
 public:
     GounkiBoard();
+    virtual ~GounkiBoard();
     GounkiBoard(const GounkiBoard &) = delete;
+    GounkiBoard& operator=(const GounkiBoard&) = delete;
 
     virtual bool isGameDone() const;
     virtual void initializeGame(const GameConfig&);
@@ -40,7 +42,6 @@ public:
     int getCaseSize(const Vector2i& pos) const;
     void clearDeploymentStatus();
 
-    virtual ~GounkiBoard();
     friend ostream &operator<<(ostream &, const GounkiBoard &);
 };
 

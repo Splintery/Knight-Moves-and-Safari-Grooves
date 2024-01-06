@@ -16,7 +16,9 @@ private:
     vector<Vector2i> getPositionFromPatterns(const Vector2i &from, const vector<Vector2i> &patterns) const;
 public:
     SafariBoard();
+    virtual ~ SafariBoard();
     SafariBoard(const SafariBoard &) = delete;
+    SafariBoard& operator=(const SafariBoard&) = delete;
 
     virtual bool isGameDone() const;
     virtual void initializeGame(const GameConfig&);
@@ -27,7 +29,6 @@ public:
 
     int getCapturedPieces(int playerIndex) const;
 
-    virtual ~ SafariBoard();
     friend ostream &operator<<(ostream &, const SafariBoard &);
 };
 

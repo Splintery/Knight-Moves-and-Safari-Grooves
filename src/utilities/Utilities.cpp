@@ -45,6 +45,7 @@ int UtilityFunctions::getValueFromColor(ButinPieceType color){
     }
     return 0;
 }
+
 SafariPieceType UtilityFunctions::getSafariPieceType(string type) {
     if (type == "crocodilePiece")   return SafariPieceType::Crocodile;
     if (type == "elephantPiece")    return SafariPieceType::Elephant;
@@ -52,6 +53,7 @@ SafariPieceType UtilityFunctions::getSafariPieceType(string type) {
     if (type == "fence")    return SafariPieceType::Fence;
     return SafariPieceType::EmptySafari;
 }
+
 int UtilityFunctions::getPlayerFromAnimal(SafariPieceType animal) {
     return (int) animal;
 }

@@ -11,7 +11,9 @@ private:
     int score;
 public:
     Player(string name);
+    virtual ~Player();
     Player(const Player &) = delete;
+    Player& operator=(const Player&) = delete;
 
     const string name;
 
@@ -19,7 +21,6 @@ public:
     void setScore(int newScore);
     int getScore() const;
 
-    virtual ~Player();
     friend ostream &operator<<(ostream &, const Player &);
 };
 

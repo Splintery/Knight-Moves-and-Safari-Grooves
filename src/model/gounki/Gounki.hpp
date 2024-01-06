@@ -6,9 +6,10 @@
 
 class Gounki : public Game {
 public:
-    virtual ~Gounki();
     Gounki();
+    virtual ~Gounki();
     Gounki(const Gounki &) = delete;
+    Gounki& operator=(const Gounki&) = delete;
 
     virtual bool isGameDone() const;
     virtual string getWinner() const;

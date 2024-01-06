@@ -106,17 +106,27 @@ void Controller::setNewGame(Game *newGame, string name) {
     gameName = name;
     game = newGame;
 }
+
 void Controller::setPlayerNames(vector<std::string> newNames) {
     playerNames = newNames;
 }
 
-Texture * Controller::getWindowAsTexture() {
+Texture* Controller::getWindowAsTexture() {
     Vector2u windowSize = window -> getSize();
     Texture *texture = new Texture();
     texture -> create(windowSize.x, windowSize.y);
     texture -> update(*window);
     return texture;
 }
+
 string Controller::getGameName() const {
     return gameName;
+}
+
+Controller::~Controller() {
+    delete machine;
+    delete window;
+    delete input;
+    delete resource;
+    delete game;
 }

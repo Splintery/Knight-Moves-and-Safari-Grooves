@@ -17,7 +17,6 @@ public:
 
     virtual ~ SafariPiece();
     friend ostream &operator<<(ostream &, const SafariPiece &);
-
 };
 
 #endif

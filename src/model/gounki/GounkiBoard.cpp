@@ -342,8 +342,11 @@ int GounkiBoard::getCaseSize(const Vector2i &pos) const {
 }
 
 GounkiBoard::~GounkiBoard() {
-    // todo supprimer chaque pièce
-    cout << "Destruction of " << *this << endl;
+    delete lastDeploymentPiece;
+    for (GounkiPiece* gp : currentDeployment) {
+        delete gp;
+    }
+    cout << "Destruction of " << *this;
 }
 
 ostream &operator<<(ostream &out, const GounkiBoard &) {

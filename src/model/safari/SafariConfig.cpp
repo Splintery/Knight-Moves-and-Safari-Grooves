@@ -4,7 +4,7 @@ SafariConfig::SafariConfig() {
     cout << "Construction of " << *this;
 }
 
-SafariConfig::SafariConfig(const SafariConfig &) {
+SafariConfig::SafariConfig(const SafariConfig &old): crocodiles {old.crocodiles}, elephants {old.elephants}, lions {old.lions}, fences {old.fences} {
     cout << "Copy of " << *this;
 }
 

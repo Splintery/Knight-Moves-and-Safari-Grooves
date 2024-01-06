@@ -43,6 +43,9 @@ Game.o: src/model/Game.cpp src/model/Game.hpp
 Player.o: src/model/Player.cpp src/model/Player.hpp
 	$(GCC) -c src/model/Player.cpp
 
+Board.o: src/model/Board.cpp src/model/Board.hpp
+	$(GCC) -c src/model/Board.cpp
+
 Butin.o: src/model/butin/Butin.cpp src/model/butin/Butin.hpp src/model/Game.hpp src/model/Player.hpp src/model/Board.hpp src/model/Piece.hpp src/model/butin/ButinBoard.hpp
 	$(GCC) -c src/model/butin/Butin.cpp
 
@@ -79,8 +82,8 @@ GounkiPiece.o: src/model/gounki/GounkiPiece.hpp src/model/gounki/GounkiPiece.cpp
 testSaf: src/TestSafari.cpp SafariPiece.o SafariBoard.o Utilities.o
 	$(GCC) src/TestSafari.cpp SafariPiece.o SafariBoard.o Utilities.o -o TestSaf.exe $(SFML_FLAGS)
 
-test: src/main.cpp Game.o SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PauseState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o GounkiPiece.o GounkiBoard.o Gounki.o Utilities.o src/settings/SETTINGS.hpp
-	$(GCC) src/main.cpp Game.o SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PauseState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o GounkiPiece.o GounkiBoard.o Gounki.o Utilities.o -o Tesssttt.exe $(SFML_FLAGS)
+test: src/main.cpp Game.o Board.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o GounkiPiece.o GounkiBoard.o Gounki.o SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PauseState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Utilities.o src/settings/SETTINGS.hpp
+	$(GCC) src/main.cpp Game.o Board.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o GounkiPiece.o GounkiBoard.o Gounki.o SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PauseState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Utilities.o -o Tesssttt.exe $(SFML_FLAGS)
 
 clean:
 	$(info Cleaning the scene...)

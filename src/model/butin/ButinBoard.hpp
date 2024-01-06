@@ -19,7 +19,9 @@ private:
     Vector2i calculateJumpedPos(const Vector2i &from, const Vector2i &to) const;
 public:
     ButinBoard();
+    virtual ~ButinBoard();
     ButinBoard(const ButinBoard &) = delete;
+    ButinBoard& operator=(const ButinBoard&) = delete;
 
     virtual bool isGameDone() const;
     virtual void initializeGame(const GameConfig&);
@@ -31,7 +33,6 @@ public:
     ButinPieceType getJumpedPieceType(const Vector2i &from, const Vector2i &to) const;
     int getBoardTotalPoints() const;
 
-    virtual ~ButinBoard();
     friend ostream &operator<<(ostream &, const ButinBoard &);
 };
 

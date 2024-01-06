@@ -4,7 +4,7 @@ ButinConfig::ButinConfig(const vector<Vector2i> deleted_pieces):deleted_pieces {
     cout << "Construction of " << *this;
 }
 
-ButinConfig::ButinConfig(const ButinConfig &) {
+ButinConfig::ButinConfig(const ButinConfig &old) : deleted_pieces {old.deleted_pieces} {
     cout << "Copy of " << *this;
 }
 

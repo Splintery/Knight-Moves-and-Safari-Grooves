@@ -30,3 +30,11 @@ vector<string> Game::getPlayerNames() const {
     }
     return res;
 }
+
+Game::~Game() {
+    for (Player* player : playerList) {
+        delete player;
+    }
+    delete board;
+    cout << "Destruction of Game" << endl;
+}

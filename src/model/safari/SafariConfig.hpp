@@ -6,6 +6,7 @@
 class SafariConfig : public GameConfig {
 public:
     SafariConfig();
+    virtual ~SafariConfig();
     SafariConfig(const SafariConfig&);
 
     vector<Vector2i> crocodiles;
@@ -13,7 +14,6 @@ public:
     vector<Vector2i> lions;
     vector<Vector2i> fences;
 
-    virtual ~SafariConfig();
     friend ostream &operator<<(ostream &, const SafariConfig &);
 };
 

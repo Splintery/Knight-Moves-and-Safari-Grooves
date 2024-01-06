@@ -10,6 +10,7 @@ public:
     Butin();
     virtual ~Butin();
     Butin(const Butin &) = delete;
+    Butin& operator=(const Butin&) = delete;
 
     virtual bool isGameDone() const;
     virtual string getWinner() const;

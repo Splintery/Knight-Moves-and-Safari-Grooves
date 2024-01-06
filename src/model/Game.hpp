@@ -17,7 +17,7 @@ protected:
     bool gameStarted = false;
     int currentPlayerIndex = 0;
 public:
-    virtual ~Game() {};
+    virtual ~Game();
 
     // Pure virtual functions
     virtual bool isGameDone() const = 0;

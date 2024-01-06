@@ -13,11 +13,11 @@ class Piece {
 protected:
     Vector2i position;
 public:
+    virtual ~Piece() {}
+
     virtual void movePiece(Vector2i position) = 0;
     virtual vector<Vector2i> getMovementPatterns() const = 0;
     virtual const Vector2i& getPosition() const = 0;
-
-    virtual ~Piece() {}
 };
 
 #endif

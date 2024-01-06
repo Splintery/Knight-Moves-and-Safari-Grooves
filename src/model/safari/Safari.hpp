@@ -13,6 +13,7 @@ public:
     Safari();
     virtual ~Safari();
     Safari(const Safari &) = delete;
+    Safari& operator=(const Safari&) = delete;
 
     virtual bool isGameDone() const;
     virtual string getWinner() const;

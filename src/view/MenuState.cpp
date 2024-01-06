@@ -88,17 +88,21 @@ void MenuState::handleInput() {
 	while (controller -> window -> pollEvent(event)) {
 		if (event.type == Event::Closed) {
 			controller -> window -> close();
-		} else if (controller -> input -> isSpriteClicked(butinButton, Mouse::Left, *controller -> window)) {
+		}
+        else if (controller -> input -> isSpriteClicked(butinButton, Mouse::Left, *controller -> window)) {
             if (controller -> canStartNewGame()) {
                 controller -> setNewGame(new Butin(), "butin");
                 controller -> machine -> addState(new PlayerState(controller), true);
-            } else if (controller -> getGameName() == "butin") {
+            }
+            else if (controller -> getGameName() == "butin") {
                 controller -> machine -> removeState();
             }
 
-        } else if (controller -> input -> isSpriteClicked(gounkiButton, Mouse::Left, *controller -> window)) {
+        }
+        else if (controller -> input -> isSpriteClicked(gounkiButton, Mouse::Left, *controller -> window)) {
             cout << "pressed gounki" << endl;
-        } else if (controller -> input -> isSpriteClicked(safariButton, Mouse::Left, *controller -> window)) {
+        }
+        else if (controller -> input -> isSpriteClicked(safariButton, Mouse::Left, *controller -> window)) {
             if (controller -> canStartNewGame()) {
                 controller -> setNewGame(new Safari(), "safari");
                 controller -> machine -> addState(new PlayerState(controller), true);
