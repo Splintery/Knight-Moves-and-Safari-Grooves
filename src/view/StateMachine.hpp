@@ -9,23 +9,25 @@
 
 
 class StateMachine {
-	public:
-		StateMachine() = default;
-		virtual ~StateMachine() = default;
-		void addState(State *newState, bool isReplacing = true);
-		void removeState();
-		void processStateChanges();
+public:
+    StateMachine() = default;
+	virtual ~StateMachine() = default;
+    StateMachine(const StateMachine&) = delete;
+    StateMachine& operator=(const StateMachine&) = delete;
 
+	void addState(State *newState, bool isReplacing = true);
+	void removeState();
+	void processStateChanges();
 
-		sf::Vector2f getCenter();
+	sf::Vector2f getCenter();
 
-		State *getActiveState();
-        std::stack<State *> states;
-		State *newState;
+	State *getActiveState();
+    std::stack<State *> states;
+	State *newState;
 		
-		bool isRemoving = false;
-		bool isAdding = false;
-		bool isReplacing = false;
+	bool isRemoving = false;
+	bool isAdding = false;
+	bool isReplacing = false;
 };
 
 #endif

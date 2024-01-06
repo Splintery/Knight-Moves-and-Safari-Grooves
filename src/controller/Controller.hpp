@@ -18,31 +18,34 @@
 using namespace std;
 
 class Controller {
-	public:
-		Controller(int width, int height, const string& title);
-        StateMachine *machine;
-        RenderWindow *window;
-        InputManager *input;
-        ResourceManager *resource;
-        Game *game;
+public:
+	Controller(int width, int height, const string &title);
+	virtual ~Controller();
+    Controller(const Controller&) = delete;
+    Controller& operator=(const Controller&) = delete;
 
-        void setNewGame(Game *, string name);
-        bool canStartNewGame() const;
-        string getGameName() const;
-        void setPlayerNames(vector<string> newNames);
-        Texture* getWindowAsTexture();
+	StateMachine *machine;
+	RenderWindow *window;
+	InputManager *input;
+	ResourceManager *resource;
+	Game *game;
 
-        virtual ~Controller();
-	private:
-        // 100000.0 représente 1 seconde en micro seconde
-        const float timePerUpdate = 1000000.0 / UPS;
-        const float timePerFrame = 1000000.0 / FPS;
-		Clock clock;
+	void setNewGame(Game *, string name);
+	bool canStartNewGame() const;
+	string getGameName() const;
+	void setPlayerNames(vector<string> newNames);
+	Texture *getWindowAsTexture();
+private:
+	// 100000.0 représente 1 seconde en micro seconde
+	const float timePerUpdate = 1000000.0 / UPS;
+	const float timePerFrame = 1000000.0 / FPS;
+	Clock clock;
 
-        string gameName = "";
-        vector<string> playerNames;
-        void loadTextures() const;
-        void run();
+	string gameName = "";
+	vector<string> playerNames;
+
+	void loadTextures() const;
+	void run();
 };
 
 #endif

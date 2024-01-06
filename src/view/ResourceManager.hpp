@@ -5,20 +5,23 @@
 #include <SFML/Graphics.hpp>
 
 using namespace std;
+using namespace sf;
 
 class ResourceManager {
-	public:
-		ResourceManager() = default;
-		virtual ~ResourceManager() = default;
+public:
+    ResourceManager() = default;
+	virtual ~ResourceManager() = default;
+    ResourceManager(const ResourceManager&) = delete;
+    ResourceManager& operator=(const ResourceManager&) = delete;
 
-		void loadTexture(string key, string filePath);
-		sf::Texture &getTexture(string key);
+	void loadTexture(string key, string filePath);
+	Texture &getTexture(string key);
 
-		void loadFont(string key, string filePath);
-		sf::Font &getFont(string key);
-	private:
-		map<string, sf::Texture> textures;
-		map<string, sf::Font> fonts;
+	void loadFont(string key, string filePath);
+	Font &getFont(string key);
+private:
+	map<string, Texture> textures;
+	map<string, Font> fonts;
 };
 
 #endif
