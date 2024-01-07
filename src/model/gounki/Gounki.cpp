@@ -2,6 +2,7 @@
 
 Gounki::Gounki() {
     board = new GounkiBoard();
+    gameStarted = true;
     cout << "Construction of " << *this;
 }
 
@@ -25,7 +26,6 @@ string Gounki::getWinner() const {
 
 void Gounki::initializeGame(const GameConfig &) {
     // no specific initialization for the game Gounki
-    gameStarted = true;
 }
 
 void Gounki::makeMove(ActionKey action, const Vector2i& from, const Vector2i& to) {
@@ -68,4 +68,3 @@ ostream &operator<<(ostream &o, const Gounki &) {
     o << "Game: Gounki" << endl;
     return o;
 }
-

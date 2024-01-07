@@ -38,6 +38,14 @@ private:
     void generateDefaultBoard();
 
     /**
+     * Verifies that the case `from` has at least a piece of the current player on it
+     * @param playerIndex   current playerindex
+     * @param from          origin vector
+     * @return              true if the case is one of the player, else false
+     */
+    bool isOriginCaseMine(int playerIndex, const Vector2i& from) const;
+
+    /**
      * Returns a vector of the valid moves associated with what direction the piece needs to take to land at the position
      * @param action    type of action
      * @param from      origin vector

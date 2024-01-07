@@ -467,9 +467,9 @@ Texture& SafariState::backBoardFactory() {
 }
 
 void SafariState::addCrocodile(Vector2i v) {
-    auto itCroc = find(config.crocodiles.begin(), config.crocodiles.end(),v);
-    auto itEle = find(config.elephants.begin(), config.elephants.end(),v);
-    auto itLio = find(config.lions.begin(), config.lions.end(),v);
+    vector<Vector2i>::const_iterator itCroc = find(config.crocodiles.begin(), config.crocodiles.end(),v);
+    vector<Vector2i>::const_iterator itEle = find(config.elephants.begin(), config.elephants.end(),v);
+    vector<Vector2i>::const_iterator itLio = find(config.lions.begin(), config.lions.end(),v);
     if (itEle == config.elephants.end() && itLio == config.lions.end()) {
         if (itCroc != config.crocodiles.end()) {
             config.crocodiles.erase(itCroc);
@@ -479,9 +479,9 @@ void SafariState::addCrocodile(Vector2i v) {
     }
 }
 void SafariState::addElephant(sf::Vector2i v) {
-    auto itEle = find(config.elephants.begin(), config.elephants.end(),v);
-    auto itCroc = find(config.crocodiles.begin(), config.crocodiles.end(),v);
-    auto itLio = find(config.lions.begin(), config.lions.end(),v);
+    vector<Vector2i>::const_iterator itEle = find(config.elephants.begin(), config.elephants.end(),v);
+    vector<Vector2i>::const_iterator itCroc = find(config.crocodiles.begin(), config.crocodiles.end(),v);
+    vector<Vector2i>::const_iterator itLio = find(config.lions.begin(), config.lions.end(),v);
     if (itCroc == config.crocodiles.end() && itLio == config.lions.end()) {
         if (itEle != config.elephants.end()) {
             config.elephants.erase(itEle);
@@ -491,9 +491,9 @@ void SafariState::addElephant(sf::Vector2i v) {
     }
 }
 void SafariState::addLion(sf::Vector2i v) {
-    auto itLio = find(config.lions.begin(), config.lions.end(),v);
-    auto itCroc = find(config.crocodiles.begin(), config.crocodiles.end(),v);
-    auto itEle = find(config.elephants.begin(), config.elephants.end(),v);
+    vector<Vector2i>::const_iterator itLio = find(config.lions.begin(), config.lions.end(),v);
+    vector<Vector2i>::const_iterator itCroc = find(config.crocodiles.begin(), config.crocodiles.end(),v);
+    vector<Vector2i>::const_iterator itEle = find(config.elephants.begin(), config.elephants.end(),v);
     if (itCroc == config.crocodiles.end() && itEle == config.elephants.end()) {
         if (itLio != config.lions.end()) {
             config.lions.erase(itLio);
@@ -503,7 +503,7 @@ void SafariState::addLion(sf::Vector2i v) {
     }
 }
 void SafariState::addFence(Vector2i v) {
-    auto it = find(config.fences.begin(), config.fences.end(),v);
+    vector<Vector2i>::const_iterator it = find(config.fences.begin(), config.fences.end(),v);
     if (it != config.fences.end()) {
         if (it - config.fences.begin() >= currentPlayerIndex * 3) {config.fences.erase(it);}
     } else {

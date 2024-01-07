@@ -7,8 +7,6 @@ ButinState::ButinState(Controller *controller): GameState(controller, BUTIN_BOAR
 	// do stuff in init rather then here
 }
 ButinState::~ButinState() {
-    if (fromTile != nullptr) delete(fromTile);
-    if (toTile != nullptr) delete(toTile);
     delete(pieceSprite);
     cout << "deleting butinGameState" << endl;
 }

@@ -6,8 +6,6 @@ GounkiState::GounkiState(Controller *controller): GameState(controller, GOUNKI_B
     //Do stuuf in init
 }
 GounkiState::~GounkiState() {
-    if (fromTile != nullptr) delete(fromTile);
-    if (toTile != nullptr) delete(toTile);
     delete(pieceSprite);
     cout << "deleting gounkiGameState" << endl;
 }
@@ -62,9 +60,27 @@ void GounkiState::handleInput() {
                 break;
             case Event::MouseButtonPressed:
                 if (controller -> input -> isSpriteClicked(board, Mouse::Left, *controller -> window)) {
-                    if (currentPlayerIndex == pieces[tileClicked.x][tileClicked.y][0])
+                    bool friendlyPiece = currentPlayerIndex == UtilityFunctions::getPlayerFromName(pieces[tileClicked.x][tileClicked.y][0]);
+                    if (fromTile == nullptr) {
+                        if (friendlyPiece) {
+                            fromTile = new Vector2i(tileClicked);
+                            movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
+                        }
+                    } else {
+                        if (tileClicked == *fromTile) {
+                            delete (fromTile);
+                            fromTile = nullptr;
+                            movesPossible.clear();
+                        } else {
+                            vector<Vector2i>::const_iterator it = find(movesPossible.begin(), movesPossible.end(),tileClicked);
+                            if (it != movesPossible.end()) {
+                                toTile = new Vector2i(tileClicked);
+                                moveReady = true;
+                            }
+                        }
+                    }
                 } else if (controller -> input -> isSpriteClicked(board, Mouse::Right, *controller -> window)) {
-
+                    cout << "tmp\n";
                 }
                 break;
             default:
@@ -74,12 +90,15 @@ void GounkiState::handleInput() {
 }
 
 void GounkiState::drawPieces() {
+    int sum = 0;
     for (int i = 0; i < (int) pieces.size(); i++) {
         for (int j = 0; j < (int) pieces[i].size(); j++) {
             for (int k = (int) pieces[i][j].size() - 1; k >= 0 ; k--) {
-                if (pieces[i][j][0] != "") {
+                if (pieces[i][j][k] != "") {
+                    sum++;
+                    cout << sum << ": " << pieces[i][j][k] << ": [" << i << "]; [" << j << "]" << endl;
                     pieceSprite -> setTexture(controller -> resource -> getTexture(pieces[i][j][k]));
-                    Vector2i v{i + 10 * k, j + 10 * k};
+                    Vector2i v{j + 10 * k, i - 10 * k};
                     positionPieceWithinBoard(pieceSprite, v);
                     controller -> window -> draw(*pieceSprite);
                 }
@@ -116,22 +135,24 @@ void GounkiState::update() {
         int oldPlayerIndex = currentPlayerIndex;
         moveReady = false;
         controller -> game -> makeMove(ActionKey::LeftClick, *fromTile, *toTile);
+        cout << "Move made !\n";
         currentPlayerIndex = controller -> game -> getCurrentPlayerIndex();
         movesPossible.clear();
 
         if (currentPlayerIndex != oldPlayerIndex) {
+            cout << "test\n";
             delete(fromTile);
             delete(toTile);
             fromTile = nullptr;
             toTile = nullptr;
             GameState::colorCurrentPlayer();
-            playerPlayed = false;
+            cout << "test2\n";
         } else {
             delete(fromTile);
             fromTile = new Vector2i(*toTile);
             delete(toTile);
             toTile = nullptr;
-            movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
+//            movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
         }
 
         if (controller -> game -> hasGameStarted() && controller -> game -> isGameDone()) {

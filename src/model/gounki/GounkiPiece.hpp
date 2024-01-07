@@ -7,7 +7,6 @@
 #include "../../utilities/Utilities.hpp"
 
 class GounkiPiece : public Piece {
-private:
 public:
     /**
      * Constructor of a Gounki piece

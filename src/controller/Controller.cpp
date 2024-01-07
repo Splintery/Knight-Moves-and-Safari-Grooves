@@ -1,7 +1,5 @@
-#include <iostream>
 #include "Controller.hpp"
 #include "../view/MenuState.hpp"
-
 
 Controller::Controller(int width, int height, const string& title) {
     cout << "creating window" << endl;

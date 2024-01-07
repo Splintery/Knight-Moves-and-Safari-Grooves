@@ -4,6 +4,8 @@ GameState::GameState(Controller *controller, int boardSize): controller{controll
     // Do stuff in init()
 }
 GameState::~GameState() {
+    if (fromTile != nullptr) delete(fromTile);
+    if (toTile != nullptr) delete(toTile);
     cout << "deleting gamestate" << endl;
 }
 Texture& GameState::backBoardFactory() {
@@ -34,7 +36,6 @@ void GameState::positionPieceWithinBoard(Sprite *piece, Vector2i pos) {
         pos.y * tileHeight + board.getGlobalBounds().top + (tileHeight / 2 - piece -> getGlobalBounds().height / 2)
     );
 }
-
 void GameState::drawPieces() {
     for (int i = 0; i < (int) pieces.size(); i++) {
         for (int j = 0; j < (int) pieces[i].size(); j++) {

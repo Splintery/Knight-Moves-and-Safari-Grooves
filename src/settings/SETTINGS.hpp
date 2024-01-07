@@ -1,5 +1,6 @@
 #define FPS 144.0
 #define UPS 200
+// 1920x1080 est la résolution la plus esthétique, si changée certaines images ne seront plus aux bonnes proportions
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
 #define TILE_SIZE 60.0f

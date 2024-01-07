@@ -61,7 +61,7 @@ int UtilityFunctions::getPlayerFromName(string color) {
     if (color == "blackSquare" || color == "blackCircle") {
         return 0;
     } else {
-        return 1.
+        return 1;
     }
 }
 

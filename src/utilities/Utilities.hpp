@@ -26,6 +26,8 @@ enum class SafariPieceType {
     EmptySafari
 };
 
+// Black => Player 0
+// White => Player 1
 enum class GounkiPieceType {
     BlackSquare,
     BlackCircle,
@@ -48,6 +50,7 @@ namespace UtilityFunctions {
     int getPlayerFromAnimal(SafariPieceType animal);
     int getPlayerFromName(string color);
     void printBoard(const vector<vector<vector<string>>>& board);
+
 }
 
 #endif
