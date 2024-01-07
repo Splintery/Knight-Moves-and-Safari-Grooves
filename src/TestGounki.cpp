@@ -75,7 +75,6 @@ int main() {
     g->makeMove(ActionKey::RightClick, Vector2i {6, 4}, Vector2i {6, 5});
      */
     // rebounds first scheme
-    /*
     Vector2i stack1 {6, 2};
     g->makeMove(ActionKey::LeftClick, Vector2i {6, 6}, stack1);
     g->makeMove(ActionKey::LeftClick, Vector2i {6, 0}, stack1);
@@ -88,7 +87,7 @@ int main() {
     g->makeMove(ActionKey::LeftClick, Vector2i {6, 5}, stack3);
     g->makeMove(ActionKey::LeftClick, Vector2i {6, 7}, stack3);
     vector<Vector2i> tmp3 = g->validMoves(ActionKey::LeftClick,  stack3);
-     */
+    /*
     // deployments + rebound second scheme
     Vector2i stack1 {2, 2};
     g->makeMove(ActionKey::LeftClick, Vector2i {0, 1}, stack1);
@@ -127,4 +126,5 @@ int main() {
     g->makeMove(ActionKey::RightClick, stack4, Vector2i {6, 7});
     vector<Vector2i> tmpB = g->validMoves(ActionKey::RightClick, Vector2i {6, 7});
     g->makeMove(ActionKey::RightClick, Vector2i {6, 7}, Vector2i {6, 6});
+     */
 }

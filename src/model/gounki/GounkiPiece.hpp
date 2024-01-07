@@ -9,16 +9,40 @@
 class GounkiPiece : public Piece {
 private:
 public:
+    /**
+     * Constructor of a Gounki piece
+     * @param type      the enum of the piece's type
+     * @param position  the position of the piece on the board
+     */
     GounkiPiece(GounkiPieceType type, Vector2i position);
     virtual ~GounkiPiece();
+    /**
+     * Copies and assignments are not possible
+     */
     GounkiPiece(const GounkiPiece &) = delete;
     GounkiPiece& operator=(const GounkiPiece&) = delete;
 
+    /**
+     * The type of the piece
+     */
     const GounkiPieceType type;
+
+    /**
+     * A static map with each Butin piece type and his possible movements
+     */
     static const map<GounkiPieceType, vector<Vector2i>> gounkiMovements;
 
+    /**
+     * @see Piece::movePiece()
+     */
     virtual void movePiece(Vector2i position);
+    /**
+     * @see Piece::getMovementPatterns()
+     */
     virtual vector<Vector2i> getMovementPatterns() const;
+    /**
+     * @see Piece::getPosition()
+     */
     virtual const Vector2i& getPosition() const;
 
     friend ostream &operator<<(ostream &, const GounkiPiece &);

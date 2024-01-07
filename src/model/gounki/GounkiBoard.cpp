@@ -156,8 +156,8 @@ bool GounkiBoard::isWithinBounds(Vector2i pos) const {
     return (isWithinBoundsX(pos.x) && isWithinBoundsX(pos.y));
 }
 
-Vector2i GounkiBoard::handleRebounds(vector<Vector2i>::const_iterator it, Vector2i finalPos) const {
-    Vector2i newDir = *it;
+Vector2i GounkiBoard::handleRebounds(const Vector2i& from, Vector2i finalPos) const {
+    Vector2i newDir = from;
     if (!isWithinBounds(finalPos)) {
         if (!isWithinBoundsX(finalPos.x))
             newDir.x = -newDir.x;
@@ -165,7 +165,7 @@ Vector2i GounkiBoard::handleRebounds(vector<Vector2i>::const_iterator it, Vector
             newDir.y = -newDir.y;
         int j = 0;
         while (!isWithinBounds(finalPos)) {
-            finalPos -= *it;
+            finalPos -= from;
             j++;
         }
         while (j != 0) {
@@ -244,7 +244,7 @@ GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
                     blockingPatterns.push_back(it);
                 }
                 else {
-                    finalPos = handleRebounds(it, finalPos);
+                    finalPos = handleRebounds(*it, finalPos);
                     if (isNextCaseTakeable(action, from, finalPos)) {
                         moves.emplace_back(make_pair(finalPos,*it));
                     }

@@ -12,14 +12,40 @@ private:
 public:
     Safari();
     virtual ~Safari();
+    /**
+     * Copies and assignments are not possible
+     */
     Safari(const Safari &) = delete;
     Safari& operator=(const Safari&) = delete;
 
+    /**
+     * @see Game::isGameDone()
+     */
     virtual bool isGameDone() const;
+
+    /**
+     * @see Game::getWinner()
+     */
     virtual string getWinner() const;
+
+    /**
+     * @see Game::initPlayers()
+     */
     void initPlayers(vector<string> playerNames) override;
+
+    /**
+     * @see Game::initializeGame()
+     */
     virtual void initializeGame(const GameConfig &);
+
+    /**
+     * @see Game::makeMove()
+     */
     virtual void makeMove(ActionKey action, const Vector2i& from, const Vector2i& to = Vector2i(0, 0));
+
+    /**
+     * @see Game::getMinMaxPlayers()
+     */
     virtual pair<int, int> getMinMaxPlayers() const;
 
     friend ostream &operator<<(ostream &, const Safari &);
