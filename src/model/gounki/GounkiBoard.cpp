@@ -122,7 +122,7 @@ void GounkiBoard::makeDeployment(const Vector2i &from, const Vector2i &to) {
     });
     GounkiPiece *newDeploymentPiece = (GounkiPiece *) *it;
     // first step of a deployment: every piece is moved to the next case
-    // and every piece is push to the current deployment vector
+    // and every piece is pushed to the current deployment vector
     if (lastDeploymentPiece == nullptr) {
         for (int i = currentCase.size() - 1; i >= 0; --i) {
             nextCase.push_back(currentCase.at(i));

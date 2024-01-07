@@ -89,8 +89,18 @@ private:
      */
     bool isNextCaseTakeable(ActionKey action, const Vector2i &from, const Vector2i &to) const;
 
+    /**
+     * Initiates the movement from the case `from` to the case `to`
+     * @param from      origin vector
+     * @param to        landing vector
+     */
     void makeMovement(const Vector2i &from, const Vector2i &to);
 
+    /**
+     * Initiates or continues the deployment from the case `from` to the case `to`
+     * @param from      origin vector
+     * @param to        landing vector
+     */
     void makeDeployment(const Vector2i &from, const Vector2i &to);
 public:
     GounkiBoard();

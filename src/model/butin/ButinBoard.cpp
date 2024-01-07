@@ -11,7 +11,7 @@ ButinBoard::ButinBoard() {
 }
 
 bool ButinBoard::isGameDone() const {
-    // In this game the game is finished no matter wich player turn it is,
+    // in this game the game is finished no matter wich player turn it is,
     // because none of the Pieces belong to a specific Player
     for (const vector<vector<Piece *>>& column : board) {
         for (const vector<Piece *>& line: column) {
