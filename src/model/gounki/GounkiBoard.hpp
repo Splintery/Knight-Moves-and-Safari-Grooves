@@ -37,6 +37,8 @@ private:
      */
     void generateDefaultBoard();
 
+    bool isOriginCaseMine(int playerIndex, const Vector2i& from) const;
+
     /**
      * Returns a vector of the valid moves associated with what direction the piece needs to take to land at the position
      * @param action    type of action

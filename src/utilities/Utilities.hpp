@@ -26,6 +26,8 @@ enum class SafariPieceType {
     EmptySafari
 };
 
+// Black => Player 0
+// White => Player 1
 enum class GounkiPieceType {
     BlackSquare,
     BlackCircle,

@@ -68,4 +68,3 @@ ostream &operator<<(ostream &o, const Gounki &) {
     o << "Game: Gounki" << endl;
     return o;
 }
-

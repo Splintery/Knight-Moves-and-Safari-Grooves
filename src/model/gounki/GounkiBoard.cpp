@@ -323,8 +323,31 @@ void filterUniqueFirst(vector<pair<Vector2i, Vector2i>>& movesWithPattern) {
             );
 }
 
+bool GounkiBoard::isOriginCaseMine(int playerIndex, const Vector2i& from) const {
+    const vector<Piece*>& vec = board[from.x][from.y];
+    if (vec.empty()) {
+        return false;
+    }
+    switch (((GounkiPiece*)vec[0])->type) {
+        case GounkiPieceType::BlackSquare:
+        case GounkiPieceType::BlackCircle:
+            if (playerIndex != 0)
+                return false;
+            return true;
+        case GounkiPieceType::WhiteSquare:
+        case GounkiPieceType::WhiteCircle:
+            if (playerIndex != 1)
+                return false;
+            return true;
+        default:
+            return false;
+    }
+}
+
 vector<Vector2i> GounkiBoard::validMoves(ActionKey action, int playerIndex, const Vector2i& from) const {
     vector<Vector2i> moves;
+    if(!isOriginCaseMine(playerIndex, from))
+        return moves;
     vector<pair<Vector2i, Vector2i>> movesWithPattern = validMovesPattern(action, from);
     switch (action) {
         // handles the calculation of a piece's move
