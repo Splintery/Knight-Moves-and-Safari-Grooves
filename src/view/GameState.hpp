@@ -29,6 +29,7 @@ class GameState: public State {
         vector<vector<vector<string>>> pieces;
         Sprite board;
         Sprite backBoard;
+        Texture& backBoardFactory();
         void drawBase();
         // one Sprite will have its texture changed and position replaced to draw all the pieces
         // insted of having a sprite for each of the pieces on the board
@@ -67,6 +68,7 @@ class GameState: public State {
 
         // will be displayed on the screen when the game is finished (printWinner = true)
         Text winner;
+        void initWinner();
         void gameOver();
 
 };

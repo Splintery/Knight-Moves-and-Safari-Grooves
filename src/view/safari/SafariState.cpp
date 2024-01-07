@@ -13,9 +13,7 @@ SafariState::~SafariState() {
 void SafariState::init() {
     Vector2f center = controller -> machine -> getCenter();
 
-    winner.setFont(controller -> resource -> getFont("pixel"));
-    winner.setFillColor(Color(9, 109, 8));
-    winner.setCharacterSize(TITLE_SIZE * 3);
+    initWinner();
 
     initInstructions.setFont(controller -> resource -> getFont("pixel"));
     initInstructions.setFillColor(Color(172, 50, 50));

@@ -97,7 +97,12 @@ void MenuState::handleInput() {
             }
 
         } else if (controller -> input -> isSpriteClicked(gounkiButton, Mouse::Left, *controller -> window)) {
-            cout << "pressed gounki" << endl;
+            if (controller -> canStartNewGame()) {
+                controller ->setNewGame(new Gounki(), "gounki");
+                controller -> machine -> addState(new PlayerState(controller), true);
+            } else if (controller -> getGameName() == "gounki") {
+                controller -> machine -> removeState();
+            }
         } else if (controller -> input -> isSpriteClicked(safariButton, Mouse::Left, *controller -> window)) {
             if (controller -> canStartNewGame()) {
                 controller -> setNewGame(new Safari(), "safari");

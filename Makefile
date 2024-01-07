@@ -31,6 +31,9 @@ ButinState.o: src/view/butin/ButinState.cpp src/view/butin/ButinState.hpp $(VIEW
 SafariState.o: src/view/safari/SafariState.cpp src/view/safari/SafariState.hpp $(VIEW_CPP) src/view/GameState.hpp src/controller/Controller.hpp src/settings/SETTINGS.hpp src/model/safari/SafariConfig.hpp
 	$(GCC) -c src/view/safari/SafariState.cpp $(SFML_FLAGS)
 
+GounkiState.o: src/view/safari/GounkiState.cpp src/view/safari/GounkiState.hpp $(VIEW_CPP) src/view/GameState.hpp src/controller/Controller.hpp src/settings/SETTINGS.hpp
+	$(GCC) -c src/view/safari/GounkiState.cpp $(SFML_FLAGS)
+
 PauseState.o: src/view/PauseState.cpp src/view/PauseState.hpp $(VIEW_CPP) src/view/MenuState.hpp src/controller/Controller.hpp src/settings/SETTINGS.hpp
 	$(GCC) -c src/view/PauseState.cpp
 

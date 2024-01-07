@@ -1,30 +1,21 @@
-#include "ButinState.hpp"
+#include "GounkiState.hpp"
 #include "../PauseState.hpp"
 
-using namespace std;
 
-ButinState::ButinState(Controller *controller): GameState(controller, BUTIN_BOARD_SIZE) {
-	// do stuff in init rather then here
+GounkiState::GounkiState(Controller *controller): GameState(controller, GOUNKI_BOARD_SIZE) {
+    //Do stuuf in init
 }
-ButinState::~ButinState() {
+GounkiState::~GounkiState() {
     if (fromTile != nullptr) delete(fromTile);
     if (toTile != nullptr) delete(toTile);
     delete(pieceSprite);
-    cout << "deleting butinGameState" << endl;
+    cout << "deleting gounkiGameState" << endl;
 }
 
-void ButinState::init() {
+void GounkiState::init() {
     Vector2f center = controller -> machine -> getCenter();
 
     initWinner();
-
-    initInstructions.setFont(controller -> resource -> getFont("pixel"));
-    initInstructions.setFillColor(Color(172, 50, 50));
-    initInstructions.setCharacterSize(TEXT_SIZE);
-    initInstructions.setString("Each player must select a yellow tile to remove from the game");
-    initInstructions.setPosition(
-        center.x - initInstructions.getGlobalBounds().width / 2, TILE_SIZE * 0.25
-    );
 
     pieceSprite = new Sprite();
     pieceSprite -> setScale(1.25, 1.25);
@@ -52,10 +43,11 @@ void ButinState::init() {
     redTileSprite.setScale(0.75, 0.75);
     blueTileSprite.setTexture(controller -> resource -> getTexture("blueTile"));
     blueTileSprite.setScale(0.75, 0.75);
+
 }
 
-void ButinState::handleInput() {
-	Event event;
+void GounkiState::handleInput() {
+    Event event;
 
 	while (controller -> window -> pollEvent(event)) {
         switch (event.type) {
@@ -92,14 +84,7 @@ void ButinState::handleInput() {
                                 }
                             }
                         } else {
-                            addPieceToRemove(tileClicked);
-                            if (piecesToRemove.size() >= playerNamesDisplay.size()) {
-                                controller -> game -> initializeGame(ButinConfig(piecesToRemove));
-                                if (controller -> game -> hasGameStarted() && controller -> game -> isGameDone()) {
-                                    gameOver();
-                                }
-                                GameState::colorCurrentPlayer();
-                            }
+                            cout << "Error in Gounki, game should had started\n";
                         }
                     } else if (pieces[tileClicked.x][tileClicked.y][0] == "") {
                         if (toTile == nullptr && fromTile != nullptr) {
@@ -121,7 +106,23 @@ void ButinState::handleInput() {
 	}
 }
 
-void ButinState::draw() {
+void GounkiState::drawPieces() {
+    for (int i = 0; i < (int) pieces.size(); i++) {
+        for (int j = 0; j < (int) pieces[i].size(); j++) {
+            for (int k = (int) pieces[i][j].size() - 1; k >= 0 ; k--) {
+                if (pieces[i][j][0] != "") {
+                    pieceSprite -> setTexture(controller -> resource -> getTexture(pieces[i][j][k]));
+                    Vector2i v{i + 10 * k, j + 10 * k};
+                    positionPieceWithinBoard(pieceSprite, v);
+                    controller -> window -> draw(*pieceSprite);
+                }
+            }
+
+        }
+    }
+}
+
+void GounkiState::draw() {
 	controller -> window -> clear();
 
     GameState::drawBase();
@@ -134,23 +135,15 @@ void ButinState::draw() {
                 GameState::drawMovesPossible();
                 GameState::drawSelectedTile();
             }
-        } else {
-            controller -> window -> draw(initInstructions);
-            // Highlights the Tiles that will be removed by the players
-            for (Vector2i v : piecesToRemove) {
-                positionRedTile(v);
-                controller -> window -> draw(redTileSprite);
-            }
         }
-
         // Draws all the pieces on their Tiles
-        GameState::drawPieces();
+        drawPieces();
     }
     GameState::drawPlayerDisplay();
 	controller -> window -> display();
 }
 
-void ButinState::update() {
+void GounkiState::update() {
 	pieces = controller -> game -> getBoardState();
     if (moveReady) {
         int oldPlayerIndex = currentPlayerIndex;
@@ -181,29 +174,29 @@ void ButinState::update() {
     }
 }
 
-void ButinState::boardFactory() {
-    Sprite whiteTileSprite = Sprite();
-    Texture whiteTile = Texture();
+
+void GounkiState::boardFactory() {
+    Sprite whiteTileSprite, blackTileSprite = Sprite();
+    Texture whiteTile, blackTile = Texture();
+
     whiteTile.loadFromFile("./resources/board/WhiteTile.png");
+    blackTile.loadFromFile("./resources/board/BlackTile.png");
     whiteTileSprite.setTexture(whiteTile);
+    blackTileSprite.setTexture(blackTile);
 
 
     render.create(120 * BUTIN_BOARD_SIZE, 120 * BUTIN_BOARD_SIZE);
     render.clear();
     for (int i = 0; i < BUTIN_BOARD_SIZE; i++) {
         for (int j = 0; j < BUTIN_BOARD_SIZE; j++) {
-            whiteTileSprite.setPosition(i * 120, j * 120);
-            render.draw(whiteTileSprite);
+            if (j % 2 + i % 2 == 0) {
+                whiteTileSprite.setPosition(i * 120, j * 120);
+                render.draw(whiteTileSprite);
+            } else {
+                blackTileSprite.setPosition(i * 120, j * 120);
+                render.draw(whiteTileSprite);
+            }
         }
     }
     render.display();
-}
-
-void ButinState::addPieceToRemove(sf::Vector2i v) {
-    auto it = find(piecesToRemove.begin(), piecesToRemove.end(),v);
-    if (it != piecesToRemove.end()) {
-        piecesToRemove.erase(it);
-    } else {
-        piecesToRemove.push_back(v);
-    }
 }

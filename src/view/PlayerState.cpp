@@ -2,6 +2,7 @@
 #include "PlayerState.hpp"
 #include "butin/ButinState.hpp"
 #include "safari/SafariState.hpp"
+#include "gounki/GounkiState.hpp"
 
 PlayerState::PlayerState(Controller *controller): controller{controller}, minPlayers{controller -> game -> getMinMaxPlayers().first}, maxPlayers{controller -> game -> getMinMaxPlayers().second} {
     playerDisplayNames.insert(playerDisplayNames.begin(), Text());
@@ -98,7 +99,7 @@ void PlayerState::goToGameState() {
     if (gameToLaunch == "butin") {
         controller -> machine -> addState(new ButinState(controller), true);
     } else if (gameToLaunch == "gounki") {
-        // TODO: launch GounkiGameState
+        controller -> machine -> addState(new GounkiState(controller), true);
     } else if (gameToLaunch == "safari") {
         controller -> machine -> addState(new SafariState(controller), true);
     } else {

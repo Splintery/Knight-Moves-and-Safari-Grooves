@@ -12,6 +12,7 @@
 #include "../model/Game.hpp"
 #include "../model/butin/Butin.hpp"
 #include "../model/safari/Safari.hpp"
+#include "../model/gounki/Gounki.hpp"
 #include "../model/GameConfig.hpp"
 
 

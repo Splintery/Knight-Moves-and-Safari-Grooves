@@ -6,6 +6,13 @@ GameState::GameState(Controller *controller, int boardSize): controller{controll
 GameState::~GameState() {
     cout << "deleting gamestate" << endl;
 }
+Texture& GameState::backBoardFactory() {
+    Image bgColor;
+    bgColor.create(BUTIN_BOARD_SIZE * 120 + 50, BUTIN_BOARD_SIZE * 120 + 50, Color(24, 24, 24));
+    Texture *bgTexture = new Texture();
+    bgTexture -> loadFromImage(bgColor);
+    return *bgTexture;
+}
 
 void GameState::drawBase() {
     controller -> window -> draw(background);
@@ -30,7 +37,7 @@ void GameState::positionPieceWithinBoard(Sprite *piece, Vector2i pos) {
 
 void GameState::drawPieces() {
     for (int i = 0; i < (int) pieces.size(); i++) {
-        for (int j = 0; j < (int) pieces.size(); j++) {
+        for (int j = 0; j < (int) pieces[i].size(); j++) {
             if (pieces[i][j][0] != "") {
                 pieceSprite -> setTexture(controller -> resource -> getTexture(pieces[i][j][0]));
                 Vector2i v{i, j};
@@ -105,9 +112,14 @@ void GameState::drawMovesPossible() {
         controller -> window -> draw(redTileSprite);
     }
 }
+
+void GameState::initWinner() {
+    winner.setFont(controller -> resource -> getFont("pixel"));
+    winner.setFillColor(Color(9, 109, 8));
+    winner.setCharacterSize(TITLE_SIZE * 3);
+}
 void GameState::gameOver() {
     winner.setString(controller -> game -> getWinner());
     winner.setPosition(controller -> machine -> getCenter().x - winner.getGlobalBounds().width / 2, controller -> machine -> getCenter().y - winner.getGlobalBounds().height / 2);
     printWinner = true;
 }
-
