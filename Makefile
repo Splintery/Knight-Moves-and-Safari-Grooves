@@ -1,6 +1,7 @@
 GCC=g++ --std=c++11 -Wall
 SFML_FLAGS=-lsfml-graphics -lsfml-window -lsfml-system
 VIEW_CPP=src/view/InputManager.hpp src/view/StateMachine.hpp src/view/ResourceManager.hpp src/view/State.hpp
+PROGRAM_NAME=knightmovesandsafarigrooves
 
 all: test clean
 
@@ -83,7 +84,7 @@ testSaf: src/TestSafari.cpp SafariPiece.o SafariBoard.o Utilities.o
 	$(GCC) src/TestSafari.cpp SafariPiece.o SafariBoard.o Utilities.o -o TestSaf.exe $(SFML_FLAGS)
 
 test: src/main.cpp Game.o Board.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o GounkiPiece.o GounkiBoard.o Gounki.o SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PauseState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Utilities.o src/settings/SETTINGS.hpp
-	$(GCC) src/main.cpp Game.o Board.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o GounkiPiece.o GounkiBoard.o Gounki.o SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PauseState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Utilities.o -o Tesssttt.exe $(SFML_FLAGS)
+	$(GCC) src/main.cpp Game.o Board.o Player.o ButinPiece.o ButinBoard.o ButinConfig.o Butin.o GounkiPiece.o GounkiBoard.o Gounki.o SafariPiece.o SafariBoard.o SafariConfig.o Safari.o Controller.o MenuState.o PauseState.o PlayerState.o GameState.o ButinState.o SafariState.o StateMachine.o InputManager.o ResourceManager.o Utilities.o -o $(PROGRAM_NAME) $(SFML_FLAGS)
 
 clean:
 	$(info Cleaning the scene...)
