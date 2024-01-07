@@ -29,7 +29,8 @@ public:
     virtual string getWinner() const;
 
     /**
-     * @see Game::initPlayers()
+     * Safari needs an overriden initilization since the players' scores are set to the number of animals at the beginning of the game
+     * @param playerNames   names of the players
      */
     void initPlayers(vector<string> playerNames) override;
 
