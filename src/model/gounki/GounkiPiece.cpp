@@ -5,7 +5,7 @@ GounkiPiece::GounkiPiece(GounkiPieceType type, Vector2i position): type {type} {
     cout << "Construction of " << *this;
 }
 
-const std::map<GounkiPieceType, std::vector<Vector2i>> GounkiPiece::gounkiMovements = {
+const map<GounkiPieceType, std::vector<Vector2i>> GounkiPiece::gounkiMovements = {
     { GounkiPieceType::BlackCircle, {Vector2i(1, -1), Vector2i(1, 1)}},
     { GounkiPieceType::WhiteCircle, {Vector2i(-1, 1), Vector2i(-1, -1)}},
     { GounkiPieceType::BlackSquare, {Vector2i(1, 0), Vector2i(0, 1), Vector2i(0, -1)}},

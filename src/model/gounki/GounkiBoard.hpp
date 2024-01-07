@@ -88,6 +88,10 @@ private:
      * @return          true if the case is takeable, else false
      */
     bool isNextCaseTakeable(ActionKey action, const Vector2i &from, const Vector2i &to) const;
+
+    void makeMovement(const Vector2i &from, const Vector2i &to);
+
+    void makeDeployment(const Vector2i &from, const Vector2i &to);
 public:
     GounkiBoard();
     virtual ~GounkiBoard();

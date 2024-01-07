@@ -5,7 +5,8 @@ Butin::Butin() {
     cout << "Construction of " << *this;
 }
 
-bool Butin::isGameDone() const{
+bool Butin::isGameDone() const {
+    // when the game is done, the last player will get removed from his points the sum of all the pieces left on the board
     if (gameStarted && board -> isGameDone()) {
         int totalPointsRemaining = ((ButinBoard *) board) -> getBoardTotalPoints();
         playerList[(currentPlayerIndex - 1) % playerList.size()] -> increaseScore(-totalPointsRemaining);
@@ -16,7 +17,9 @@ bool Butin::isGameDone() const{
 
 string Butin::getWinner() const {
     int max = 0;
-    Player* winner = nullptr;
+    Player* winner;
+
+    // the winner is the player with the most points
     for (Player* player : playerList) {
         if (player->getScore() > max) {
             max = player->getScore();
@@ -36,7 +39,7 @@ void Butin::makeMove(ActionKey action, const Vector2i &from, const Vector2i &to)
     playerList[currentPlayerIndex]->increaseScore(UtilityFunctions::getValueFromColor(butinPieceType));
     board->makeMove(action, currentPlayerIndex, from, to);
 
-    // skip to the next player is no more moves are available
+    // skip to the next player if no more moves are possible
     if (validMoves(action, to).empty()) {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
     }

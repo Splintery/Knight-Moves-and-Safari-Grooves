@@ -17,6 +17,7 @@ vector<Vector2i> ButinPiece::getMovementPatterns() const {
     patterns.push_back(Vector2i(2, -2));
     patterns.push_back(Vector2i(-2, 2));
     patterns.push_back(Vector2i(-2, -2));
+
     // straight jumps
     patterns.push_back(Vector2i(0, 2));
     patterns.push_back(Vector2i(0, -2));

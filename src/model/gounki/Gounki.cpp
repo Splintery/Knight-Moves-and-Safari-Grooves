@@ -14,6 +14,7 @@ bool Gounki::isGameDone() const {
 }
 
 string Gounki::getWinner() const {
+    // the winner either ate all the pieces, or landed a piece on a winning position
     for (Player * p : playerList) {
         if (p->getScore() == GOUNKI_BOARD_SIZE * 2)
             return p->name;
@@ -23,14 +24,18 @@ string Gounki::getWinner() const {
 }
 
 void Gounki::initializeGame(const GameConfig &) {
+    // no specific initialization for the game Gounki
     gameStarted = true;
 }
 
 void Gounki::makeMove(ActionKey action, const Vector2i& from, const Vector2i& to) {
     GounkiBoard* gounkiBoard = (GounkiBoard*) board;
+
+    // a classic movement will increase the score of the player if the landed case is an ennemy case
     if (action == ActionKey::LeftClick && gounkiBoard->isLandedCaseEnnemy(from, to)) {
         playerList[currentPlayerIndex]->increaseScore(gounkiBoard->getCaseSize(to));
     }
+
     board->makeMove(action, currentPlayerIndex, from, to);
 
     switch (action) {
