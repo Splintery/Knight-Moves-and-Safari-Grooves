@@ -12,7 +12,10 @@ using namespace sf;
 
 class GameConfig {
 public:
-
+    /**
+     * Destructor of the interface
+     */
+    virtual ~GameConfig() {}
 };
 
 #endif

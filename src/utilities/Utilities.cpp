@@ -1,6 +1,6 @@
 #include "Utilities.hpp"
 
-const string UtilityFunctions::getButinPieceString(ButinPieceType type) {
+string UtilityFunctions::getButinPieceString(ButinPieceType type) {
     switch (type) {
         case ButinPieceType::Red: return "redPiece";
         case ButinPieceType::Yellow: return "yellowPiece";
@@ -10,7 +10,7 @@ const string UtilityFunctions::getButinPieceString(ButinPieceType type) {
     }
 }
 
-const string UtilityFunctions::getSafariPieceString(SafariPieceType type) {
+string UtilityFunctions::getSafariPieceString(SafariPieceType type) {
     switch (type) {
         case SafariPieceType::Crocodile: return "crocodilePiece";
         case SafariPieceType::Elephant: return "elephantPiece";
@@ -21,18 +21,18 @@ const string UtilityFunctions::getSafariPieceString(SafariPieceType type) {
     }
 }
 
-const string UtilityFunctions::getGounkiPieceString(GounkiPieceType type) {
+string UtilityFunctions::getGounkiPieceString(GounkiPieceType type) {
     switch (type) {
-        case GounkiPieceType::BlackSquare: return "BlackSquare";
-        case GounkiPieceType::BlackCircle: return "BlackCircle";
-        case GounkiPieceType::WhiteSquare: return "WhiteSquare";
-        case GounkiPieceType::WhiteCircle: return "WhiteCircle";
-        case GounkiPieceType::EmptyGounki: return "EmptyGounki";
+        case GounkiPieceType::BlackSquare: return "blackSquare";
+        case GounkiPieceType::BlackCircle: return "blackCircle";
+        case GounkiPieceType::WhiteSquare: return "whiteSquare";
+        case GounkiPieceType::WhiteCircle: return "whiteCircle";
+        case GounkiPieceType::EmptyGounki: return "";
         default: return "";
     }
 }
 
-const int UtilityFunctions::getValueFromColor(ButinPieceType color){
+int UtilityFunctions::getValueFromColor(ButinPieceType color){
     switch (color) {
         case ButinPieceType::Black:
             return 3;
@@ -45,15 +45,24 @@ const int UtilityFunctions::getValueFromColor(ButinPieceType color){
     }
     return 0;
 }
-const SafariPieceType UtilityFunctions::getSafariPieceType(string type) {
+
+SafariPieceType UtilityFunctions::getSafariPieceType(string type) {
     if (type == "crocodilePiece")   return SafariPieceType::Crocodile;
     if (type == "elephantPiece")    return SafariPieceType::Elephant;
     if (type == "lionPiece")    return SafariPieceType::Lion;
     if (type == "fence")    return SafariPieceType::Fence;
     return SafariPieceType::EmptySafari;
 }
+
 int UtilityFunctions::getPlayerFromAnimal(SafariPieceType animal) {
     return (int) animal;
+}
+int UtilityFunctions::getPlayerFromName(string color) {
+    if (color == "blackSquare" || color == "blackCircle") {
+        return 0;
+    } else {
+        return 1.
+    }
 }
 
 void UtilityFunctions::printBoard(const std::vector<std::vector<std::vector<std::string>>> &board) {

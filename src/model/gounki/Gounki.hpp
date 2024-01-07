@@ -6,21 +6,39 @@
 
 class Gounki : public Game {
 public:
-    virtual ~Gounki();
     Gounki();
+    virtual ~Gounki();
+    /**
+     * Copies and assignments are not possible
+     */
     Gounki(const Gounki &) = delete;
+    Gounki& operator=(const Gounki&) = delete;
 
+    /**
+     * @see Game::isGameDone()
+     */
     virtual bool isGameDone() const;
+
+    /**
+     * @see Game::getWinner()
+     */
     virtual string getWinner() const;
-    virtual bool hasGameStarted() const;
-    virtual void initPlayers(vector<string> playerNames);
+
+    /**
+     * @see Game::initializeGame()
+     *
+     */
     virtual void initializeGame(const GameConfig &);
+
+    /**
+     * @see Game::makeMove()
+     */
     virtual void makeMove(ActionKey action, const Vector2i& from, const Vector2i& to);
-    virtual const vector<Vector2i> validMoves(ActionKey action, const Vector2i& from) const;
-    virtual const vector<vector<vector<string>>> getBoardState() const;
-    virtual const int getCurrentPlayerIndex() const;
-    virtual vector<string> getPlayerNames() const;
-    virtual const pair<int, int> getMinMaxPlayers() const;
+
+    /**
+     * @see Game::getMinMaxPlayers()
+     */
+    virtual pair<int, int> getMinMaxPlayers() const;
 
     friend ostream &operator<<(ostream &, const Gounki &);
 };

@@ -13,7 +13,6 @@ class GounkiState: public GameState {
         void draw();
     private:
         void boardFactory();
-        Texture& backBoardFactory();
         void drawPieces();
 };
 

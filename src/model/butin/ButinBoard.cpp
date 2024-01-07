@@ -11,13 +11,12 @@ ButinBoard::ButinBoard() {
 }
 
 bool ButinBoard::isGameDone() const {
-    for (const vector<vector<Piece *>> &column : board) {
-        for (const vector<Piece *> &line: column) {
+    // in this game the game is finished no matter wich player turn it is,
+    // because none of the Pieces belong to a specific Player
+    for (const vector<vector<Piece *>>& column : board) {
+        for (const vector<Piece *>& line: column) {
             for (Piece *bp: line) {
                 if (bp != nullptr) {
-                    // In this game the game is finished no matter wich Player turn it is,
-                    // because none of the Pieces belong to a specific Player,
-                    // so we just check it from 0
                     if (!validMoves(ActionKey::LeftClick, 0, bp -> getPosition()).empty()) {
                         return false;
                     }
@@ -61,10 +60,10 @@ void ButinBoard::generateDefaultBoard() {
 }
 
 
-// TODO jsp si c'est nécessaire de mettre nullptr dedans
 void ButinBoard::initializeGame(const GameConfig& gc) {
     const ButinConfig& bc = (ButinConfig&) gc;
-    for (Vector2i v: bc.deleted_pieces) {
+    // we remove and delete each piece removed during initialization
+    for (const Vector2i& v: bc.deleted_pieces) {
         ButinPiece* tmp = (ButinPiece *) board[v.x][v.y][0];
         board[v.x][v.y][0] = nullptr;
         if (tmp != nullptr)
@@ -72,7 +71,7 @@ void ButinBoard::initializeGame(const GameConfig& gc) {
     }
 }
 
-const vector<vector<vector<string>>> ButinBoard::getBoardState() const {
+vector<vector<vector<string>>> ButinBoard::getBoardState() const {
     // initialize a vector of BUTIN_BOARD_SIZE elements of vector<vector<string>> initalized at BUTIN_BOARD_SIZE
     vector<vector<vector<string>>> boardState(BUTIN_BOARD_SIZE, vector<vector<string>>(BUTIN_BOARD_SIZE));
     for (int i = 0; i < BUTIN_BOARD_SIZE; i++) {
@@ -90,12 +89,12 @@ const vector<vector<vector<string>>> ButinBoard::getBoardState() const {
     return boardState;
 }
 
-const Vector2i ButinBoard::calculateJumpedPos(const Vector2i &from, const Vector2i &to) const {
+Vector2i ButinBoard::calculateJumpedPos(const Vector2i &from, const Vector2i &to) const {
     return Vector2i((from.x + to.x) / 2, (from.y + to.y) / 2);
 }
 
-// No matter if it is a Left or Right-click the action stays the same
 void ButinBoard::makeMove(ActionKey action, int playerIndex, const Vector2i &from, const Vector2i &to) {
+    // no matter if it is a Left or Right-click the action stays the same for Butin
     const Vector2i jumpedPos = calculateJumpedPos(from, to);
     ButinPiece* jumpedPiece = (ButinPiece*) board[jumpedPos.x][jumpedPos.y][0];
     ButinPiece* toPiece = (ButinPiece*) board[to.x][to.y][0];
@@ -117,10 +116,11 @@ bool ButinBoard::isWithinBounds(Vector2i pos) const {
     return (pos.x >= 0 && pos.x < BUTIN_BOARD_SIZE && pos.y >= 0 && pos.y < BUTIN_BOARD_SIZE);
 }
 
-const vector<Vector2i> ButinBoard::validMoves(ActionKey action, int playerIndex, const Vector2i &from) const {
+vector<Vector2i> ButinBoard::validMoves(ActionKey action, int playerIndex, const Vector2i &from) const {
     vector<Vector2i> moves;
     ButinPiece* piece = (ButinPiece *)board[from.x][from.y][0];
 
+    // piece that aren't yellow can't move
     if (piece == nullptr || piece->color != ButinPieceType::Yellow)
         return moves;
 
@@ -131,7 +131,7 @@ const vector<Vector2i> ButinBoard::validMoves(ActionKey action, int playerIndex,
         Vector2i endPos = from + pattern;
 
         if (isWithinBounds(midPos) && isWithinBounds(endPos)) {
-            // checks that the jumped piece is existing, and that the endposition is empty
+            // checks that the jumped piece exists and that the end position is empty
             if (board[midPos.x][midPos.y][0] != nullptr && board[endPos.x][endPos.y][0] == nullptr)
                 moves.push_back(endPos);
         }
@@ -141,9 +141,9 @@ const vector<Vector2i> ButinBoard::validMoves(ActionKey action, int playerIndex,
 
 int ButinBoard::getBoardTotalPoints() const {
     int sum = 0;
-    for (const vector<vector<Piece *>> &column : board) {
-        for (const vector<Piece *> &row : column) {
-            for (Piece *p : row) {
+    for (const vector<vector<Piece *>>& column : board) {
+        for (const vector<Piece *>& row : column) {
+            for (Piece* p : row) {
                 if (p != nullptr) {
                     sum += ((ButinPiece *) p) -> value;
                 }

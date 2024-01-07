@@ -8,12 +8,16 @@ using namespace sf;
 class GameState: public State {
     public:
         virtual ~GameState();
+        GameState(const GameState &) = delete;
+        GameState& operator=(const GameState &) = delete;
+
         virtual void init() = 0;
         virtual void handleInput() = 0;
         virtual void update() = 0;
         virtual void draw() = 0;
         virtual void pause() {}
         virtual void resume() {}
+
     protected:
         GameState(Controller *controller, int BoardSize);
         Controller *controller;
@@ -29,11 +33,18 @@ class GameState: public State {
         vector<vector<vector<string>>> pieces;
         Sprite board;
         Sprite backBoard;
+
+        // those two will be used in the init() to build a big Sprite for the board from multiple images of a Tile
+        RenderTexture render;
+        virtual void boardFactory() = 0;
+
         Texture& backBoardFactory();
+
         void drawBase();
         // one Sprite will have its texture changed and position replaced to draw all the pieces
         // insted of having a sprite for each of the pieces on the board
         virtual Vector2i getTileWithinBoard(Vector2f mousePos);
+
         virtual void positionPieceWithinBoard(Sprite *piece, Vector2i pos);
 
         Sprite *pieceSprite = nullptr;
@@ -48,6 +59,11 @@ class GameState: public State {
         void drawPlayerDisplay();
         void colorCurrentPlayer();
 
+        // will be displayed on the screen when the game is finished (printWinner = true)
+        Text winner;
+        void initWinner();
+        void gameOver();
+
         // used to show the possibles moves a certain piece can make
         Sprite redTileSprite;
         void positionRedTile(Vector2i v);
@@ -56,21 +72,10 @@ class GameState: public State {
         void positionBlueTile(Vector2i v);
         void drawSelectedTile();
 
-        // those two will be used in the init() to build a big Sprite for the board from multiple images of a Tile
-        RenderTexture render;
-        virtual void boardFactory() = 0;
-        virtual Texture& backBoardFactory() = 0;
-
         Vector2i *fromTile = nullptr;
         Vector2i *toTile = nullptr;
         vector<Vector2i> movesPossible;
         void drawMovesPossible();
-
-        // will be displayed on the screen when the game is finished (printWinner = true)
-        Text winner;
-        void initWinner();
-        void gameOver();
-
 };
 
 #endif

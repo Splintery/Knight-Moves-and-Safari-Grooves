@@ -12,19 +12,42 @@ private:
 public:
     Safari();
     virtual ~Safari();
+    /**
+     * Copies and assignments are not possible
+     */
     Safari(const Safari &) = delete;
+    Safari& operator=(const Safari&) = delete;
 
+    /**
+     * @see Game::isGameDone()
+     */
     virtual bool isGameDone() const;
+
+    /**
+     * @see Game::getWinner()
+     */
     virtual string getWinner() const;
-    virtual bool hasGameStarted() const;
-    virtual void initPlayers(vector<string> playerNames);
+
+    /**
+     * Safari needs an overriden initilization since the players' scores are set to the number of animals at the beginning of the game
+     * @param playerNames   names of the players
+     */
+    void initPlayers(vector<string> playerNames) override;
+
+    /**
+     * @see Game::initializeGame()
+     */
     virtual void initializeGame(const GameConfig &);
+
+    /**
+     * @see Game::makeMove()
+     */
     virtual void makeMove(ActionKey action, const Vector2i& from, const Vector2i& to = Vector2i(0, 0));
-    virtual const vector<Vector2i> validMoves(ActionKey action, const Vector2i& from) const;
-    virtual const vector<vector<vector<string>>> getBoardState() const;
-    virtual const int getCurrentPlayerIndex() const;
-    virtual vector<string> getPlayerNames() const;
-    virtual const pair<int, int> getMinMaxPlayers() const;
+
+    /**
+     * @see Game::getMinMaxPlayers()
+     */
+    virtual pair<int, int> getMinMaxPlayers() const;
 
     friend ostream &operator<<(ostream &, const Safari &);
 };

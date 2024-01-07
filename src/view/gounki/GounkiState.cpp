@@ -48,6 +48,7 @@ void GounkiState::init() {
 
 void GounkiState::handleInput() {
     Event event;
+    Vector2i tileClicked = GameState::getTileWithinBoard(controller -> input -> getMousePosition(*controller -> window));
 
 	while (controller -> window -> pollEvent(event)) {
         switch (event.type) {
@@ -61,43 +62,9 @@ void GounkiState::handleInput() {
                 break;
             case Event::MouseButtonPressed:
                 if (controller -> input -> isSpriteClicked(board, Mouse::Left, *controller -> window)) {
-                    Vector2i tileClicked = GameState::getTileWithinBoard(
-                        controller -> input -> getMousePosition(*controller -> window)
-                    );
-                    if (pieces[tileClicked.x][tileClicked.y][0] == "yellowPiece") {
-                        if (controller -> game -> hasGameStarted()) {
+                    if (currentPlayerIndex == pieces[tileClicked.x][tileClicked.y][0])
+                } else if (controller -> input -> isSpriteClicked(board, Mouse::Right, *controller -> window)) {
 
-                            if (fromTile == nullptr) {
-                                fromTile = new Vector2i(tileClicked);
-                                movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
-                            } else {
-                                if (!playerPlayed) {
-                                    if (*fromTile == tileClicked) {
-                                        delete(fromTile);
-                                        fromTile = nullptr;
-                                        movesPossible.clear();
-                                    } else {
-                                        delete(fromTile);
-                                        fromTile = new Vector2i(tileClicked);
-                                        movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
-                                    }
-                                }
-                            }
-                        } else {
-                            cout << "Error in Gounki, game should had started\n";
-                        }
-                    } else if (pieces[tileClicked.x][tileClicked.y][0] == "") {
-                        if (toTile == nullptr && fromTile != nullptr) {
-                            for (Vector2i v : movesPossible) {
-                                if (tileClicked == v) {
-                                    playerPlayed = true;
-                                    toTile = new Vector2i(tileClicked);
-                                    moveReady = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
                 }
                 break;
             default:
@@ -189,12 +156,12 @@ void GounkiState::boardFactory() {
     render.clear();
     for (int i = 0; i < BUTIN_BOARD_SIZE; i++) {
         for (int j = 0; j < BUTIN_BOARD_SIZE; j++) {
-            if (j % 2 + i % 2 == 0) {
+            if ((j + i) % 2 == 0) {
                 whiteTileSprite.setPosition(i * 120, j * 120);
                 render.draw(whiteTileSprite);
             } else {
                 blackTileSprite.setPosition(i * 120, j * 120);
-                render.draw(whiteTileSprite);
+                render.draw(blackTileSprite);
             }
         }
     }

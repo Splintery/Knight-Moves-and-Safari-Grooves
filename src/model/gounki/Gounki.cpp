@@ -1,7 +1,6 @@
 #include "Gounki.hpp"
 
 Gounki::Gounki() {
-    gameStarted = false;
     board = new GounkiBoard();
     cout << "Construction of " << *this;
 }
@@ -15,6 +14,7 @@ bool Gounki::isGameDone() const {
 }
 
 string Gounki::getWinner() const {
+    // the winner either ate all the pieces, or landed a piece on a winning position
     for (Player * p : playerList) {
         if (p->getScore() == GOUNKI_BOARD_SIZE * 2)
             return p->name;
@@ -23,26 +23,19 @@ string Gounki::getWinner() const {
     return playerList[index]->name;
 }
 
-bool Gounki::hasGameStarted() const {
-    return gameStarted;
-}
-
-void Gounki::initPlayers(vector<string> playerNames) {
-    for (const string &s: playerNames) {
-        playerList.push_back(new Player(s));
-    }
-    currentPlayerIndex = 0;
-}
-
 void Gounki::initializeGame(const GameConfig &) {
+    // no specific initialization for the game Gounki
     gameStarted = true;
 }
 
 void Gounki::makeMove(ActionKey action, const Vector2i& from, const Vector2i& to) {
     GounkiBoard* gounkiBoard = (GounkiBoard*) board;
+
+    // a classic movement will increase the score of the player if the landed case is an ennemy case
     if (action == ActionKey::LeftClick && gounkiBoard->isLandedCaseEnnemy(from, to)) {
-        playerList[currentPlayerIndex]->increaseScore(board->board[to.x][to.y].size());
+        playerList[currentPlayerIndex]->increaseScore(gounkiBoard->getCaseSize(to));
     }
+
     board->makeMove(action, currentPlayerIndex, from, to);
 
     switch (action) {
@@ -63,27 +56,7 @@ void Gounki::makeMove(ActionKey action, const Vector2i& from, const Vector2i& to
     }
 }
 
-const vector<Vector2i> Gounki::validMoves(ActionKey action, const Vector2i &from) const {
-    return board->validMoves(action, currentPlayerIndex, from);
-}
-
-const vector<vector<vector<string>>> Gounki::getBoardState() const {
-    return board->getBoardState();
-}
-
-const int Gounki::getCurrentPlayerIndex() const {
-    return currentPlayerIndex;
-}
-
-vector<string> Gounki::getPlayerNames() const {
-    vector<string> res;
-    for (Player* p : playerList) {
-        res.push_back(p -> name);
-    }
-    return res;
-}
-
-const pair<int, int> Gounki::getMinMaxPlayers() const {
+pair<int, int> Gounki::getMinMaxPlayers() const {
     return pair<int, int>(2, 2);
 }
 

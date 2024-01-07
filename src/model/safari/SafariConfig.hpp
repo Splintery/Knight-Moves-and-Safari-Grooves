@@ -6,8 +6,15 @@
 class SafariConfig : public GameConfig {
 public:
     SafariConfig();
-    SafariConfig(const SafariConfig&);
     virtual ~SafariConfig();
+    /**
+     * Constructor of a copy of SafariConfig
+     */
+    SafariConfig(const SafariConfig&);
+
+    /**
+     * Vectors of the placed pieces during the initialization of "Safari Round Up"
+     */
     vector<Vector2i> crocodiles;
     vector<Vector2i> elephants;
     vector<Vector2i> lions;

@@ -2,7 +2,7 @@
 
 GounkiBoard::GounkiBoard() {
     board.resize(GOUNKI_BOARD_SIZE);
-    for (vector<vector<Piece *>> &column : board) {
+    for (vector<vector<Piece *>>& column : board) {
         column.resize(GOUNKI_BOARD_SIZE);
     }
     generateDefaultBoard();
@@ -32,7 +32,7 @@ bool GounkiBoard::isGameDone() const {
 
 void GounkiBoard::initializeGame(const GameConfig &) {}
 
-const vector<vector<vector<string>>> GounkiBoard::getBoardState() const {
+vector<vector<vector<string>>> GounkiBoard::getBoardState() const {
     vector<vector<vector<string>>> boardState(GOUNKI_BOARD_SIZE, vector<vector<string>>(GOUNKI_BOARD_SIZE));
     for (int i = 0; i < GOUNKI_BOARD_SIZE; i++) {
         for (int j = 0; j < GOUNKI_BOARD_SIZE; j++) {
@@ -77,7 +77,7 @@ GounkiPieceType GounkiBoard::determinePieceType(const Vector2i& from, const Vect
     Vector2i diff = to - from;
 
     // iterate through each piece type and its movement patterns
-    for (const pair<GounkiPieceType, vector<Vector2i>>& pair : GounkiPiece::gounkiMovements) {
+    for (const pair<const GounkiPieceType, vector<Vector2i>>& pair : GounkiPiece::gounkiMovements) {
         const vector<Vector2i>& movementPattern = pair.second;
 
         if (find(movementPattern.begin(), movementPattern.end(), diff)
@@ -89,62 +89,78 @@ GounkiPieceType GounkiBoard::determinePieceType(const Vector2i& from, const Vect
     return GounkiPieceType::EmptyGounki;
 }
 
-void GounkiBoard::makeMove(ActionKey action, int playerIndex, const Vector2i &from, const Vector2i &to) {
+void GounkiBoard::makeMovement(const Vector2i &from, const Vector2i &to) {
+    vector<Piece *>& currentCase = board[from.x][from.y];
+    vector<Piece *>& nextCase = board[to.x][to.y];
+    lastDeploymentPiece = nullptr;
+
+    // if the move eats enemy pieces we delete each piece on the case
+    if (isLandedCaseEnnemy(from, to)) {
+        for (int i = nextCase.size() - 1; i >= 0; --i) {
+            if (!nextCase.empty() && (GounkiPiece *) nextCase.at(i) != nullptr)
+                delete ((GounkiPiece *) nextCase.at(i));
+        }
+        nextCase.clear();
+    }
+
+    // each piece from the original case are moved to the new case
+    for (int i = currentCase.size() - 1; i >= 0; --i) {
+        nextCase.push_back(currentCase.at(i));
+        currentCase.at(i)->movePiece(to);
+    }
+    currentCase.clear();
+}
+
+void GounkiBoard::makeDeployment(const Vector2i &from, const Vector2i &to) {
     vector<Piece *>& currentCase = board[from.x][from.y];
     vector<Piece *>& nextCase = board[to.x][to.y];
 
+    GounkiPieceType movingPieceType = determinePieceType(from, to);
+    // we search for a piece with the same type as the last deployment piece
+    vector<Piece *>::iterator it = find_if(currentCase.begin(),currentCase.end(),[this, movingPieceType](Piece *piece) {
+        return ((GounkiPiece *) piece)->type == movingPieceType && piece != lastDeploymentPiece;
+    });
+    GounkiPiece *newDeploymentPiece = (GounkiPiece *) *it;
+    // first step of a deployment: every piece is moved to the next case
+    // and every piece is pushed to the current deployment vector
+    if (lastDeploymentPiece == nullptr) {
+        for (int i = currentCase.size() - 1; i >= 0; --i) {
+            nextCase.push_back(currentCase.at(i));
+            currentDeployment.push_back((GounkiPiece *) currentCase.at(i));
+            currentCase.at(i)->movePiece(to);
+        }
+        currentCase.clear();
+    }
+    else {
+        // move pieces that are not equal to lastDeploymentPiece
+        for (GounkiPiece *gp: currentDeployment) {
+            if (gp != lastDeploymentPiece) {
+                nextCase.push_back(gp);
+                currentCase.erase(
+                        find(currentCase.begin(), currentCase.end(), gp));
+                gp->movePiece(to);
+            }
+        }
+    }
+    // remove from the current deployment vector the piece we just moved
+    currentDeployment.erase(find(currentDeployment.begin(), currentDeployment.end(),newDeploymentPiece));
+    lastDeploymentPiece = newDeploymentPiece;
+    lastDeploymentDirection = to - from;
+}
+
+void GounkiBoard::makeMove(ActionKey action, int playerIndex, const Vector2i &from, const Vector2i &to) {
     if (isWinningPosition(to)) {
         gameDone = true;
         winningPlayer = playerIndex;
     }
+
     switch (action) {
         case ActionKey::LeftClick:
-            lastDeploymentPiece = nullptr;
-            // if the move eats enemy pieces we delete each piece on the case
-            if (isLandedCaseEnnemy(from, to)) {
-                for (int i = nextCase.size() - 1; i >= 0; --i) {
-                    if (!nextCase.empty() && (GounkiPiece *) nextCase.at(i) != nullptr)
-                        delete ((GounkiPiece *) nextCase.at(i));
-                }
-                nextCase.clear();
-            }
-
-            // each piece from the original case are moved to the new case
-            for (int i = currentCase.size() - 1; i >= 0; --i) {
-                nextCase.push_back(currentCase.at(i));
-                currentCase.at(i)->movePiece(to);
-            }
-            currentCase.clear();
+            makeMovement(from, to);
             break;
         case ActionKey::RightClick:
-            GounkiPieceType movingPieceType = determinePieceType(from, to);
-            // we search for a piece with the same type has the last deployment piece
-            vector<Piece *>::iterator it = find_if(currentCase.begin(), currentCase.end(),[this, movingPieceType](Piece *piece) {
-                return ((GounkiPiece *) piece)->type == movingPieceType && piece != lastDeploymentPiece;
-            });
-            GounkiPiece* newDeploymentPiece = (GounkiPiece*) *it;
-            // this case handles the first step of a deployment
-            if (lastDeploymentPiece == nullptr) {
-                for (int i = currentCase.size() - 1; i >= 0; --i) {
-                    nextCase.push_back(currentCase.at(i));
-                    currentDeployment.push_back((GounkiPiece*) currentCase.at(i));
-                    currentCase.at(i)->movePiece(to);
-                }
-                currentCase.clear();
-            }
-            else {
-                // move pieces that are not equal to lastDeploymentPiece
-                for (GounkiPiece* gp : currentDeployment) {
-                    if (gp != lastDeploymentPiece) {
-                        nextCase.push_back(gp);
-                        currentCase.erase(find(currentCase.begin(), currentCase.end(), gp));
-                        gp->movePiece(to);
-                    }
-                }
-            }
-            currentDeployment.erase(find(currentDeployment.begin(), currentDeployment.end(), newDeploymentPiece));
-            lastDeploymentPiece = newDeploymentPiece;
-            lastDeploymentDirection = to - from;
+            makeDeployment(from, to);
+            break;
     }
 }
 
@@ -156,8 +172,10 @@ bool GounkiBoard::isWithinBounds(Vector2i pos) const {
     return (isWithinBoundsX(pos.x) && isWithinBoundsX(pos.y));
 }
 
-Vector2i GounkiBoard::handleRebounds(vector<Vector2i>::const_iterator it, Vector2i finalPos) const {
-    Vector2i newDir = *it;
+Vector2i GounkiBoard::handleRebounds(const Vector2i& from, Vector2i finalPos) const {
+    Vector2i newDir = from;
+    // to calculate rebounds, we check if the landing position is not within bounds
+    // in this case we transfrom the coordinate to be the symmetry in x and/or y
     if (!isWithinBounds(finalPos)) {
         if (!isWithinBoundsX(finalPos.x))
             newDir.x = -newDir.x;
@@ -165,7 +183,7 @@ Vector2i GounkiBoard::handleRebounds(vector<Vector2i>::const_iterator it, Vector
             newDir.y = -newDir.y;
         int j = 0;
         while (!isWithinBounds(finalPos)) {
-            finalPos -= *it;
+            finalPos -= from;
             j++;
         }
         while (j != 0) {
@@ -201,15 +219,17 @@ bool GounkiBoard::isWinningPosition(const Vector2i& position) const {
 }
 
 bool GounkiBoard::isNextCaseTakeable(ActionKey action, const Vector2i &from, const Vector2i &to) const {
-    // we can't stack more than 3 pieces on the same case
-    // or else the case can be taken if it's not a deployment
     bool isCaseEnnemy = isLandedCaseEnnemy(from, to);
     size_t currentCaseSize = board[from.x][from.y].size();
     size_t nextCaseSize = board[to.x][to.y].size();
+
+    // if classic movement or deployement, the case can't be full
     bool isEnnemyCaseFull = (!isCaseEnnemy &&
             ((action == ActionKey::LeftClick && (currentCaseSize + nextCaseSize) <= 3)
             || (action == ActionKey::RightClick && nextCaseSize <= 3)));
+    // if classic movement and the case is an ennemy case
     bool isNextCaseTakeable = isCaseEnnemy && action == ActionKey::LeftClick;
+
     return isEnnemyCaseFull || isNextCaseTakeable;
 }
 
@@ -221,7 +241,7 @@ int setMaximumRange(ActionKey action, int defaultRange) {
     return defaultRange;
 }
 
-const vector<pair<Vector2i, Vector2i>>
+vector<pair<Vector2i, Vector2i>>
 GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
     vector<pair<Vector2i, Vector2i>> moves;
     if (board[from.x][from.y].empty())
@@ -231,8 +251,11 @@ GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
     vector<vector<Vector2i>::const_iterator> blockingPatterns;
     // this maps holds each piece type and it's number of occurences of the original case
     map<GounkiPieceType, int> stackCount = calculatePieceDistribution(action, from);
-    for (const pair<GounkiPieceType, int> &pairs: stackCount) {
+    // for each piece that can be moved, we generate the positions based on the quantity of the piece type on the case
+    for (const pair<const GounkiPieceType, int>& pairs: stackCount) {
+        // possible moves from the piece type
         vector<Vector2i> stackPieceMoves = GounkiPiece::gounkiMovements.at(pairs.first);
+        // if the action is a deployment, we limit the distance of movement to 1
         range = setMaximumRange(action, pairs.second);
         for (int i = 1; i <= range; i++) {
             for (vector<Vector2i>::const_iterator it = stackPieceMoves.begin(); it != stackPieceMoves.end(); it++) {
@@ -244,7 +267,7 @@ GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
                     blockingPatterns.push_back(it);
                 }
                 else {
-                    finalPos = handleRebounds(it, finalPos);
+                    finalPos = handleRebounds(*it, finalPos);
                     if (isNextCaseTakeable(action, from, finalPos)) {
                         moves.emplace_back(make_pair(finalPos,*it));
                     }
@@ -258,7 +281,7 @@ GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
                 }
             }
             // removes the blocking patterns to not generate them at the next iteration
-            for (vector<Vector2i>::const_iterator it: blockingPatterns) {
+            for (const vector<Vector2i>::const_iterator& it: blockingPatterns) {
                 stackPieceMoves.erase(it);
             }
             blockingPatterns.clear();
@@ -271,6 +294,11 @@ auto extractFirstElement = [](const pair<Vector2i, Vector2i>& pair) {
     return pair.first;
 };
 
+/**
+ * Stores inside moves the transformed vector of pair to a simple vector with only the first element of each pair
+ * @param moves             the vector to store values in
+ * @param movesWithPattern  the vector of positions and patterns
+ */
 void extractMoves(vector<Vector2i>& moves, const vector<pair<Vector2i, Vector2i>>& movesWithPattern) {
     moves.clear();
     moves.resize(movesWithPattern.size());
@@ -278,19 +306,24 @@ void extractMoves(vector<Vector2i>& moves, const vector<pair<Vector2i, Vector2i>
     transform(movesWithPattern.begin(), movesWithPattern.end(), moves.begin(), extractFirstElement);
 }
 
+/**
+ * Filters the vector of pair<movement, pattern direction> to only keep a vector of unique movements
+ * @param movesWithPattern
+ */
 void filterUniqueFirst(vector<pair<Vector2i, Vector2i>>& movesWithPattern) {
-    sort(movesWithPattern.begin(), movesWithPattern.end(),[](const pair<Vector2i, Vector2i> &a, const pair<Vector2i, Vector2i> &b) {
-        return a.first.x < b.first.x
-        || (a.first.x == b.first.x && a.first.y < b.first.y);
+    sort(movesWithPattern.begin(), movesWithPattern.end(),
+         [](const pair<Vector2i, Vector2i> &a, const pair<Vector2i, Vector2i> &b) {
+        return a.first.x < b.first.x || (a.first.x == b.first.x && a.first.y < b.first.y);
     });
 
-    movesWithPattern.erase(unique(movesWithPattern.begin(), movesWithPattern.end(),[](const pair<Vector2i, Vector2i> &a, const pair<Vector2i, Vector2i> &b) {
-        return a.first.x == b.first.x && a.first.y == b.first.y;
-    }),movesWithPattern.end());
+    movesWithPattern.erase(
+            unique(movesWithPattern.begin(), movesWithPattern.end(),[](const pair<Vector2i, Vector2i> &a, const pair<Vector2i, Vector2i> &b) {
+                return a.first.x == b.first.x && a.first.y == b.first.y;
+            }),movesWithPattern.end()
+            );
 }
 
-const vector<Vector2i>
-GounkiBoard::validMoves(ActionKey action, int playerIndex, const Vector2i& from) const {
+vector<Vector2i> GounkiBoard::validMoves(ActionKey action, int playerIndex, const Vector2i& from) const {
     vector<Vector2i> moves;
     vector<pair<Vector2i, Vector2i>> movesWithPattern = validMovesPattern(action, from);
     switch (action) {
@@ -336,12 +369,19 @@ int GounkiBoard::getWinnerIndex() const {
     return winningPlayer;
 }
 
-GounkiBoard::~GounkiBoard() {
-    // todo supprimer chaque pièce
-    cout << "Destruction of " << *this << endl;
+int GounkiBoard::getCaseSize(const Vector2i &pos) const {
+    return board[pos.x][pos.y].size();
 }
 
-ostream &operator<<(ostream &out, const GounkiBoard &gb) {
+GounkiBoard::~GounkiBoard() {
+    delete lastDeploymentPiece;
+    for (GounkiPiece* gp : currentDeployment) {
+        delete gp;
+    }
+    cout << "Destruction of " << *this;
+}
+
+ostream &operator<<(ostream &out, const GounkiBoard &) {
     out << "Board: Gounki" << endl;
     return out;
 }

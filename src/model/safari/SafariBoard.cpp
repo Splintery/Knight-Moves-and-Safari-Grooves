@@ -4,7 +4,7 @@
 SafariBoard::SafariBoard(): tilesToCapture{8} {
     // Making the Board a SAFARI_BOARD_SIZE x SAFARI_BOARD_SIZE of EmptySafari
     board.resize(SAFARI_BOARD_SIZE);
-    for (vector<vector<Piece *>> &column : board) {
+    for (vector<vector<Piece *>>& column : board) {
         column.resize(SAFARI_BOARD_SIZE);
     }
     for (int x = 0; x < (int) board.size(); x++) {
@@ -18,7 +18,7 @@ SafariBoard::SafariBoard(): tilesToCapture{8} {
 bool SafariBoard::isCaptured(const SafariPiece *piece) const {
     unique_ptr<vector<vector<bool>>> mark(new vector<vector<bool>>(SAFARI_BOARD_SIZE));
 
-    for (vector<bool> &v : *mark) {
+    for (vector<bool>& v : *mark) {
         for (int j = 0; j < SAFARI_BOARD_SIZE; j++) {
             v.push_back(false);
         }
@@ -30,7 +30,7 @@ int SafariBoard::getAccessibleTiles(const Vector2i &from, const vector<Vector2i>
     (*mark)[from.x][from.y] = true;
     int res = 1;
     vector<Vector2i> moves = getPositionFromPatterns(from, patterns);
-    for (Vector2i pos : moves) {
+    for (const Vector2i& pos : moves) {
         if (!(*mark)[pos.x][pos.y]) {
             cout << "[" << pos.x << ", " << pos.y << "]\n";
             res += getAccessibleTiles(pos, patterns, mark);
@@ -42,7 +42,7 @@ int SafariBoard::getAccessibleTiles(const Vector2i &from, const vector<Vector2i>
 vector<Vector2i> SafariBoard::getPositionFromPatterns(const Vector2i &from, const vector<Vector2i> &patterns) const {
     vector<Vector2i> moves;
     bool noFence;
-    for (const Vector2i &pattern : patterns) {
+    for (const Vector2i& pattern : patterns) {
         Vector2i endPos = from + pattern;
         noFence = true;
 
@@ -82,12 +82,13 @@ vector<Vector2i> SafariBoard::getPositionFromPatterns(const Vector2i &from, cons
 
 int SafariBoard::getCapturedPieces(int playerIndex) const {
     int capturedPieces = 0;
-    for (vector<vector<Piece *>> line : board) {
-        for (vector<Piece *> column : line) {
-            for (Piece *p : column) {
-                SafariPiece *sp = ((SafariPiece *) p);
+    for (const vector<vector<Piece*>>& line : board) {
+        for (const vector<Piece*>& column : line) {
+            for (Piece* p : column) {
+                SafariPiece* sp = ((SafariPiece *) p);
                 if (UtilityFunctions::getPlayerFromAnimal(sp -> animal) == playerIndex) {
-                    if (isCaptured(sp))  capturedPieces++;
+                    if (isCaptured(sp))
+                        capturedPieces++;
                 }
             }
         }
@@ -102,21 +103,21 @@ bool SafariBoard::isGameDone() const {
 void SafariBoard::initializeGame(const GameConfig& gc) {
     SafariConfig& sc = (SafariConfig&) gc;
 
-    for (Vector2i crocPos : sc.crocodiles) {
+    for (const Vector2i& crocPos : sc.crocodiles) {
         board[crocPos.x][crocPos.y][0] = new SafariPiece(SafariPieceType::Crocodile, crocPos);
     }
-    for (Vector2i elePos : sc.elephants) {
+    for (const Vector2i& elePos : sc.elephants) {
         board[elePos.x][elePos.y][0] = new SafariPiece(SafariPieceType::Elephant, elePos);
     }
-    for (Vector2i lioPos : sc.lions) {
+    for (const Vector2i& lioPos : sc.lions) {
         board[lioPos.x][lioPos.y][0] = new SafariPiece(SafariPieceType::Lion, lioPos);
     }
-    for (Vector2i fenPos : sc.fences) {
+    for (const Vector2i& fenPos : sc.fences) {
         board[fenPos.x][fenPos.y][0] = new SafariPiece(SafariPieceType::Fence, fenPos);
     }
 }
 
-const vector<vector<vector<string>>> SafariBoard::getBoardState() const {
+vector<vector<vector<string>>> SafariBoard::getBoardState() const {
     // initialize a vector of SAFARI_BOARD_SIZE elements of vector<vector<string>> initalized at SAFARI_BOARD_SIZE
     vector<vector<vector<string>>> boardState(SAFARI_BOARD_SIZE, vector<vector<string>>(SAFARI_BOARD_SIZE));
     for (int i = 0; i < SAFARI_BOARD_SIZE; i++) {
@@ -156,9 +157,9 @@ void SafariBoard::makeMove(ActionKey action, const int playerIndex, const Vector
     }
 }
 
-const vector<Vector2i> SafariBoard::validMoves(ActionKey action, int playerIndex, const Vector2i &from) const {
+vector<Vector2i> SafariBoard::validMoves(ActionKey action, int playerIndex, const Vector2i &from) const {
     vector<Vector2i> moves;
-    auto* piece = (SafariPiece *)board[from.x][from.y][0];
+    SafariPiece* piece = (SafariPiece *)board[from.x][from.y][0];
     // Permet de vérifier que la case clické n'est pas vide
     if (piece == nullptr) {
         return moves;

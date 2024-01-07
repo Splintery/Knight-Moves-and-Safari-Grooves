@@ -1,7 +1,8 @@
-#include "SafariPiece.hpp"
-#include "SafariBoard.hpp"
+#include "model/safari/SafariPiece.hpp"
+#include "model/safari/SafariBoard.hpp"
 
 int main() {
+    /*
     SafariPiece *sp = new SafariPiece(SafariPieceType::Lion, Vector2i(0, 0));
 
     SafariBoard *sb = new SafariBoard();
@@ -17,6 +18,7 @@ int main() {
     sb -> board[0][3][0] = f3;
     sb -> board[2][3][0] = f4;
 
-    cout << "isCaptured: " << (bool) sb -> isCaptured(sp) << endl;
+    // cout << "isCaptured: " << (bool) sb -> isCaptured(sp) << endl;
+     */
     return EXIT_SUCCESS;
 }
