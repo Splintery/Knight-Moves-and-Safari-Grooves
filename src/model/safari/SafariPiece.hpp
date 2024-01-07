@@ -12,7 +12,7 @@ public:
      * @param position  the position of the piece on the board
      */
     SafariPiece(SafariPieceType animal, Vector2i position);
-    virtual ~ SafariPiece();
+    virtual ~SafariPiece();
     /**
      * Copies and assignments are not possible
      */

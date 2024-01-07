@@ -15,7 +15,7 @@ SafariBoard::SafariBoard(): tilesToCapture{8} {
     cout << "Construction of " << *this << endl;
 }
 
-bool SafariBoard::isCaptured(const SafariPiece *piece) const {
+bool SafariBoard::isCaptured(SafariPiece *piece) const {
     unique_ptr<vector<vector<bool>>> mark(new vector<vector<bool>>(SAFARI_BOARD_SIZE));
 
     for (vector<bool>& v : *mark) {

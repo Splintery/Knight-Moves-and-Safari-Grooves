@@ -46,7 +46,6 @@ namespace UtilityFunctions {
     int getValueFromColor(ButinPieceType color);
     SafariPieceType getSafariPieceType(string type);
     int getPlayerFromAnimal(SafariPieceType animal);
-    void printBoard(const vector<vector<vector<string>>>& board);
 }
 
 #endif
