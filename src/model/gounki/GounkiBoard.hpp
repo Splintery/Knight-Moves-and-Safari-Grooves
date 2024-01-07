@@ -37,6 +37,12 @@ private:
      */
     void generateDefaultBoard();
 
+    /**
+     * Verifies that the case `from` has at least a piece of the current player on it
+     * @param playerIndex   current playerindex
+     * @param from          origin vector
+     * @return              true if the case is one of the player, else false
+     */
     bool isOriginCaseMine(int playerIndex, const Vector2i& from) const;
 
     /**
