@@ -60,8 +60,10 @@ int UtilityFunctions::getPlayerFromAnimal(SafariPieceType animal) {
 int UtilityFunctions::getPlayerFromName(string color) {
     if (color == "blackSquare" || color == "blackCircle") {
         return 0;
-    } else {
+    } else if (color == "whiteSquare" || color == "whiteCircle"){
         return 1;
+    } else {
+        return -1;
     }
 }
 

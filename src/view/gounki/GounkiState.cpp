@@ -92,8 +92,8 @@ void GounkiState::positionPieceWithinBoard(Sprite *piece, Vector2i pos, int offs
     int tileWidth = board.getGlobalBounds().width / boardSize;
     int tileHeight = board.getGlobalBounds().height / boardSize;
     piece -> setPosition(
-        pos.x * tileWidth + board.getGlobalBounds().left + (tileWidth / 2 - piece -> getGlobalBounds().width / 2) + (10 * offset),
-        pos.y * tileHeight + board.getGlobalBounds().top + (tileHeight / 2 - piece -> getGlobalBounds().height / 2) - (10 * offset)
+        pos.x * tileWidth + board.getGlobalBounds().left + (tileWidth / 2 - piece -> getGlobalBounds().width / 2) + (30 * offset),
+        pos.y * tileHeight + board.getGlobalBounds().top + (tileHeight / 2 - piece -> getGlobalBounds().height / 2) - (30 * offset)
     );
 }
 
@@ -103,7 +103,7 @@ void GounkiState::drawPieces() {
             for (int k = (int) pieces[i][j].size() - 1; k >= 0 ; k--) {
                 if (pieces[i][j][k] != "") {
                     pieceSprite -> setTexture(controller -> resource -> getTexture(pieces[i][j][k]));
-                    Vector2i v{j, i};
+                    Vector2i v{i, j};
                     positionPieceWithinBoard(pieceSprite, v, k);
                     controller -> window -> draw(*pieceSprite);
                 }
@@ -153,10 +153,7 @@ void GounkiState::update() {
             GameState::colorCurrentPlayer();
             cout << "test2\n";
         } else {
-            delete(fromTile);
-            fromTile = new Vector2i(*toTile);
-            delete(toTile);
-            toTile = nullptr;
+            cout << "same player\n";
 //            movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
         }
 

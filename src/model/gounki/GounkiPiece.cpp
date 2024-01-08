@@ -6,10 +6,10 @@ GounkiPiece::GounkiPiece(GounkiPieceType type, Vector2i position): type {type} {
 }
 
 const map<GounkiPieceType, std::vector<Vector2i>> GounkiPiece::gounkiMovements = {
-    { GounkiPieceType::BlackCircle, {Vector2i(1, -1), Vector2i(1, 1)}},
-    { GounkiPieceType::WhiteCircle, {Vector2i(-1, 1), Vector2i(-1, -1)}},
-    { GounkiPieceType::BlackSquare, {Vector2i(1, 0), Vector2i(0, 1), Vector2i(0, -1)}},
-    { GounkiPieceType::WhiteSquare, {Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)}},
+    { GounkiPieceType::BlackCircle, {Vector2i(-1, 1), Vector2i(1, 1)}},
+    { GounkiPieceType::WhiteCircle, {Vector2i(-1, -1), Vector2i(1, -1)}},
+    { GounkiPieceType::BlackSquare, {Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, 0)}},
+    { GounkiPieceType::WhiteSquare, {Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, 0)}},
     { GounkiPieceType::EmptyGounki, {}}
 };
 
