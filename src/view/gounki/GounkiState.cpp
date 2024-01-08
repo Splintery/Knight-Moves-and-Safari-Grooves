@@ -98,7 +98,7 @@ void GounkiState::drawPieces() {
                     sum++;
                     cout << sum << ": " << pieces[i][j][k] << ": [" << i << "]; [" << j << "]" << endl;
                     pieceSprite -> setTexture(controller -> resource -> getTexture(pieces[i][j][k]));
-                    Vector2i v{j + 10 * k, i - 10 * k};
+                    Vector2i v{i + 10 * k, j - 10 * k};
                     positionPieceWithinBoard(pieceSprite, v);
                     controller -> window -> draw(*pieceSprite);
                 }

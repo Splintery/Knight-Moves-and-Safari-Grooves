@@ -11,16 +11,16 @@ GounkiBoard::GounkiBoard() {
 
 void GounkiBoard::generateDefaultBoard() {
     for (int i = 0; i < GOUNKI_BOARD_SIZE; ++i) {
-        board[0][i].push_back(new GounkiPiece(
+        board[i][0].push_back(new GounkiPiece(
                 i % 2 == 0 ? GounkiPieceType::BlackCircle : GounkiPieceType::BlackSquare,
                 Vector2i{0, i}));
-        board[1][i].push_back(new GounkiPiece(
+        board[i][1].push_back(new GounkiPiece(
                 i % 2 == 0 ? GounkiPieceType::BlackSquare : GounkiPieceType::BlackCircle,
                 Vector2i{1, i}));
-        board[GOUNKI_BOARD_SIZE - 2][i].push_back(new GounkiPiece(
+        board[i][GOUNKI_BOARD_SIZE - 2].push_back(new GounkiPiece(
                 i % 2 == 0 ? GounkiPieceType::WhiteCircle : GounkiPieceType::WhiteSquare,
                 Vector2i{GOUNKI_BOARD_SIZE - 1, i}));
-        board[GOUNKI_BOARD_SIZE - 1][i].push_back(new GounkiPiece(
+        board[i][GOUNKI_BOARD_SIZE - 1].push_back(new GounkiPiece(
                 i % 2 == 0 ? GounkiPieceType::WhiteSquare : GounkiPieceType::WhiteCircle,
                 Vector2i{GOUNKI_BOARD_SIZE - 2, i}));
     }
@@ -215,7 +215,7 @@ map<GounkiPieceType, int> GounkiBoard::calculatePieceDistribution(ActionKey acti
 }
 
 bool GounkiBoard::isWinningPosition(const Vector2i& position) const {
-    return (position.x == GOUNKI_BOARD_SIZE || position.x == -1) && isWithinBoundsX(position.y);
+    return (position.y == GOUNKI_BOARD_SIZE || position.y == -1) && isWithinBoundsX(position.x);
 }
 
 bool GounkiBoard::isNextCaseTakeable(ActionKey action, const Vector2i &from, const Vector2i &to) const {
