@@ -424,6 +424,16 @@ vector<Vector2i> GounkiBoard::validMoves(ActionKey action, int playerIndex, cons
     return moves;
 }
 
+void GounkiBoard::deleteRemainingDeploymentPieces(const Vector2i &pos) {
+    vector<Piece*>& pieces = board[pos.x][pos.y];
+
+    for (GounkiPiece* p : currentDeployment) {
+        vector<Piece*>::iterator it = std::find(pieces.begin(), pieces.end(), p);
+        pieces.erase(it);
+        delete p;
+    }
+}
+
 void GounkiBoard::clearDeploymentStatus() {
     lastDeploymentDirection = Vector2i {0, 0};
     lastDeploymentPiece = nullptr;

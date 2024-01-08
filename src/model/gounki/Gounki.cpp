@@ -3,6 +3,7 @@
 Gounki::Gounki() {
     board = new GounkiBoard();
     gameStarted = true;
+    // currentPlayerIndex = 1;
     cout << "Construction of " << *this;
 }
 
@@ -31,15 +32,14 @@ void Gounki::initializeGame(const GameConfig &) {
 void Gounki::makeMove(ActionKey action, const Vector2i& from, const Vector2i& to) {
     GounkiBoard* gounkiBoard = (GounkiBoard*) board;
 
-    board->makeMove(action, currentPlayerIndex, from, to);
-    if (board->isGameDone())
-        return;
-
     // a classic movement will increase the score of the player if the landed case is an ennemy case
-    if (action == ActionKey::LeftClick && gounkiBoard->isLandedCaseEnnemy(from, to)) {
+    if (action == ActionKey::LeftClick && gounkiBoard->isWithinBounds(to) && gounkiBoard->isLandedCaseEnnemy(from, to)){
         playerList[currentPlayerIndex]->increaseScore(gounkiBoard->getCaseSize(to));
     }
 
+    board->makeMove(action, currentPlayerIndex, from, to);
+    if (board->isGameDone())
+        return;
 
     switch (action) {
         // a classic movement is done in one step
@@ -49,10 +49,15 @@ void Gounki::makeMove(ActionKey action, const Vector2i& from, const Vector2i& to
         case ActionKey::RightClick:
             size_t currentDeploymentSize = gounkiBoard->currentDeploymentSize();
             // it's the next player's turn if the deployment is done
-            // or if the deployment can't be finished
-            if (currentDeploymentSize == 0
-            || board->validMoves(action, currentPlayerIndex, to).size() == 0) {
+            if (currentDeploymentSize == 0) {
                 currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
+            }
+            // or if the deployment can't be finished, we delete every remaining pieces since you can't half deploy in the rules
+            else if (board->validMoves(action, currentPlayerIndex, to).size() == 0) {
+                // we give points to the other player of the number of pieces going to be deleted
+                currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
+                playerList[currentPlayerIndex]->increaseScore(currentDeploymentSize);
+                gounkiBoard->deleteRemainingDeploymentPieces(to);
                 gounkiBoard->clearDeploymentStatus();
             }
             break;

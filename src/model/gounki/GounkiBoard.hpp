@@ -177,6 +177,12 @@ public:
     int getCaseSize(const Vector2i& pos) const;
 
     /**
+     * Deletes and clears the board at the provided position
+     * @param pos   position to clear
+     */
+    void deleteRemainingDeploymentPieces(const Vector2i& pos);
+
+    /**
      * Clears the data stored to keep track of a deployement
      */
     void clearDeploymentStatus();
