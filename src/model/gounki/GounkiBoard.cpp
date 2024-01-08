@@ -1,6 +1,6 @@
 #include "GounkiBoard.hpp"
 
-GounkiBoard::GounkiBoard() {
+GounkiBoard::GounkiBoard(): gameDone {false} {
     board.resize(GOUNKI_BOARD_SIZE);
     for (vector<vector<Piece *>>& column : board) {
         column.resize(GOUNKI_BOARD_SIZE);
