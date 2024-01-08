@@ -31,12 +31,15 @@ void Gounki::initializeGame(const GameConfig &) {
 void Gounki::makeMove(ActionKey action, const Vector2i& from, const Vector2i& to) {
     GounkiBoard* gounkiBoard = (GounkiBoard*) board;
 
+    board->makeMove(action, currentPlayerIndex, from, to);
+    if (board->isGameDone())
+        return;
+
     // a classic movement will increase the score of the player if the landed case is an ennemy case
     if (action == ActionKey::LeftClick && gounkiBoard->isLandedCaseEnnemy(from, to)) {
         playerList[currentPlayerIndex]->increaseScore(gounkiBoard->getCaseSize(to));
     }
 
-    board->makeMove(action, currentPlayerIndex, from, to);
 
     switch (action) {
         // a classic movement is done in one step
