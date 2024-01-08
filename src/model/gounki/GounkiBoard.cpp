@@ -96,10 +96,16 @@ void GounkiBoard::makeMovement(const Vector2i &from, const Vector2i &to) {
 
     // if the move eats enemy pieces we delete each piece on the case
     if (isLandedCaseEnnemy(from, to)) {
+        for (Piece *p : nextCase) {
+            delete p;
+            p = nullptr;
+        }
+        /*
         for (int i = nextCase.size() - 1; i >= 0; --i) {
-            if (!nextCase.empty() && (GounkiPiece *) nextCase.at(i) != nullptr)
+            if ((GounkiPiece *) nextCase.at(i) != nullptr)
                 delete ((GounkiPiece *) nextCase.at(i));
         }
+         */
         nextCase.clear();
     }
 
