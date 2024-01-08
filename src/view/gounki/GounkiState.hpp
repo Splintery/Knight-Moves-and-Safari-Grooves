@@ -14,6 +14,7 @@ class GounkiState: public GameState {
     private:
         void boardFactory();
         void drawPieces();
+        void positionPieceWithinBoard(Sprite *piece, Vector2i pos, int offset);
 };
 
 

@@ -88,18 +88,23 @@ void GounkiState::handleInput() {
         }
 	}
 }
+void GounkiState::positionPieceWithinBoard(Sprite *piece, Vector2i pos, int offset) {
+    int tileWidth = board.getGlobalBounds().width / boardSize;
+    int tileHeight = board.getGlobalBounds().height / boardSize;
+    piece -> setPosition(
+        pos.x * tileWidth + board.getGlobalBounds().left + (tileWidth / 2 - piece -> getGlobalBounds().width / 2) + (10 * offset),
+        pos.y * tileHeight + board.getGlobalBounds().top + (tileHeight / 2 - piece -> getGlobalBounds().height / 2) - (10 * offset)
+    );
+}
 
 void GounkiState::drawPieces() {
-    int sum = 0;
     for (int i = 0; i < (int) pieces.size(); i++) {
         for (int j = 0; j < (int) pieces[i].size(); j++) {
             for (int k = (int) pieces[i][j].size() - 1; k >= 0 ; k--) {
                 if (pieces[i][j][k] != "") {
-                    sum++;
-                    cout << sum << ": " << pieces[i][j][k] << ": [" << i << "]; [" << j << "]" << endl;
                     pieceSprite -> setTexture(controller -> resource -> getTexture(pieces[i][j][k]));
-                    Vector2i v{j + 10 * k, i - 10 * k};
-                    positionPieceWithinBoard(pieceSprite, v);
+                    Vector2i v{j, i};
+                    positionPieceWithinBoard(pieceSprite, v, k);
                     controller -> window -> draw(*pieceSprite);
                 }
             }
