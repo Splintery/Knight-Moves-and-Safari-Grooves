@@ -186,8 +186,10 @@ Vector2i GounkiBoard::handleRebounds(const Vector2i& from, Vector2i finalPos) co
     if (!isWithinBounds(finalPos)) {
         if (!isWithinBoundsX(finalPos.x))
             newDir.x = -newDir.x;
+        /*
         if (!isWithinBoundsX(finalPos.y))
             newDir.y = -newDir.y;
+            */
         int j = 0;
         while (!isWithinBounds(finalPos)) {
             finalPos -= from;
@@ -267,10 +269,12 @@ GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
         for (int i = 1; i <= range; i++) {
             for (vector<Vector2i>::const_iterator it = stackPieceMoves.begin(); it != stackPieceMoves.end(); it++) {
                 Vector2i finalPos = from + (*it * i);
+                cout << "pos: " << finalPos.x << " " << finalPos.y << endl;
                 // when the calculated position is a winning case
                 // we stop generating values in this direction
-                if (isWinningPosition(finalPos)) {
-                    moves.emplace_back(make_pair(finalPos, *it));
+                if (finalPos.y >= GOUNKI_BOARD_SIZE || finalPos.y <= -1) {
+                    if (isWinningPosition(finalPos))
+                        moves.emplace_back(make_pair(finalPos, *it));
                     blockingPatterns.push_back(it);
                 }
                 else {
