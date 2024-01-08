@@ -62,9 +62,15 @@ void GounkiState::handleInput() {
                 if (controller -> input -> isSpriteClicked(board, Mouse::Left, *controller -> window)) {
                     bool friendlyPiece = currentPlayerIndex == UtilityFunctions::getPlayerFromName(pieces[tileClicked.x][tileClicked.y][0]);
                     if (fromTile == nullptr) {
+                        cout << "from till == nullptr if friendly going to select\n";
                         if (friendlyPiece) {
                             fromTile = new Vector2i(tileClicked);
+                            cout << "piece is friendly and selected, going to ask the validMoves(" << fromTile -> x << ", " << fromTile -> y << ") from her\n";
                             movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
+                            cout << "validMoves() returned with:\n";
+                            for (size_t i = 0; i < movesPossible.size(); i++) {
+                                cout << "[" << movesPossible[i].x << ", " << movesPossible[i].y << "]" << endl;
+                            }
                         }
                     } else {
                         if (tileClicked == *fromTile) {

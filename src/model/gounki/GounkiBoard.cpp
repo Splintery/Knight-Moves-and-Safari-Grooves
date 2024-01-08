@@ -350,6 +350,7 @@ vector<Vector2i> GounkiBoard::validMoves(ActionKey action, int playerIndex, cons
     if(!isOriginCaseMine(playerIndex, from))
         return moves;
     vector<pair<Vector2i, Vector2i>> movesWithPattern = validMovesPattern(action, from);
+    cout << "AFTER VALIDMOVES PATTERN\n";
     switch (action) {
         // handles the calculation of a piece's move
         case ActionKey::LeftClick:
