@@ -257,7 +257,8 @@ GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
         return moves;
 
     int range;
-    vector<vector<Vector2i>::const_iterator> blockingPatterns;
+    // vector<vector<Vector2i>::const_iterator> blockingPatterns;
+    vector<size_t> blockingPatterns;
     // this maps holds each piece type and it's number of occurences of the original case
     map<GounkiPieceType, int> stackCount = calculatePieceDistribution(action, from);
     // for each piece that can be moved, we generate the positions based on the quantity of the piece type on the case
@@ -267,6 +268,30 @@ GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
         // if the action is a deployment, we limit the distance of movement to 1
         range = setMaximumRange(action, pairs.second);
         for (int i = 1; i <= range; i++) {
+            for (size_t j = 0; j < stackPieceMoves.size(); j++) {
+                Vector2i finalPos = from + (stackPieceMoves[j] * i);
+                // when the calculated position is a winning case
+                // we stop generating values in this direction
+                if (finalPos.y >= GOUNKI_BOARD_SIZE || finalPos.y <= -1) {
+                    if (isWinningPosition(finalPos))
+                        moves.emplace_back(finalPos, stackPieceMoves[j]);
+                    blockingPatterns.push_back(j);
+                }
+                else {
+                    finalPos = handleRebounds(stackPieceMoves[j], finalPos);
+                    if (isNextCaseTakeable(action, from, finalPos)) {
+                        moves.emplace_back(finalPos, stackPieceMoves[j]);
+                    }
+                    // if the move calculated position contains a piece on the board
+                    // we stop generating in this direction
+                    // we don't add blocking patterns if this is the maximum attainable case
+                    // TODO Maybe pairs.second et pas range si un truc marche pas mdr
+                    if (i != range && !board[finalPos.x][finalPos.y].empty()) {
+                        blockingPatterns.push_back(j);
+                    }
+                }
+            }
+            /*
             for (vector<Vector2i>::const_iterator it = stackPieceMoves.begin(); it != stackPieceMoves.end(); it++) {
                 Vector2i finalPos = from + (*it * i);
                 cout << "pos: " << finalPos.x << " " << finalPos.y << endl;
@@ -274,13 +299,13 @@ GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
                 // we stop generating values in this direction
                 if (finalPos.y >= GOUNKI_BOARD_SIZE || finalPos.y <= -1) {
                     if (isWinningPosition(finalPos))
-                        moves.emplace_back(make_pair(finalPos, *it));
+                        moves.emplace_back(finalPos, *it);
                     blockingPatterns.push_back(it);
                 }
                 else {
                     finalPos = handleRebounds(*it, finalPos);
                     if (isNextCaseTakeable(action, from, finalPos)) {
-                        moves.emplace_back(make_pair(finalPos,*it));
+                        moves.emplace_back(finalPos,*it);
                     }
                     // if the move calculated position contains a piece on the board
                     // we stop generating in this direction
@@ -294,6 +319,15 @@ GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
             // removes the blocking patterns to not generate them at the next iteration
             for (const vector<Vector2i>::const_iterator& it: blockingPatterns) {
                 stackPieceMoves.erase(it);
+            }
+             */
+            sort(blockingPatterns.begin(), blockingPatterns.end(), std::greater<size_t>());
+
+            for (const size_t& index: blockingPatterns) {
+                cout << "index" << endl;
+                if (index < stackPieceMoves.size()) {
+                    stackPieceMoves.erase(stackPieceMoves.begin() + index);
+                }
             }
             blockingPatterns.clear();
         }
