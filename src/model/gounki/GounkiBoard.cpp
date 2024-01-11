@@ -33,7 +33,7 @@ bool GounkiBoard::isGameDone() const {
 void GounkiBoard::initializeGame(const GameConfig &) {}
 
 vector<vector<vector<string>>> GounkiBoard::getBoardState() const {
-    vector<vector<vector<string>>> boardState(GOUNKI_BOARD_SIZE, vector<vector<string>>(GOUNKI_BOARD_SIZE));
+    vector<vector<vector<string>>> boardState(GOUNKI_BOARD_SIZE, vector<vector<string>>(GOUNKI_BOARD_SIZE, vector<string>(5)));
     for (int i = 0; i < GOUNKI_BOARD_SIZE; i++) {
         for (int j = 0; j < GOUNKI_BOARD_SIZE; j++) {
             string s;
@@ -257,8 +257,7 @@ int setMaximumRange(ActionKey action, int defaultRange) {
     return defaultRange;
 }
 
-vector<pair<Vector2i, Vector2i>>
-GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
+vector<pair<Vector2i, Vector2i>> GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
     vector<pair<Vector2i, Vector2i>> moves;
     if (board[from.x][from.y].empty())
         return moves;
@@ -298,36 +297,6 @@ GounkiBoard::validMovesPattern(ActionKey action, const Vector2i &from) const {
                     }
                 }
             }
-            /*
-            for (vector<Vector2i>::const_iterator it = stackPieceMoves.begin(); it != stackPieceMoves.end(); it++) {
-                Vector2i finalPos = from + (*it * i);
-                cout << "pos: " << finalPos.x << " " << finalPos.y << endl;
-                // when the calculated position is a winning case
-                // we stop generating values in this direction
-                if (finalPos.y >= GOUNKI_BOARD_SIZE || finalPos.y <= -1) {
-                    if (isWinningPosition(finalPos))
-                        moves.emplace_back(finalPos, *it);
-                    blockingPatterns.push_back(it);
-                }
-                else {
-                    finalPos = handleRebounds(*it, finalPos);
-                    if (isNextCaseTakeable(action, from, finalPos)) {
-                        moves.emplace_back(finalPos,*it);
-                    }
-                    // if the move calculated position contains a piece on the board
-                    // we stop generating in this direction
-                    // we don't add blocking patterns if this is the maximum attainable case
-                    // TODO Maybe pairs.second et pas range si un truc marche pas mdr
-                    if (i != range && !board[finalPos.x][finalPos.y].empty()) {
-                        blockingPatterns.push_back(it);
-                    }
-                }
-            }
-            // removes the blocking patterns to not generate them at the next iteration
-            for (const vector<Vector2i>::const_iterator& it: blockingPatterns) {
-                stackPieceMoves.erase(it);
-            }
-             */
             sort(blockingPatterns.begin(), blockingPatterns.end(), std::greater<size_t>());
 
             for (const size_t& index: blockingPatterns) {
@@ -414,9 +383,12 @@ vector<Vector2i> GounkiBoard::validMoves(ActionKey action, int playerIndex, cons
                 return moves;
 
             // we search for every calculated moves that correspond to the last deployment's pattern
-            vector<pair<Vector2i, Vector2i>>::iterator newEnd = remove_if(movesWithPattern.begin(), movesWithPattern.end(),[this](const pair<Vector2i, Vector2i> &move) {
+            cout << "last dep x: " << lastDeploymentDirection.x << " y" << lastDeploymentDirection.y << endl;
+            vector<pair<Vector2i, Vector2i>>::iterator newEnd = remove_if(
+                    movesWithPattern.begin(), movesWithPattern.end(),[this](const pair<Vector2i, Vector2i> &move) {
                 return move.second != lastDeploymentDirection;
             });
+            cout << "taille moves with pattern: " << movesWithPattern.size() << endl;
             // if no moves correspond to the last deployment direction
             // we return the list of all the moves possible
             // this handles the case of a first deployment and
@@ -425,6 +397,7 @@ vector<Vector2i> GounkiBoard::validMoves(ActionKey action, int playerIndex, cons
                 movesWithPattern.erase(newEnd, movesWithPattern.end());
             filterUniqueFirst(movesWithPattern);
             extractMoves(moves, movesWithPattern);
+            cout << "taille moves with pattern avant return: " << movesWithPattern.size() << endl;
             return moves;
     }
     return moves;
