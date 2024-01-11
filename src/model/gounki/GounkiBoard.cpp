@@ -33,7 +33,7 @@ bool GounkiBoard::isGameDone() const {
 void GounkiBoard::initializeGame(const GameConfig &) {}
 
 vector<vector<vector<string>>> GounkiBoard::getBoardState() const {
-    vector<vector<vector<string>>> boardState(GOUNKI_BOARD_SIZE, vector<vector<string>>(GOUNKI_BOARD_SIZE, vector<string>(5)));
+    vector<vector<vector<string>>> boardState(GOUNKI_BOARD_SIZE, vector<vector<string>>(GOUNKI_BOARD_SIZE));
     for (int i = 0; i < GOUNKI_BOARD_SIZE; i++) {
         for (int j = 0; j < GOUNKI_BOARD_SIZE; j++) {
             string s;
@@ -156,7 +156,10 @@ void GounkiBoard::makeDeployment(int playerIndex, const Vector2i &from, const Ve
         }
     }
     // remove from the current deployment vector the piece we just moved
-    currentDeployment.erase(find(currentDeployment.begin(), currentDeployment.end(),newDeploymentPiece));
+    if (currentDeployment.size() == 1)
+        currentDeployment.clear();
+    else
+        currentDeployment.erase(find(currentDeployment.begin(), currentDeployment.end(),newDeploymentPiece));
     lastDeploymentPiece = newDeploymentPiece;
     lastDeploymentDirection = to - from;
 }
