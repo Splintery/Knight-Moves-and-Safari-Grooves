@@ -3,7 +3,7 @@
 Gounki::Gounki() {
     board = new GounkiBoard();
     gameStarted = true;
-    // currentPlayerIndex = 1;
+    currentPlayerIndex = 0;
     cout << "Construction of " << *this;
 }
 

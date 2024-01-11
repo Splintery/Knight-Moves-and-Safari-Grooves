@@ -2,7 +2,7 @@
 #include "../PauseState.hpp"
 
 
-GounkiState::GounkiState(Controller *controller): GameState(controller, GOUNKI_BOARD_SIZE) {
+GounkiState::GounkiState(Controller *controller): GameState(controller, GOUNKI_BOARD_SIZE), isDeployement{false} {
     //Do stuuf in init
 }
 GounkiState::~GounkiState() {
@@ -62,31 +62,49 @@ void GounkiState::handleInput() {
                 if (controller -> input -> isSpriteClicked(board, Mouse::Left, *controller -> window)) {
                     bool friendlyPiece = currentPlayerIndex == UtilityFunctions::getPlayerFromName(pieces[tileClicked.x][tileClicked.y][0]);
                     if (fromTile == nullptr) {
-                        cout << "from till == nullptr if friendly going to select\n";
                         if (friendlyPiece) {
+                            isDeployement = false;
                             fromTile = new Vector2i(tileClicked);
-                            cout << "piece is friendly and selected, going to ask the validMoves(" << fromTile -> x << ", " << fromTile -> y << ") from her\n";
                             movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
-                            cout << "validMoves() returned with:\n";
-                            for (size_t i = 0; i < movesPossible.size(); i++) {
-                                cout << "[" << movesPossible[i].x << ", " << movesPossible[i].y << "]" << endl;
-                            }
                         }
                     } else {
-                        if (tileClicked == *fromTile) {
-                            delete (fromTile);
-                            fromTile = nullptr;
-                            movesPossible.clear();
-                        } else {
-                            vector<Vector2i>::const_iterator it = find(movesPossible.begin(), movesPossible.end(),tileClicked);
-                            if (it != movesPossible.end()) {
-                                toTile = new Vector2i(tileClicked);
-                                moveReady = true;
+                        if (!isDeployement) {
+                            if (tileClicked == *fromTile) {
+                                delete (fromTile);
+                                fromTile = nullptr;
+                                movesPossible.clear();
+                            } else {
+                                vector<Vector2i>::const_iterator it = find(movesPossible.begin(), movesPossible.end(),tileClicked);
+                                if (it != movesPossible.end()) {
+                                    toTile = new Vector2i(tileClicked);
+                                    moveReady = true;
+                                }
                             }
                         }
                     }
                 } else if (controller -> input -> isSpriteClicked(board, Mouse::Right, *controller -> window)) {
-                    cout << "tmp\n";
+                    bool friendlyPiece = currentPlayerIndex == UtilityFunctions::getPlayerFromName(pieces[tileClicked.x][tileClicked.y][0]);
+                    if (fromTile == nullptr) {
+                        if (friendlyPiece) {
+                            isDeployement = true;
+                            fromTile = new Vector2i(tileClicked);
+                            movesPossible = controller -> game -> validMoves(ActionKey::RightClick, *fromTile);
+                        }
+                    } else {
+                        if (isDeployement) {
+                            if (tileClicked == *fromTile) {
+                                delete (fromTile);
+                                fromTile = nullptr;
+                                movesPossible.clear();
+                            } else {
+                                vector<Vector2i>::const_iterator it = find(movesPossible.begin(), movesPossible.end(),tileClicked);
+                                if (it != movesPossible.end()) {
+                                    toTile = new Vector2i(tileClicked);
+                                    moveReady = true;
+                                }
+                            }
+                        }
+                    }
                 }
                 break;
             default:
@@ -97,9 +115,10 @@ void GounkiState::handleInput() {
 void GounkiState::positionPieceWithinBoard(Sprite *piece, Vector2i pos, int offset) {
     int tileWidth = board.getGlobalBounds().width / boardSize;
     int tileHeight = board.getGlobalBounds().height / boardSize;
+//    cout << "offset: " << offset << endl;
     piece -> setPosition(
-        pos.x * tileWidth + board.getGlobalBounds().left + (tileWidth / 2 - piece -> getGlobalBounds().width / 2) + (30 * offset),
-        pos.y * tileHeight + board.getGlobalBounds().top + (tileHeight / 2 - piece -> getGlobalBounds().height / 2) - (30 * offset)
+        pos.x * tileWidth + board.getGlobalBounds().left + (tileWidth / 2 - piece -> getGlobalBounds().width / 2) + (15 * offset),
+        pos.y * tileHeight + board.getGlobalBounds().top + (tileHeight / 2 - piece -> getGlobalBounds().height / 2) - (15 * offset)
     );
 }
 
@@ -145,22 +164,26 @@ void GounkiState::update() {
     if (moveReady) {
         int oldPlayerIndex = currentPlayerIndex;
         moveReady = false;
-        controller -> game -> makeMove(ActionKey::LeftClick, *fromTile, *toTile);
-        cout << "Move made !\n";
+        if (isDeployement) {
+            controller -> game -> makeMove(ActionKey::RightClick, *fromTile, *toTile);
+        } else {
+            controller -> game -> makeMove(ActionKey::LeftClick, *fromTile, *toTile);
+        }
         currentPlayerIndex = controller -> game -> getCurrentPlayerIndex();
         movesPossible.clear();
 
         if (currentPlayerIndex != oldPlayerIndex) {
-            cout << "test\n";
             delete(fromTile);
             delete(toTile);
             fromTile = nullptr;
             toTile = nullptr;
             GameState::colorCurrentPlayer();
-            cout << "test2\n";
         } else {
-            cout << "same player\n";
-//            movesPossible = controller -> game -> validMoves(ActionKey::LeftClick, *fromTile);
+            delete(fromTile);
+            fromTile = new Vector2i(*toTile);
+            delete(toTile);
+            toTile = nullptr;
+            movesPossible = controller -> game -> validMoves(ActionKey::RightClick, *fromTile);
         }
 
         if (controller -> game -> hasGameStarted() && controller -> game -> isGameDone()) {

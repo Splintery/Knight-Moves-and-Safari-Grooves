@@ -39,13 +39,14 @@ vector<vector<vector<string>>> GounkiBoard::getBoardState() const {
             string s;
             if (board[i][j].size() == 0) {
                 s = UtilityFunctions::getGounkiPieceString(GounkiPieceType::EmptyGounki);
+                boardState[i][j].push_back(s);
             }
             else {
                 for (Piece* p : board[i][j]) {
                     s = UtilityFunctions::getGounkiPieceString(((GounkiPiece*) p)->type);
+                    boardState[i][j].push_back(s);
                 }
             }
-            boardState[i][j].push_back(s);
         }
     }
     return boardState;
@@ -394,7 +395,6 @@ vector<Vector2i> GounkiBoard::validMoves(ActionKey action, int playerIndex, cons
     if(!isOriginCaseMine(playerIndex, from))
         return moves;
     vector<pair<Vector2i, Vector2i>> movesWithPattern = validMovesPattern(action, from);
-    cout << "AFTER VALIDMOVES PATTERN\n";
     switch (action) {
         // handles the calculation of a piece's move
         case ActionKey::LeftClick:
