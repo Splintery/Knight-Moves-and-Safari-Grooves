@@ -165,8 +165,12 @@ void GounkiState::update() {
         int oldPlayerIndex = currentPlayerIndex;
         moveReady = false;
         if (isDeployement) {
+            cout << "call deployment" << endl;
+            cout << "from " << (*fromTile).x << "from " << (*fromTile).y << endl;
+            cout << "to " << (*toTile).x << "to " << (*toTile).y << endl;
             controller -> game -> makeMove(ActionKey::RightClick, *fromTile, *toTile);
         } else {
+            cout << "call movement" << endl;
             controller -> game -> makeMove(ActionKey::LeftClick, *fromTile, *toTile);
         }
         currentPlayerIndex = controller -> game -> getCurrentPlayerIndex();

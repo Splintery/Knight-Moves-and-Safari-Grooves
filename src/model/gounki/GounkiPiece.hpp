@@ -31,6 +31,13 @@ public:
      */
     static const map<GounkiPieceType, vector<Vector2i>> gounkiMovements;
 
+    static const map<GounkiPieceType, vector<Vector2i>> gounkiWhiteMovements;
+
+    static const map<GounkiPieceType, vector<Vector2i>> gounkiBlackMovements;
+
+    static const map<GounkiPieceType, vector<Vector2i>>& getMovesForPlayer(int playerIndex);
+
+
     /**
      * @see Piece::movePiece()
      */

@@ -16,8 +16,8 @@ enum class ButinPieceType {
 };
 
 // Crocodile => Player 0
-// Elephant => Player 1
-// Lion => Player 2
+// Elephant  => Player 1
+// Lion      => Player 2
 enum class SafariPieceType {
     Crocodile,
     Elephant,
@@ -50,7 +50,6 @@ namespace UtilityFunctions {
     int getPlayerFromAnimal(SafariPieceType animal);
     int getPlayerFromName(string color);
     void printBoard(const vector<vector<vector<string>>>& board);
-
 }
 
 #endif

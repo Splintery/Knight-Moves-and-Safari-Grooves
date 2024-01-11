@@ -30,6 +30,7 @@ void Gounki::initializeGame(const GameConfig &) {
 }
 
 void Gounki::makeMove(ActionKey action, const Vector2i& from, const Vector2i& to) {
+    cout << "make move gounki" << endl;
     GounkiBoard* gounkiBoard = (GounkiBoard*) board;
 
     // a classic movement will increase the score of the player if the landed case is an ennemy case

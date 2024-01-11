@@ -74,11 +74,12 @@ bool GounkiBoard::isLandedCaseEnnemy(const Vector2i& from, const Vector2i& to) c
     }
 }
 
-GounkiPieceType GounkiBoard::determinePieceType(const Vector2i& from, const Vector2i& to) const {
+GounkiPieceType GounkiBoard::determinePieceType(int playerIndex, const Vector2i& from, const Vector2i& to) const {
     Vector2i diff = to - from;
 
     // iterate through each piece type and its movement patterns
-    for (const pair<const GounkiPieceType, vector<Vector2i>>& pair : GounkiPiece::gounkiMovements) {
+    const map<GounkiPieceType, vector<Vector2<int>>>& map = GounkiPiece::getMovesForPlayer(playerIndex);
+    for (const pair<const GounkiPieceType, vector<Vector2i>>& pair : map) {
         const vector<Vector2i>& movementPattern = pair.second;
 
         if (find(movementPattern.begin(), movementPattern.end(), diff)
@@ -118,15 +119,20 @@ void GounkiBoard::makeMovement(const Vector2i &from, const Vector2i &to) {
     currentCase.clear();
 }
 
-void GounkiBoard::makeDeployment(const Vector2i &from, const Vector2i &to) {
+void GounkiBoard::makeDeployment(int playerIndex, const Vector2i &from, const Vector2i &to) {
     vector<Piece *>& currentCase = board[from.x][from.y];
     vector<Piece *>& nextCase = board[to.x][to.y];
 
-    GounkiPieceType movingPieceType = determinePieceType(from, to);
+    GounkiPieceType movingPieceType = determinePieceType(playerIndex, from, to);
+    cout << "type: " << UtilityFunctions::getGounkiPieceString(movingPieceType) << endl;
     // we search for a piece with the same type as the last deployment piece
     vector<Piece *>::iterator it = find_if(currentCase.begin(),currentCase.end(),[this, movingPieceType](Piece *piece) {
         return ((GounkiPiece *) piece)->type == movingPieceType && piece != lastDeploymentPiece;
     });
+    if (it == currentCase.end()) {
+        cout << "pas normal return" << endl;
+        return;
+    }
     GounkiPiece *newDeploymentPiece = (GounkiPiece *) *it;
     // first step of a deployment: every piece is moved to the next case
     // and every piece is pushed to the current deployment vector
@@ -167,7 +173,7 @@ void GounkiBoard::makeMove(ActionKey action, int playerIndex, const Vector2i &fr
             makeMovement(from, to);
             break;
         case ActionKey::RightClick:
-            makeDeployment(from, to);
+            makeDeployment(playerIndex, from, to);
             break;
     }
 }

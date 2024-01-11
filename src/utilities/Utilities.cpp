@@ -57,6 +57,7 @@ SafariPieceType UtilityFunctions::getSafariPieceType(string type) {
 int UtilityFunctions::getPlayerFromAnimal(SafariPieceType animal) {
     return (int) animal;
 }
+
 int UtilityFunctions::getPlayerFromName(string color) {
     if (color == "blackSquare" || color == "blackCircle") {
         return 0;

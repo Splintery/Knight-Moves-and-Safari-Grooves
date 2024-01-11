@@ -59,7 +59,7 @@ private:
      * @param to    landing vector
      * @return      the matching piece type
      */
-    GounkiPieceType determinePieceType(const Vector2i& from, const Vector2i& to) const;
+    GounkiPieceType determinePieceType(int playerIndex, const Vector2i& from, const Vector2i& to) const;
 
     /**
      * Calculates if the provided vector will encounter a wall rebound during the movement `from` -> `finalPos`
@@ -109,7 +109,7 @@ private:
      * @param from      origin vector
      * @param to        landing vector
      */
-    void makeDeployment(const Vector2i &from, const Vector2i &to);
+    void makeDeployment(int playerIndex, const Vector2i &from, const Vector2i &to);
 public:
     GounkiBoard();
     virtual ~GounkiBoard();
