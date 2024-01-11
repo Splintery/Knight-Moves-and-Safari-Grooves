@@ -11,6 +11,10 @@ void StateMachine::removeState() {
 	isRemoving = true;
 }
 
+void StateMachine::removeBackendState() {
+    isRemovingBackend = true;
+}
+
 void StateMachine::processStateChanges() {
 	if (isRemoving && !states.empty()) {
         delete(states.top());
@@ -24,6 +28,7 @@ void StateMachine::processStateChanges() {
 	if (isAdding) {
 		if (!states.empty()) {
 			if (isReplacing) {
+                delete(states.top());
 				states.pop();
 			} else {
 				states.top() -> pause();
@@ -34,6 +39,20 @@ void StateMachine::processStateChanges() {
 		states.top() -> init();
 		isAdding = false;
 	}
+    if (isRemovingBackend) {
+        if (!states.empty()) {
+            State *stateToKeep = std::move(states.top());
+            stateToKeep -> pause();
+            states.pop();
+            while (!states.empty()) {
+                delete(states.top());
+                states.pop();
+            }
+            states.push(std::move(stateToKeep));
+            states.top() -> resume();
+        }
+        isRemovingBackend = false;
+    }
 }
 
 State *StateMachine::getActiveState() {

@@ -24,6 +24,11 @@ public:
 	Sprite gounkiButton;
 	Sprite safariButton;
 
+    Sprite closeButton;
+    Sprite quitButin;
+    Sprite quitGounki;
+    Sprite quitSafari;
+
     RenderTexture rd;
     void buttonFactory();
 };

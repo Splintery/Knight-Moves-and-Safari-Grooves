@@ -6,6 +6,7 @@ GameState::GameState(Controller *controller, int boardSize): controller{controll
 GameState::~GameState() {
     if (fromTile != nullptr) delete(fromTile);
     if (toTile != nullptr) delete(toTile);
+    controller -> removeGame();
     cout << "deleting gamestate" << endl;
 }
 Texture& GameState::backBoardFactory() {

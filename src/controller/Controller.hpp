@@ -34,6 +34,7 @@ public:
 	void setNewGame(Game *, string name);
 	bool canStartNewGame() const;
 	string getGameName() const;
+    void removeGame();
 	void setPlayerNames(vector<string> newNames);
 	Texture *getWindowAsTexture();
 private:

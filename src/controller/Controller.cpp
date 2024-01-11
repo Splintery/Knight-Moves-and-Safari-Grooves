@@ -23,6 +23,10 @@ Controller::Controller(int width, int height, const string& title) {
 
 void Controller::loadTextures() const {
     resource -> loadFont("pixel", "./resources/Minecraft.ttf");
+    resource -> loadTexture("closeButton", "./resources/button/CloseButton.png");
+    resource -> loadTexture("quitButin", "./resources/button/QuitButinButton.png");
+    resource -> loadTexture("quitGounki", "./resources/button/QuitGounkiButton.png");
+    resource -> loadTexture("quitSafari", "./resources/button/QuitSafariButton.png");
 	resource -> loadTexture("butinLaunch", "./resources/button/ButinButton.png");
 	resource -> loadTexture("gounkiLaunch", "./resources/button/GounkiButton.png");
 	resource -> loadTexture("safariLaunch", "./resources/button/SafariButton.png");
@@ -107,6 +111,11 @@ void Controller::setNewGame(Game *newGame, string name) {
     }
     gameName = name;
     game = newGame;
+}
+
+void Controller::removeGame() {
+    delete(game);
+    game = nullptr;
 }
 
 void Controller::setPlayerNames(vector<std::string> newNames) {

@@ -17,6 +17,7 @@ public:
 
 	void addState(State *newState, bool isReplacing = true);
 	void removeState();
+    void removeBackendState();
 	void processStateChanges();
 
 	sf::Vector2f getCenter();
@@ -28,6 +29,7 @@ public:
 	bool isRemoving = false;
 	bool isAdding = false;
 	bool isReplacing = false;
+    bool isRemovingBackend = false;
 };
 
 #endif
