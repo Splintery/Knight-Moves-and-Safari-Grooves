@@ -13,9 +13,14 @@ class GounkiState: public GameState {
         void draw();
     private:
         bool isDeployement;
+        Sprite topRow;
+        Sprite bottomRow;
+        RenderTexture rowRender;
+        void rowFactory();
         void boardFactory();
         void drawPieces();
         void positionPieceWithinBoard(Sprite *piece, Vector2i pos, int offset);
+        void drawBase();
 };
 
 

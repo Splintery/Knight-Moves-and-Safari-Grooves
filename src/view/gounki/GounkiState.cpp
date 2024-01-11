@@ -4,10 +4,10 @@
 
 GounkiState::GounkiState(Controller *controller): GameState(controller, GOUNKI_BOARD_SIZE), isDeployement{false} {
     //Do stuuf in init
+    pieces = controller -> game -> getBoardState();
 }
 GounkiState::~GounkiState() {
     delete(pieceSprite);
-    cout << "deleting gounkiGameState" << endl;
 }
 
 void GounkiState::init() {
@@ -22,6 +22,12 @@ void GounkiState::init() {
     board.setTexture(render.getTexture());
     board.setScale(0.75, 0.75);
 
+    rowFactory();
+    topRow.setTexture(rowRender.getTexture());
+    topRow.setScale(0.75, 0.75);
+    bottomRow.setTexture(rowRender.getTexture());
+    bottomRow.setScale(0.75, 0.75);
+
     backBoard.setTexture(backBoardFactory());
     backBoard.setScale(0.75, 0.75);
 
@@ -32,6 +38,12 @@ void GounkiState::init() {
     board.setPosition(
         center.x - board.getGlobalBounds().width / 2, center.y - board.getGlobalBounds().height / 2
     );
+    topRow.setPosition(
+        center.x - topRow.getGlobalBounds().width / 2, center.y - board.getGlobalBounds().height / 2 - topRow.getGlobalBounds().height
+    );
+    bottomRow.setPosition(
+        center.x - bottomRow.getGlobalBounds().width / 2, center.y + board.getGlobalBounds().height / 2
+    );
     backBoard.setPosition(
         center.x - backBoard.getGlobalBounds().width / 2, center.y - backBoard.getGlobalBounds().height / 2
     );
@@ -41,7 +53,6 @@ void GounkiState::init() {
     redTileSprite.setScale(0.75, 0.75);
     blueTileSprite.setTexture(controller -> resource -> getTexture("blueTile"));
     blueTileSprite.setScale(0.75, 0.75);
-
 }
 
 void GounkiState::handleInput() {
@@ -59,7 +70,30 @@ void GounkiState::handleInput() {
                 }
                 break;
             case Event::MouseButtonPressed:
-                if (controller -> input -> isSpriteClicked(board, Mouse::Left, *controller -> window)) {
+                if (controller -> input -> isSpriteClicked(topRow, Mouse::Left, *controller -> window)
+                    || controller -> input -> isSpriteClicked(topRow, Mouse::Right, *controller -> window)
+                ) {
+                    if (fromTile != nullptr) {
+                        tileClicked.y--;
+                        cout << "TILE CLICKED: [" << tileClicked.x << "; " << tileClicked.y << "]\n";
+                        vector<Vector2i>::const_iterator it = find(movesPossible.begin(), movesPossible.end(),tileClicked);
+                        if (it != movesPossible.end()) {
+                            toTile = new Vector2i(tileClicked);
+                            moveReady = true;
+                        }
+                    }
+                } else if (controller -> input -> isSpriteClicked(bottomRow, Mouse::Left, *controller -> window)
+                    || controller -> input -> isSpriteClicked(bottomRow, Mouse::Right, *controller -> window)) {
+                    if (fromTile != nullptr) {
+                        tileClicked.y = GOUNKI_BOARD_SIZE;
+                        cout << "TILE CLICKED: [" << tileClicked.x << "; " << tileClicked.y << "]\n";
+                        vector<Vector2i>::const_iterator it = find(movesPossible.begin(), movesPossible.end(),tileClicked);
+                        if (it != movesPossible.end()) {
+                            toTile = new Vector2i(tileClicked);
+                            moveReady = true;
+                        }
+                    }
+                } else if (controller -> input -> isSpriteClicked(board, Mouse::Left, *controller -> window)) {
                     bool friendlyPiece = currentPlayerIndex == UtilityFunctions::getPlayerFromName(pieces[tileClicked.x][tileClicked.y][0]);
                     if (fromTile == nullptr) {
                         if (friendlyPiece) {
@@ -112,10 +146,16 @@ void GounkiState::handleInput() {
         }
 	}
 }
+void GounkiState::drawBase() {
+    controller -> window -> draw(background);
+    controller -> window -> draw(topRow);
+    controller -> window -> draw(bottomRow);
+    controller -> window -> draw(backBoard);
+    controller -> window -> draw(board);
+}
 void GounkiState::positionPieceWithinBoard(Sprite *piece, Vector2i pos, int offset) {
     int tileWidth = board.getGlobalBounds().width / boardSize;
     int tileHeight = board.getGlobalBounds().height / boardSize;
-//    cout << "offset: " << offset << endl;
     piece -> setPosition(
         pos.x * tileWidth + board.getGlobalBounds().left + (tileWidth / 2 - piece -> getGlobalBounds().width / 2) + (15 * offset),
         pos.y * tileHeight + board.getGlobalBounds().top + (tileHeight / 2 - piece -> getGlobalBounds().height / 2) - (15 * offset)
@@ -126,7 +166,7 @@ void GounkiState::drawPieces() {
     for (int i = 0; i < (int) pieces.size(); i++) {
         for (int j = 0; j < (int) pieces[i].size(); j++) {
             for (int k = (int) pieces[i][j].size() - 1; k >= 0 ; k--) {
-                if (pieces[i][j][k] != "") {
+                if (pieces[i][j][k] != (string)"") {
                     pieceSprite -> setTexture(controller -> resource -> getTexture(pieces[i][j][k]));
                     Vector2i v{i, j};
                     positionPieceWithinBoard(pieceSprite, v, k);
@@ -141,7 +181,7 @@ void GounkiState::drawPieces() {
 void GounkiState::draw() {
 	controller -> window -> clear();
 
-    GameState::drawBase();
+    drawBase();
 
     if (printWinner) {
         controller -> window -> draw(winner);
@@ -160,17 +200,12 @@ void GounkiState::draw() {
 }
 
 void GounkiState::update() {
-	pieces = controller -> game -> getBoardState();
     if (moveReady) {
         int oldPlayerIndex = currentPlayerIndex;
         moveReady = false;
         if (isDeployement) {
-            cout << "call deployment" << endl;
-            cout << "from " << (*fromTile).x << "from " << (*fromTile).y << endl;
-            cout << "to " << (*toTile).x << "to " << (*toTile).y << endl;
             controller -> game -> makeMove(ActionKey::RightClick, *fromTile, *toTile);
         } else {
-            cout << "call movement" << endl;
             controller -> game -> makeMove(ActionKey::LeftClick, *fromTile, *toTile);
         }
         currentPlayerIndex = controller -> game -> getCurrentPlayerIndex();
@@ -191,12 +226,29 @@ void GounkiState::update() {
         }
 
         if (controller -> game -> hasGameStarted() && controller -> game -> isGameDone()) {
-            GameState::gameOver();
+            gameOver();
         }
-        GameState::updateScoresDisplay();
+        updateScoresDisplay();
+        pieces = controller -> game -> getBoardState();
     }
 }
 
+
+void GounkiState::rowFactory() {
+    Sprite whiteTileSprite= Sprite();
+    Texture whiteTile = Texture();
+
+    whiteTile.loadFromFile("./resources/board/WhiteTile.png");
+    whiteTileSprite.setTexture(whiteTile);
+
+    rowRender.create(120 * GOUNKI_BOARD_SIZE, 120);
+    rowRender.clear();
+    for (int i = 0; i < GOUNKI_BOARD_SIZE; i++) {
+        whiteTileSprite.setPosition(i * 120, 0);
+        rowRender.draw(whiteTileSprite);
+    }
+    rowRender.display();
+}
 
 void GounkiState::boardFactory() {
     Sprite whiteTileSprite, blackTileSprite = Sprite();
@@ -208,10 +260,10 @@ void GounkiState::boardFactory() {
     blackTileSprite.setTexture(blackTile);
 
 
-    render.create(120 * BUTIN_BOARD_SIZE, 120 * BUTIN_BOARD_SIZE);
+    render.create(120 * GOUNKI_BOARD_SIZE, 120 * GOUNKI_BOARD_SIZE);
     render.clear();
-    for (int i = 0; i < BUTIN_BOARD_SIZE; i++) {
-        for (int j = 0; j < BUTIN_BOARD_SIZE; j++) {
+    for (int i = 0; i < GOUNKI_BOARD_SIZE; i++) {
+        for (int j = 0; j < GOUNKI_BOARD_SIZE; j++) {
             if ((j + i) % 2 == 0) {
                 whiteTileSprite.setPosition(i * 120, j * 120);
                 render.draw(whiteTileSprite);

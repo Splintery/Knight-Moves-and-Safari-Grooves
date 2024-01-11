@@ -57,6 +57,7 @@ void Gounki::makeMove(ActionKey action, const Vector2i& from, const Vector2i& to
             // or if the deployment can't be finished, we delete every remaining pieces since you can't half deploy in the rules
             else if (board->validMoves(action, currentPlayerIndex, to).size() == 0) {
                 // we give points to the other player of the number of pieces going to be deleted
+                cout << "AU CAS OÙ" << endl;
                 currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
                 playerList[currentPlayerIndex]->increaseScore(currentDeploymentSize);
                 gounkiBoard->deleteRemainingDeploymentPieces(to);
