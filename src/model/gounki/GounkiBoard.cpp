@@ -146,13 +146,20 @@ void GounkiBoard::makeDeployment(int playerIndex, const Vector2i &from, const Ve
     }
     else {
         // move pieces that are not equal to lastDeploymentPiece
+        vector<Piece*> toMove;
         for (GounkiPiece *gp: currentDeployment) {
             if (gp != lastDeploymentPiece) {
                 nextCase.push_back(gp);
-                currentCase.erase(
-                        find(currentCase.begin(), currentCase.end(), gp));
-                gp->movePiece(to);
+                toMove.push_back(gp);
             }
+        }
+        currentCase.erase(
+                remove_if(currentCase.begin(), currentCase.end(),[&toMove](const Piece *p) {
+                    auto tmp = find(toMove.begin(), toMove.end(),p);
+                    return tmp != toMove.end();
+                }), currentCase.end());
+        for (Piece* p : toMove) {
+            p->movePiece(to);
         }
     }
     // remove from the current deployment vector the piece we just moved
@@ -410,7 +417,7 @@ void GounkiBoard::deleteRemainingDeploymentPieces(const Vector2i &pos) {
     vector<Piece*>& pieces = board[pos.x][pos.y];
 
     for (GounkiPiece* p : currentDeployment) {
-        vector<Piece*>::iterator it = std::find(pieces.begin(), pieces.end(), p);
+        vector<Piece*>::iterator it = find(pieces.begin(), pieces.end(), p);
         pieces.erase(it);
         delete p;
     }
