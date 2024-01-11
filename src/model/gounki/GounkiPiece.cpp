@@ -51,6 +51,6 @@ GounkiPiece::~GounkiPiece() {
 }
 
 ostream &operator<<(ostream &out, const GounkiPiece &g) {
-    out << "piece: Gounki" << endl << "\t Type: " << UtilityFunctions::getGounkiPieceString(g.type) << endl;
+    out << "Piece: Gounki" << endl << "\t Type: " << UtilityFunctions::getGounkiPieceString(g.type) << endl;
     return out;
 }
