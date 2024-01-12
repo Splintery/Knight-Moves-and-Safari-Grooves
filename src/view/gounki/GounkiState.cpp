@@ -211,23 +211,24 @@ void GounkiState::update() {
         currentPlayerIndex = controller -> game -> getCurrentPlayerIndex();
         movesPossible.clear();
 
-        if (currentPlayerIndex != oldPlayerIndex) {
-            delete(fromTile);
-            delete(toTile);
-            fromTile = nullptr;
-            toTile = nullptr;
-            GameState::colorCurrentPlayer();
+        if (controller -> game -> isGameDone()) {
+            gameOver();
         } else {
-            delete(fromTile);
-            fromTile = new Vector2i(*toTile);
-            delete(toTile);
-            toTile = nullptr;
-            movesPossible = controller -> game -> validMoves(ActionKey::RightClick, *fromTile);
+            if (currentPlayerIndex != oldPlayerIndex) {
+                delete(fromTile);
+                delete(toTile);
+                fromTile = nullptr;
+                toTile = nullptr;
+                GameState::colorCurrentPlayer();
+            } else {
+                delete(fromTile);
+                fromTile = new Vector2i(*toTile);
+                delete(toTile);
+                toTile = nullptr;
+                movesPossible = controller -> game -> validMoves(ActionKey::RightClick, *fromTile);
+            }
         }
 
-        if (controller -> game -> hasGameStarted() && controller -> game -> isGameDone()) {
-            gameOver();
-        }
         updateScoresDisplay();
         pieces = controller -> game -> getBoardState();
     }

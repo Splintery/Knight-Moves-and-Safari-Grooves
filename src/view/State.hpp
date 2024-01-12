@@ -3,6 +3,10 @@
 
 #include <SFML/Graphics.hpp>
 
+/**
+ * La classe mère de tout les différents états que peut prendre notre logiciel
+ * dans notre cas, un état est l'équivalent d'un JPanel en swing
+ * */
 class State {
 public:
     virtual ~State();
