@@ -7,8 +7,8 @@ using namespace sf;
 
 class InputManager {
 public:
-    InputManager() = default {}
-    virtual ~InputManager() = default {}
+    InputManager() {};
+    virtual ~InputManager() {};
     /**
      * on ne veut pas plusieurs manager pour les inputs donc on ne va pas en faire de copie non plus
      * */

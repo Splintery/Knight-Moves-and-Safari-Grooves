@@ -14,7 +14,7 @@ State::~State() {
     cout << "StateDestruction" << endl;
 }
 MenuState::~MenuState() {
-    cout << "destroying menuuuuuu" << endl;
+    cout << "destroying menu" << endl;
 }
 
 void MenuState::buttonFactory() {
