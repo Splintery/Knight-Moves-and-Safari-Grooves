@@ -13,10 +13,6 @@ const map<GounkiPieceType, std::vector<Vector2i>> GounkiPiece::gounkiMovements =
         { GounkiPieceType::EmptyGounki, {}}
 };
 
-void GounkiPiece::movePiece(Vector2i position) {
-    this->position = position;
-}
-
 const map<GounkiPieceType, std::vector<Vector2i>> GounkiPiece::gounkiWhiteMovements= {
         { GounkiPieceType::WhiteCircle, {Vector2i(-1, -1), Vector2i(1, -1)}},
         { GounkiPieceType::WhiteSquare, {Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, 0)}},
@@ -26,6 +22,10 @@ const map<GounkiPieceType, std::vector<Vector2i>> GounkiPiece::gounkiBlackMoveme
         { GounkiPieceType::BlackCircle, {Vector2i(-1, 1), Vector2i(1, 1)}},
         { GounkiPieceType::BlackSquare, {Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, 0)}},
 };
+
+void GounkiPiece::movePiece(Vector2i position) {
+    this->position = position;
+}
 
 const map<GounkiPieceType, vector<Vector2i>> & GounkiPiece::getMovesForPlayer(int playerIndex) {
     switch (playerIndex) {

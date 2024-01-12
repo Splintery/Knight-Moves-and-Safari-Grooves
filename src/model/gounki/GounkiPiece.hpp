@@ -31,6 +31,10 @@ public:
      */
     static const map<GounkiPieceType, vector<Vector2i>> gounkiMovements;
 
+    /**
+     * A static map with the white and black movements, and a function to get them by player index
+     */
+
     static const map<GounkiPieceType, vector<Vector2i>> gounkiWhiteMovements;
 
     static const map<GounkiPieceType, vector<Vector2i>> gounkiBlackMovements;
