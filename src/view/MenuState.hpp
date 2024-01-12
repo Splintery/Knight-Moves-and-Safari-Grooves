@@ -12,13 +12,19 @@ public:
     MenuState(const MenuState &) = delete;
     MenuState &operator=(const MenuState &) = delete;
 
+    /**
+     * Ces 4 méthodes sont expliqués dans State.hpp
+     * */
 	void init();
 	void handleInput();
 	void update();
 	void draw();
-	private:
-	Controller *controller;
 
+private:
+    /**
+     * Les différents éléments necessaires pour l'affichage du menu
+     * */
+    Controller *controller;
     Text gameTitle;
 	Sprite butinButton;
 	Sprite gounkiButton;
@@ -29,6 +35,10 @@ public:
     Sprite quitGounki;
     Sprite quitSafari;
 
+    /**
+     * Cette méthode est un outil pour créer des .png de boutton sans avoir à passer super
+     * longtemps dans un logiciel paint
+     * */
     RenderTexture rd;
     void buttonFactory();
 };

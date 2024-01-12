@@ -2,6 +2,13 @@
 #include "../settings/SETTINGS.hpp"
 #include <iostream>
 
+StateMachine::~StateMachine() {
+    while (!states.empty()) {
+        delete(states.top());
+        states.pop();
+    }
+}
+
 void StateMachine::addState(State *newState, bool isReplacing) {
 	this -> isAdding = true;
 	this -> isReplacing = isReplacing;

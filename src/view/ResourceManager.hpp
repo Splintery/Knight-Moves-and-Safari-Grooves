@@ -20,11 +20,21 @@ public:
     ResourceManager& operator=(const ResourceManager&) = delete;
 
     /**
-     * loadTexture
+     * loadTexture creates a Texture from the .png found at "filepath" and associates it with "key" in a map
+     * @param key a string that will be used to acces the Texture created from the image at "filePath"
+     * @param filePath the filePath where can be found an image to build a Texture out of
      * */
 	void loadTexture(string key, string filePath);
+    /**
+     * getTexture renvoie la Texture créée par l'appel à loadTexture() pour la même valeur de "key"
+     * @param key la clef qui a servie à load la texture
+     * @return la Texture stocké dans la map pour la valeur de "key"
+     * */
 	Texture &getTexture(string key);
 
+    /**
+     * Littéralement la même chose que pour les Textures mais avec les fonts
+     * */
 	void loadFont(string key, string filePath);
 	Font &getFont(string key);
 private:

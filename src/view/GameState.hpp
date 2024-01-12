@@ -23,28 +23,41 @@ class GameState: public State {
         Controller *controller;
         int boardSize;
 
-        // boolean values used by update() and handleInput() to communicate
+        /**
+         * valeurs booléennes utilisées par update() et handleInput() pour communiquer
+         * */
         bool moveReady;
         bool playerPlayed;
         bool printWinner;
 
-        // column x lines x number of pieces on that tile
-        // & string holds the name of the piece
+        /**
+         * colonne x lignes x nombre de pièces sur cette tuile
+         * & la chaîne contient le nom de la pièce
+         * */
         vector<vector<vector<string>>> pieces;
         Sprite board;
         Sprite backBoard;
 
-        // those two will be used in the init() to build a big Sprite for the board from multiple images of a Tile
+
+
+        /**
+         * ces deux-là seront utilisés dans init() pour construire un gros Sprite pour le tableau à partir de plusieurs images d'une tuile
+         * */
         RenderTexture render;
         virtual void boardFactory() = 0;
 
         Texture& backBoardFactory();
 
         void drawBase();
-        // one Sprite will have its texture changed and position replaced to draw all the pieces
-        // insted of having a sprite for each of the pieces on the board
+        /**
+         * un Sprite verra sa texture modifiée et sa position remplacée pour dessiner toutes les pièces
+         * au lieu d'avoir un sprite pour chacune des pièces du plateau. Ces deux méthodes sont virtuelles pour que
+         * si un enfant de gameState est besoin d'une version différente de ces méthodes que ce soit leurs version qui
+         * soient appelés
+         * @param mousePos la position de la souris à transformer en position de Tuile sur le plateau de jeu
+         * @return la position calculé dans le plateau
+         * */
         virtual Vector2i getTileWithinBoard(Vector2f mousePos);
-
         virtual void positionPieceWithinBoard(Sprite *piece, Vector2i pos);
 
         Sprite *pieceSprite = nullptr;
@@ -54,20 +67,28 @@ class GameState: public State {
         vector<Text> playerNamesDisplay;
         vector<Text> playerScoresDisplay;
         void updateScoresDisplay();
-        // x is the offeset on where to draw it on the window
+        /**
+         * x est le décalage de l'endroit où le dessiner sur la fenêtre
+         */
         void initializePlayerDisplay(int x);
         void drawPlayerDisplay();
         void colorCurrentPlayer();
 
-        // will be displayed on the screen when the game is finished (printWinner = true)
+        /**
+         * sera affiché à l'écran une fois le jeu terminé (printWinner = true)
+         */
         Text winner;
         void initWinner();
         void gameOver();
 
-        // used to show the possibles moves a certain piece can make
+        /**
+         * utilisé pour montrer les mouvements possibles qu'une certaine pièce peut faire
+         */
         Sprite redTileSprite;
         void positionRedTile(Vector2i v);
-        // used to show wich piece is being selected
+        /**
+         * utilisé pour montrer quelle pièce est sélectionnée
+         */
         Sprite blueTileSprite;
         void positionBlueTile(Vector2i v);
         void drawSelectedTile();
@@ -77,5 +98,4 @@ class GameState: public State {
         vector<Vector2i> movesPossible;
         void drawMovesPossible();
 };
-
 #endif

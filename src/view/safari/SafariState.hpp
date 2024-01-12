@@ -10,11 +10,19 @@ public:
     SafariState(const SafariState&) = delete;
     SafariState& operator=(const SafariState&) = delete;
 
+    /**
+     * Ces 4 méthodes sont expliqués dans State.hpp
+     * */
 	void init();
 	void handleInput();
 	void update();
 	void draw();
 private:
+    /**
+     * Contrairement à Butin où c'est très simple, ici on doit créer un plateau spécial et
+     * dissimuler les cases pour les barrières ainsi que de réellement faire la distinction entre click gauche
+     * et droit
+     */
     void incrementPlayer();
     Sprite *horizontalFenceSprite;
     Sprite *verticalFenceSprite;
@@ -32,6 +40,10 @@ private:
     bool canEndTurn;
     void endTurnButtonEffect();
 
+    /**
+     * pour qu'une partie puisse commencer, chque joueur doit placer 3 animaux et 3 barrières
+     * les méthodees en dessous servent à celà
+     */
     SafariConfig config;
     void addCrocodile(Vector2i v);
     void addElephant(Vector2i v);
